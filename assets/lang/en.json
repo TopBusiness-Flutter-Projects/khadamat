@@ -1,0 +1,10 @@
+{
+ "user_account": "user to the account",
+ "search_country": "Search Country",
+ "phone_number_text": "Phone Number",
+ "phone_validator_message": "Please Enter Phone Number !!!",
+ "verification_validator_message": "Please fill up all the cells properly",
+ "done_btn": "Done",
+ "back_btn": "Back",
+ "register": "Register"
+}

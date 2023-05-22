@@ -1,0 +1,10 @@
+{
+  "user_account": "الدخول الى الحساب",
+  "search_country": "البحث عن الدوله",
+  "phone_number_text": "رقم الهاتف",
+  "phone_validator_message": "من فضلك ادخل رقم الهاتف!!!",
+  "verification_validator_message": "يرجى ملء جميع الخلايا بشكل صحيح",
+  "done_btn": "تـم",
+  "back_btn": "رجوع",
+  "register": "انشاء حساب"
+}
