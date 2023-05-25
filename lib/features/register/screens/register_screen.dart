@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart'as oo;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
+import 'package:khadamat/core/widgets/custom_textfield.dart';
 import 'package:khadamat/core/widgets/my_svg_widget.dart';
 import 'package:khadamat/features/login/cubit/login_cubit.dart';
 
@@ -119,6 +120,36 @@ class RegisterScreen extends StatelessWidget {
                                 keyboardType: TextInputType.phone,
                                 keyboardAction: TextInputAction.done,
                                 inputBorder: InputBorder.none,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 25),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: AppColors.white,
+                          borderRadius: BorderRadius.circular(28),
+                        ),
+                        padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.person,
+                              color: AppColors.primary,
+                              size: 35,
+                            ),
+                            SizedBox(width: 0),
+                            Expanded(
+                              child:CustomTextField(
+                                title: 'username'.tr(),
+                                backgroundColor: AppColors.white,
+                                textInputType: TextInputType.text,
+                                // controller: ,
+                                validatorMessage: 'username_valid'.tr(),
                               ),
                             ),
                           ],

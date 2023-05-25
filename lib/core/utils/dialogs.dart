@@ -7,7 +7,7 @@ import 'package:khadamat/core/utils/app_colors.dart';
 /*----------------------------------------------------------------------------*/
 /*------------------------------  Error Get Bar  -----------------------------*/
 /*----------------------------------------------------------------------------*/
-errorGetBar(String? message) {
+errorGetBar(String message) {
   Get.showSnackbar(
     GetSnackBar(
       messageText: Text(
