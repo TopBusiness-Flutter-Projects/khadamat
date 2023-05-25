@@ -39,6 +39,8 @@ class LoginCubit extends Cubit<LoginState> {
         if (r.code == 200) {
           model = r;
           Get.toNamed( Routes.otpRoute);
+          Preferences.instance.setUser(r);
+
           // sendSmsCode(code: phoneCode, phoneNum: phoneController.text);
         } else if (r.code == 422) {
           errorGetBar('لا يوجد حساب مرتبط بهذا الهاتف');
