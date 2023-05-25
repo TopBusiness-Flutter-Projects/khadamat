@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:khadamat/features/home/screens/home.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 import '../../../../core/utils/app_colors.dart';
@@ -36,7 +37,6 @@ class _VerificationScreenState extends State<VerificationScreen> {
     errorController = StreamController<ErrorAnimationType>();
     String lang = EasyLocalization.of(context)!.locale.languageCode;
     return Scaffold(
-      backgroundColor: AppColors.scaffoldBackground,
       resizeToAvoidBottomInset: false,
       body: BlocBuilder<LoginCubit, LoginState>(
         builder: (context, state) {
@@ -99,10 +99,8 @@ class _VerificationScreenState extends State<VerificationScreen> {
                     child: PinCodeTextField(
                       // backgroundColor: AppColors.white,
                       hintCharacter: '-',
-                      textStyle:
-                          TextStyle(color: AppColors.white),
-                      hintStyle:
-                          TextStyle(color: AppColors.primary),
+                      textStyle: TextStyle(color: AppColors.white),
+                      hintStyle: TextStyle(color: AppColors.primary),
                       pastedTextStyle: TextStyle(
                         color: AppColors.primary,
                         fontWeight: FontWeight.bold,
@@ -119,14 +117,13 @@ class _VerificationScreenState extends State<VerificationScreen> {
                       },
                       pinTheme: PinTheme(
                         inactiveColor: AppColors.white,
-                        activeColor: AppColors.primary,
+                        activeColor: AppColors.secondPrimary,
                         shape: PinCodeFieldShape.box,
                         borderRadius: BorderRadius.circular(15),
-                        selectedColor: AppColors.primary,
+                        selectedColor: AppColors.secondPrimary,
                       ),
-                      cursorColor: AppColors.textBackground,
-                      animationDuration:
-                          const Duration(milliseconds: 300),
+                      cursorColor: AppColors.secondPrimary,
+                      animationDuration: const Duration(milliseconds: 300),
                       errorAnimationController: errorController,
                       keyboardType: TextInputType.number,
                       onChanged: (value) {
@@ -141,9 +138,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 30.0),
                   child: Text(
-                    hasError
-                        ? 'verification_validator_message'.tr()
-                        : "",
+                    hasError ? 'verification_validator_message'.tr() : "",
                     style: TextStyle(
                         color: AppColors.error,
                         fontSize: 12,
@@ -153,8 +148,9 @@ class _VerificationScreenState extends State<VerificationScreen> {
                 const SizedBox(height: 20),
                 CustomButton(
                   text: 'done_btn'.tr(),
-                  color: AppColors.primary,
+                  color: AppColors.secondPrimary,
                   paddingHorizontal: 40,
+                  textcolor: AppColors.black,
                   borderRadius: 30,
                   onClick: () {
                     formKey.currentState!.validate();
@@ -167,6 +163,11 @@ class _VerificationScreenState extends State<VerificationScreen> {
                       setState(
                         () {
                           hasError = false;
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => HomeScreen()),
+                          );
                           // context
                           //     .read<LoginCubit>()
                           //     .verifySmsCode(currentText);
@@ -177,20 +178,21 @@ class _VerificationScreenState extends State<VerificationScreen> {
                 ),
                 const SizedBox(height: 12),
                 Align(
-                  alignment: lang=='en'
+                  alignment: lang == 'en'
                       ? Alignment.centerRight
                       : Alignment.centerLeft,
                   child: Padding(
                     padding: EdgeInsets.symmetric(
-                        horizontal:
-                            MediaQuery.of(context).size.width / 8),
+                        horizontal: MediaQuery.of(context).size.width / 8),
                     child: TextButton(
                       onPressed: () => Navigator.pop(context),
                       style: TextButton.styleFrom(
-                        foregroundColor:
-                            AppColors.white, // Text Color
+                        foregroundColor: AppColors.white,
                       ),
-                      child: Text('back_btn'.tr(),
+                      child: Text(
+                        'back_btn'.tr(),
+                        style: TextStyle(
+                            fontSize: 22, fontWeight: FontWeight.bold),
                       ),
                     ),
                   ),

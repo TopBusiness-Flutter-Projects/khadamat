@@ -54,6 +54,10 @@ dependencies:
   intl_phone_number_input: ^0.7.2
   page_transition: "^2.0.9"
   pin_code_fields: ^7.4.0
+  firebase_messaging: ^14.2.1
+  firebase_auth: ^4.2.6
+  firebase_core: ^2.5.0
+
 
 
 dev_dependencies:
@@ -80,8 +84,8 @@ flutter:
     - assets/lang/
     - assets/images/
     - assets/icons/
-    - assets/lottie/
-    - assets/fonts/
+#    - assets/lottie/
+#    - assets/fonts/
 #
 #  fonts:
 #    - family: Cairo

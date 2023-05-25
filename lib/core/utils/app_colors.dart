@@ -1,50 +1,17 @@
 import 'package:flutter/material.dart';
 
-import '../preferences/preferences.dart';
 import 'hex_color.dart';
 
 class AppColors {
   static Color primary = HexColor('#FB2958');
-  static Color secondPrimary = HexColor('#4455D7');
+  static Color secondPrimary = HexColor('#F4E07D');
   static Color orangeThirdPrimary = HexColor('#FF9201');
-  static final AppColors instance = AppColors._internal();
-  static Color litePrimary = HexColor('#7F8CF3');
-
-  AppColors._internal();
-
-  factory AppColors() => instance;
-
-  static Color scaffoldBackground = HexColor('#FDF5E8');
-  static Color buttonBackground = HexColor('#594339');
-  static Color textBackground = HexColor('#92603F');
-  static Color onBoardingColor = HexColor('#DC8068');
-  static Color containerBackgroundColor = HexColor('#F7DFB1');
-  static Color iconBackgroundColor = HexColor('#402D26');
-  static Color gray1 = HexColor('#404040');
-  static Color unselectedTab = HexColor('#D9D9D9');
-  static Color commentBackground = HexColor('#F3F2F2');
-  static Color paymentContainer = HexColor('#F0D3AB');
-  static Color textFormFieldColor = HexColor('#EDEDED');
-  static Color descriptionBoardingColor = HexColor('#777777');
-  static Color bottomNavigatorColor = HexColor('#F3F4F9');
-  static Color unselectedTabColor = HexColor('#EEEEEE');
-  static Color liveExamBackgroundColor = HexColor('#FFEAD7');
-  static Color liveExamGrayTextColor = HexColor('#646463');
-  static Color goldColor = HexColor('#F4BC35');
-  static Color skyColor = HexColor('#48B8E0');
   static Color blueLiteColor = HexColor('#00B3DC');
-  static Color redLiteColor = HexColor('#FEECEA');
-  static Color greenDownloadColor = HexColor('#009541');
-
-  static Color blueLikeColor = HexColor('#2e7dea');
-  static Color redDislikeColor = HexColor('#ff2c2c');
-
-  static Color green = HexColor('#15860B');
-  static Color blueColor1 = HexColor('#6A85B6');
-  static Color blueColor2 = HexColor('#BAC8E0');
-  static Color blueColor3 = HexColor('#1877F2');
-  static Color blueLiteColor1 = HexColor('#429993');
-  static Color blueLiteColor2 = HexColor('#7CD4CC');
+  static Color blueTextColor = HexColor('#5663FF');
+  static Color grayTextColor = HexColor('#6E7FAA');
+  static Color goldStarColor = HexColor('#FFCC00');
+  static Color unStarColor = HexColor('#E9E9EE');
+  static Color scaffoldColor = HexColor('#F5F5F5');
 
   static Color hint = Colors.grey;
   static Color blackLite = Colors.black54;

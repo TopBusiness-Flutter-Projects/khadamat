@@ -6,5 +6,14 @@
  "verification_validator_message": "Please fill up all the cells properly",
  "done_btn": "Done",
  "back_btn": "Back",
- "register": "Register"
+ "register": "Register",
+ "login": "Login",
+ "last_added": "Last Added",
+ "choose_services": "Search for the service by rating",
+ "search": "Search",
+ "following": "Following",
+ "followers": "Followers",
+ "reviews": "Reviews",
+ "username_valid": "Please Enter Your Username !!!"
+
 }

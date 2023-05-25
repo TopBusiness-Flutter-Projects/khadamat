@@ -1,7 +1,9 @@
 import 'dart:convert';
 
 
-import '../utils/app_strings.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../models/login_model.dart';
 
 class Preferences {
   static final Preferences instance = Preferences._internal();
@@ -21,4 +23,24 @@ class Preferences {
   //   String? jsonData = prefs.getString('onBoarding');
   //   return jsonData;
   // }
+
+  Future<void> setUser(LoginModel loginModel) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    preferences.setString(
+        'user', jsonEncode(LoginModel.fromJson(loginModel.toJson())));
+    print(await getUserModel());
+  }
+
+  Future<LoginModel> getUserModel() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    String? jsonData = preferences.getString('user');
+    LoginModel userModel;
+    if (jsonData != null) {
+      userModel = LoginModel.fromJson(jsonDecode(jsonData));
+    } else {
+      userModel = LoginModel();
+    }
+    return userModel;
+  }
+
 }
