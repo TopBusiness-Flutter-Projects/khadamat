@@ -45,18 +45,17 @@ class _SplashScreenState extends State<SplashScreen>
   Future<void> _getStoreUser() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     if (prefs.getString('user') != null) {
-      // Navigator.pushReplacementNamed(
-      //   context,
-      //   Routes.homePageScreenRoute
-      // );
+      print(prefs.getString('user'));
+      Navigator.pushReplacementNamed(
+        context,
+        Routes.homeRoute
+      );
     } else {
       Navigator.pushReplacement(
         context,
         PageTransition(
           alignment: Alignment.centerRight,
-          // curve: Curves.easeInOut,
           duration: Duration(milliseconds: 1300),
-          // reverseDuration: Duration(milliseconds: 600),
           type: PageTransitionType.scale,
           child: LoginScreen(),
         ),

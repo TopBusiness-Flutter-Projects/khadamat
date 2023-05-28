@@ -14,6 +14,11 @@
  "following": "Following",
  "followers": "Followers",
  "reviews": "Reviews",
- "username_valid": "Please Enter Your Username !!!"
+ "username_valid": "Please Enter Your Username !!!",
+ "my_posts": "My Posts",
+ "profile": "My Profile",
+ "setting": "Setting",
+ "call": "Call to App Support",
+ "about_app": "About App"
 
 }

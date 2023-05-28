@@ -176,7 +176,7 @@ class HomePageWidget extends StatelessWidget {
                                         bottomRight:
                                         Radius.circular(12),
                                       ),
-                                      color: AppColors.gray4,
+                                      color: AppColors.gray1,
                                     ),
                                     child: Center(
                                       child: Text(

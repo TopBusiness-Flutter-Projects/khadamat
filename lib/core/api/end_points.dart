@@ -3,6 +3,7 @@ class EndPoints {
   static const String loginUrl = '${baseUrl}auth/login';
   static const String homeUrl = '${baseUrl}home';
   static const String servicesUrl = '${baseUrl}services/';
+  static const String favoriteUrl = '${baseUrl}services/get-favourites';
 
 
 

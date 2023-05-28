@@ -6,10 +6,10 @@ import '../api/end_points.dart';
 import '../error/exceptions.dart';
 import '../error/failures.dart';
 import '../models/catigoreis_services.dart';
+import '../models/favorite_model.dart';
 import '../models/home_model.dart';
 import '../models/login_model.dart';
 import '../preferences/preferences.dart';
-import '../utils/app_strings.dart';
 
 class ServiceApi {
   final BaseApiConsumer dio;
@@ -61,6 +61,22 @@ class ServiceApi {
       );
       print(response);
       return Right(CategoriesServicesModel.fromJson(response));
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
+
+  Future<Either<Failure, FavoriteModel>>getFavoriteData() async {
+    LoginModel loginModel = await Preferences.instance.getUserModel();
+    try {
+      final response = await dio.get(
+        EndPoints.favoriteUrl ,
+        options: Options(
+          headers: {'Authorization': loginModel.data!.accessToken!},
+        ),
+      );
+      print(response);
+      return Right(FavoriteModel.fromJson(response));
     } on ServerException {
       return Left(ServerFailure());
     }

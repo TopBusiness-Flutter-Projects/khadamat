@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:flutter/material.dart';
 import 'package:khadamat/core/remote/service.dart';
 import 'package:meta/meta.dart';
 
@@ -11,6 +12,7 @@ class HomeCubit extends Cubit<HomeState> {
     getHomeData();
   }
   final ServiceApi api;
+  late TabController tabController;
 
   int currentIndex = 0;
 

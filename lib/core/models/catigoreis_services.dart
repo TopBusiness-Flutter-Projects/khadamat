@@ -71,7 +71,7 @@ class ServicesModel {
     details: json["details"],
     category: json["category"],
     subCategory: json["sub_category"],
-    rate: json["rate"],
+    rate: json["rate"]??0,
     following: json["following"],
     followers: json["followers"],
     reviews: json["reviews"],

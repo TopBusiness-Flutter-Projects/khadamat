@@ -21,17 +21,15 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen>
-    with TickerProviderStateMixin {
+class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   List<String> titles = [];
-  late TabController _tabController;
 
   @override
   void initState() {
     super.initState();
 
-    _tabController = TabController(length: 5, vsync: this);
-    _tabController.animateTo(context.read<HomeCubit>().currentIndex);
+    context.read<HomeCubit>().tabController = TabController(length: 5, vsync: this);
+    context.read<HomeCubit>().tabController.animateTo(context.read<HomeCubit>().currentIndex);
   }
 
   @override
@@ -49,11 +47,11 @@ class _HomeScreenState extends State<HomeScreen>
             children: [
               Positioned(
                 top: 0,
-                bottom: 25,
+                bottom:cubit.currentIndex==4?0: 25,
                 left: 0,
                 right: 0,
                 child: TabBarView(
-                  controller: _tabController,
+                  controller: cubit.tabController,
                   physics: NeverScrollableScrollPhysics(),
                   children: [
                     HomePageWidget(),
@@ -62,106 +60,121 @@ class _HomeScreenState extends State<HomeScreen>
                     NotificationScreen(),
                     ProfileScreen(),
                   ],
-                )
+                ),
               ),
               Positioned(
                 top: 0,
                 left: 0,
                 right: 0,
-                child: Container(
-                  height: 90,
-                  decoration: BoxDecoration(
-                      color: AppColors.transparent,
-                      image: DecorationImage(
-                        image: AssetImage(ImageAssets.topStatusBarImage),
-                        fit: BoxFit.fill,
-                      )),
+                child: Visibility(
+                  visible: cubit.currentIndex!=4,
+                  child: Container(
+                    height: 90,
+                    decoration: BoxDecoration(
+                        color: AppColors.transparent,
+                        image: DecorationImage(
+                          image: AssetImage(ImageAssets.topStatusBarImage),
+                          fit: BoxFit.fill,
+                        )),
+                  ),
                 ),
               ),
               Positioned(
                 bottom: 0,
                 left: 0,
                 right: 0,
-                child: RotationTransition(
-                  turns: AlwaysStoppedAnimation(180 / 360),
-                  child: Container(
-                    height: 90,
-                    padding: EdgeInsets.only(top: 8, right: 16, left: 16),
-                    decoration: BoxDecoration(
-                      color: AppColors.transparent,
-                      image: DecorationImage(
-                        image: AssetImage(ImageAssets.topStatusBarImage),
-                        fit: BoxFit.fill,
+                child: Visibility(
+                  visible: cubit.currentIndex!=4,
+                  child: RotationTransition(
+                    turns: AlwaysStoppedAnimation(180 / 360),
+                    child: Container(
+                      height: 90,
+                      padding: EdgeInsets.only(top: 8, right: 16, left: 16),
+                      decoration: BoxDecoration(
+                        color: AppColors.transparent,
+                        image: DecorationImage(
+                          image: AssetImage(ImageAssets.topStatusBarImage),
+                          fit: BoxFit.fill,
+                        ),
                       ),
-                    ),
-                    child: RotationTransition(
-                      turns: AlwaysStoppedAnimation(180 / 360),
-                      child: Directionality(
-                        textDirection: TextDirection.ltr,
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            InkWell(
-                              onTap: (){
-                                cubit.selectTap(0);
-                                _tabController.animateTo(0);
-                              },
-                              child: Icon(
-                                Icons.home,
-                                color: cubit.currentIndex==0?AppColors.secondPrimary:AppColors.gray4,
-                                size: 36,
-                              ),
-                            ),
-                            InkWell(
-                              onTap: (){
-                                cubit.selectTap(1);
-                                _tabController.animateTo(1);
-                              },
-                              child: Icon(
-                                Icons.favorite,
-                                color:cubit.currentIndex==1?AppColors.secondPrimary: AppColors.gray4,
-                                size: 36,
-                              ),
-                            ),
-                            Column(
-                              children: [
-                                SizedBox(
-                                  height: 8,
+                      child: RotationTransition(
+                        turns: AlwaysStoppedAnimation(180 / 360),
+                        child: Directionality(
+                          textDirection: TextDirection.ltr,
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              InkWell(
+                                onTap: () {
+                                  cubit.selectTap(0);
+                                  // _tabController.animateTo(0);
+                                },
+                                child: Icon(
+                                  Icons.home,
+                                  color: cubit.currentIndex == 0
+                                      ? AppColors.secondPrimary
+                                      : AppColors.gray1,
+                                  size: 36,
                                 ),
-                                FloatingActionButton(
-                                  onPressed: () {
+                              ),
+                              InkWell(
+                                onTap: () {
+                                  cubit.selectTap(1);
+                                  cubit.tabController.animateTo(1);
+                                },
+                                child: Icon(
+                                  Icons.favorite,
+                                  color: cubit.currentIndex == 1
+                                      ? AppColors.secondPrimary
+                                      : AppColors.gray1,
+                                  size: 36,
+                                ),
+                              ),
+                              Column(
+                                children: [
+                                  SizedBox(
+                                    height: 8,
+                                  ),
+                                  FloatingActionButton(
+                                    onPressed: () {
                                       cubit.selectTap(2);
-                                      _tabController.animateTo(2);
-                                  },
-                                  child: Icon(Icons.add),
-                                  elevation: 12,
+                                      cubit.tabController.animateTo(2);
+                                    },
+                                    child: Icon(Icons.add),
+                                    elevation: 12,
+                                  ),
+                                ],
+                              ),
+                              SizedBox(width: 1),
+                              // InkWell(
+                              //   onTap: () {
+                              //     cubit.selectTap(3);
+                              //     cubit.tabController.animateTo(3);
+                              //   },
+                              //   child: Icon(
+                              //     Icons.notifications,
+                              //     color: cubit.currentIndex == 3
+                              //         ? AppColors.secondPrimary
+                              //         : AppColors.gray1,
+                              //     size: 36,
+                              //   ),
+                              // ),
+                              InkWell(
+                                onTap: () {
+                                  cubit.selectTap(4);
+                                  cubit.tabController.animateTo(4);
+                                },
+                                child: Icon(
+                                  Icons.person,
+                                  color: cubit.currentIndex == 4
+                                      ? AppColors.secondPrimary
+                                      : AppColors.gray1,
+                                  size: 36,
                                 ),
-                              ],
-                            ),
-                            InkWell(
-                              onTap: (){
-                                cubit.selectTap(3);
-                                _tabController.animateTo(3);
-                              },
-                              child: Icon(
-                                Icons.notifications,
-                                color: cubit.currentIndex==3?AppColors.secondPrimary:AppColors.gray4,
-                                size: 36,
                               ),
-                            ),
-                            InkWell(
-                              onTap: (){
-                                cubit.selectTap(4);
-                                _tabController.animateTo(4);
-                              },
-                              child: Icon(
-                                Icons.person,
-                                color: cubit.currentIndex==4?AppColors.secondPrimary:AppColors.gray4,
-                                size: 36,
-                              ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     ),

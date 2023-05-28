@@ -8,9 +8,11 @@ import 'config/themes/app_theme.dart';
 import 'core/utils/app_strings.dart';
 import 'package:khadamat/injector.dart' as injector;
 
+import 'features/favorite/cubit/favorite_cubit.dart';
 import 'features/home/cubit/home_cubit.dart';
 import 'features/login/cubit/login_cubit.dart';
 import 'features/posts/cubit/posts_cubit.dart';
+import 'features/profile/cubit/profile_cubit.dart';
 import 'features/splash/cubit/splash_cubit.dart';
 
 class Khadamat extends StatefulWidget {
@@ -48,6 +50,12 @@ class _KhadamatState extends State<Khadamat> {
         ),
         BlocProvider(
           create: (_) => injector.serviceLocator<PostsCubit>(),
+        ),
+        BlocProvider(
+          create: (_) => injector.serviceLocator<ProfileCubit>(),
+        ),
+        BlocProvider(
+          create: (_) => injector.serviceLocator<FavoriteCubit>(),
         ),
       ],
       child: GetMaterialApp(
