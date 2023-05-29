@@ -58,7 +58,7 @@ class Data {
 
 class User {
   final int? id;
-  final String? name;
+    String? name;
   final dynamic phoneCode;
   final String? phone;
   final String? email;

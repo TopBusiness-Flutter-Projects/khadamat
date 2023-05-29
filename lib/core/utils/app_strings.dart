@@ -56,6 +56,7 @@ class AppStrings {
   static const String balanceText = 'balance_text';
   static const String SARText = 'SAR';
   static const String noEmailError = 'There_is_no_email_with_this_phone';
+  static const String newName = 'new name';
 
 
 

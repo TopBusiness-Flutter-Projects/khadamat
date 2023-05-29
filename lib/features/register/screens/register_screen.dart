@@ -162,7 +162,9 @@ class RegisterScreen extends StatelessWidget {
                       color: AppColors.primary,
                       paddingHorizontal: 80,
                       borderRadius: 20,
-                      onClick: () {},
+                      onClick: () {
+
+                      },
                     ),
                   ],
                 ),
@@ -171,5 +173,6 @@ class RegisterScreen extends StatelessWidget {
           },
         ),
       ),
-    );  }
+    );
+  }
 }

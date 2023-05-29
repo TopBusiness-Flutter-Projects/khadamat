@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:khadamat/config/routes/app_routes.dart';
 import 'package:khadamat/core/utils/app_colors.dart';
 import 'package:khadamat/core/widgets/show_loading_indicator.dart';
 
@@ -65,13 +66,17 @@ class ProfileScreen extends StatelessWidget {
                       SizedBox(height: 25),
                       ProfileListTailWidget(
                         title: 'my_posts'.tr(),
-                        onclick: () {},
+                        onclick: () {
+                          Navigator.pushNamed(context, Routes.favoriteRoute);
+                        },
                         image: ImageAssets.postImageIcon,
                         imageColor: AppColors.black,
                       ),
                       ProfileListTailWidget(
                         title: 'profile'.tr(),
-                        onclick: () {},
+                        onclick: () {
+                          Navigator.pushNamed(context, Routes.editProfileRoute);
+                        },
                         image: ImageAssets.profilesImageIcon,
                         imageColor: AppColors.black,
                       ),
@@ -81,12 +86,12 @@ class ProfileScreen extends StatelessWidget {
                         image: ImageAssets.settingImageIcon,
                         imageColor: AppColors.black,
                       ),
-                      ProfileListTailWidget(
-                        title: 'call'.tr(),
-                        onclick: () {},
-                        image: ImageAssets.callsImageIcon,
-                        imageColor: AppColors.black,
-                      ),
+                      // ProfileListTailWidget(
+                      //   title: 'call'.tr(),
+                      //   onclick: () {},
+                      //   image: ImageAssets.callsImageIcon,
+                      //   imageColor: AppColors.black,
+                      // ),
                       ProfileListTailWidget(
                         title: 'about_app'.tr(),
                         onclick: () {},

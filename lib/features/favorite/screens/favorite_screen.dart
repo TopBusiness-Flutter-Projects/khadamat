@@ -12,6 +12,7 @@ class FavoriteScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       body: BlocBuilder<FavoriteCubit, FavoriteState>(
         builder: (context, state) {
