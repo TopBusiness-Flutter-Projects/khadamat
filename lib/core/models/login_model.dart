@@ -13,6 +13,11 @@ class LoginModel {
   final String? message;
   final int? code;
 
+  @override
+  String toString() {
+    return 'LoginModel{data: $data, message: $message, code: $code}';
+  }
+
   LoginModel({
     this.data,
     this.message,

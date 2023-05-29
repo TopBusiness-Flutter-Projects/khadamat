@@ -15,7 +15,40 @@ class ServiceApi {
   final BaseApiConsumer dio;
 
   ServiceApi(this.dio);
-
+         // Future updateProfileName(LoginModel loginModel)async{
+         //   try{
+         //      dio.post(
+         //       EndPoints.updateProfileUrl,
+         //       body: {
+         //         "phone":loginModel.data?.user?.phone,
+         //         "name":loginModel.data?.user?.name,
+         //        // "image":loginModel.data?.user?.image,
+         //       }
+         //     ).then((value) {
+         //       print("__________ $value ______________________________");
+         //       return value;
+         //      });
+         //     // print("&&&&&&&&&&& $response &&&&&&&&&&&&&&&&&&&&&&&");
+         //     // return response;
+         //   }catch(e) {
+         //     return null;
+         //   }
+         // }
+  Future<Either<Failure, LoginModel>> postEditProfile(
+      String name,String phone) async {
+    try {
+      final response = await dio.post(
+        EndPoints.loginUrl,
+        body: {
+          'name': name,
+          "phone":phone,
+        },
+      );
+      return Right(LoginModel.fromJson(response));
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
   Future<Either<Failure, LoginModel>> postLogin(
       String phone, String phoneCode) async {
     try {

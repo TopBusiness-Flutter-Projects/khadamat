@@ -86,7 +86,7 @@ class EditProfile extends StatelessWidget {
                         borderRadius: 20,
                         onClick: () async {
                         await  cubit.getUserData();
-                      await cubit.setUserNewName();
+                      await cubit.updateProfile();
                         },
                       ),
                     ],
