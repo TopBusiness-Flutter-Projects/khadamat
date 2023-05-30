@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:khadamat/features/edit_profile/cubit/edit_profile_cubit.dart';
-import 'package:khadamat/features/privacy/screen/privacy_about.dart';
+import 'package:khadamat/features/my_posts/screen/my_posts.dart';
 import 'package:khadamat/features/splash/screens/splash_screen.dart';
-
 import '../../core/utils/app_strings.dart';
 import '../../features/edit_profile/screen/edit_profile.dart';
 import '../../features/favorite/screens/favorite_screen.dart';
 import '../../features/home/screens/home.dart';
+import '../../features/privacy_about/screen/privacy_about.dart';
 
 class Routes {
   static const String initialRoute = '/';
@@ -15,7 +14,8 @@ class Routes {
   static const String otpRoute = '/otp';
   static const String favoriteRoute = '/favorite';
   static const String editProfileRoute = '/editProfile';
-  static const String privacyRoute = '/privacy';
+  static const String privacyRoute = '/privacy_about';
+  static const String myPostsRoute = '/my_posts';
 }
 
 class AppRoutes {
@@ -46,6 +46,10 @@ class AppRoutes {
       case Routes.privacyRoute:
         return MaterialPageRoute(
           builder: (context) =>   PrivacyAbout(),
+        );
+      case Routes.myPostsRoute:
+        return MaterialPageRoute(
+          builder: (context) =>   MyPosts(),
         );
 
       default:

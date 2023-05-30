@@ -3,7 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:khadamat/features/edit_profile/cubit/edit_profile_cubit.dart';
-import 'package:khadamat/features/privacy/cubit/privacy_cubit.dart';
+import 'package:khadamat/features/my_posts/cubit/my_posts_cubit.dart';
+
 
 import 'config/routes/app_routes.dart';
 import 'config/themes/app_theme.dart';
@@ -14,6 +15,7 @@ import 'features/favorite/cubit/favorite_cubit.dart';
 import 'features/home/cubit/home_cubit.dart';
 import 'features/login/cubit/login_cubit.dart';
 import 'features/posts/cubit/posts_cubit.dart';
+import 'features/privacy_about/cubit/privacy_cubit.dart';
 import 'features/profile/cubit/profile_cubit.dart';
 import 'features/splash/cubit/splash_cubit.dart';
 
@@ -64,6 +66,10 @@ class _KhadamatState extends State<Khadamat> {
         ),
         BlocProvider(
           create: (_) => injector.serviceLocator<PrivacyCubit>(),
+        ),
+
+        BlocProvider(
+          create: (_) => injector.serviceLocator<MyPostsCubit>(),
         ),
       ],
       child: GetMaterialApp(

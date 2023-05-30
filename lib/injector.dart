@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:khadamat/features/edit_profile/cubit/edit_profile_cubit.dart';
-import 'package:khadamat/features/privacy/cubit/privacy_cubit.dart';
+import 'package:khadamat/features/my_posts/cubit/my_posts_cubit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'core/api/app_interceptors.dart';
@@ -12,6 +12,7 @@ import 'features/favorite/cubit/favorite_cubit.dart';
 import 'features/home/cubit/home_cubit.dart';
 import 'features/login/cubit/login_cubit.dart';
 import 'features/posts/cubit/posts_cubit.dart';
+import 'features/privacy_about/cubit/privacy_cubit.dart';
 import 'features/profile/cubit/profile_cubit.dart';
 import 'features/splash/cubit/splash_cubit.dart';
 
@@ -56,6 +57,12 @@ Future<void> setup() async {
   );
   serviceLocator.registerFactory(
         () => EditProfileCubit(
+      serviceLocator(),
+    ),
+
+  );
+  serviceLocator.registerFactory(
+        () => MyPostsCubit(
       serviceLocator(),
     ),
 

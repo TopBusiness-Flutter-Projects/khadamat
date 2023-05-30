@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:khadamat/features/privacy/cubit/privacy_cubit.dart';
+
 
 import '../../../core/utils/assets_manager.dart';
+import '../cubit/privacy_cubit.dart';
 
 class PrivacyAbout extends StatelessWidget {
   PrivacyAbout({
@@ -35,7 +36,7 @@ class PrivacyAbout extends StatelessWidget {
                   ),
                   cubit.isPrivacy
                       ? Text(
-                          "privacy",
+                          "privacy_about",
                           style:
                               TextStyle(fontSize: 25, fontWeight: FontWeight.w500),
                         )
