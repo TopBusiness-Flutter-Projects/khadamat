@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:khadamat/config/routes/app_routes.dart';
 import 'package:khadamat/core/utils/app_colors.dart';
 import 'package:khadamat/core/widgets/show_loading_indicator.dart';
-
+import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
 import '../../../core/utils/assets_manager.dart';
 import '../../../core/widgets/network_image.dart';
 import '../../home/cubit/home_cubit.dart';
@@ -92,7 +92,11 @@ class ProfileScreen extends StatelessWidget {
                       ),
                       ProfileListTailWidget(
                         title: 'call'.tr(),
-                        onclick: () {},
+                        onclick: () {
+                          //todo
+                       var dialNumber = context.read<PrivacyCubit>().settingModel!.data!.whatsapp??0100000000;
+                          UrlLauncher.launch("tel://${dialNumber}");
+                        },
                         image: ImageAssets.callsImageIcon,
                         imageColor: AppColors.black,
                       ),

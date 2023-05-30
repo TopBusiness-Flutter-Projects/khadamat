@@ -18,4 +18,5 @@ class ProfileCubit extends Cubit<ProfileState> {
     model =await Preferences.instance.getUserModel();
     emit(ProfileUserSuccess());
   }
+
 }
