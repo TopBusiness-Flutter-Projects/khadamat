@@ -72,9 +72,9 @@ class ServicesModel {
     category: json["category"],
     subCategory: json["sub_category"],
     rate: json["rate"]??0,
-    following: json["following"],
-    followers: json["followers"],
-    reviews: json["reviews"],
+    following: json["following"]??0,
+    followers: json["followers"]??0,
+    reviews: json["reviews"]??0,
     images: json["images"] == null ? [] : List<String>.from(json["images"]!.map((x) => x)),
     provider: json["provider"] == null ? null : Provider.fromJson(json["provider"]),
   );
@@ -94,6 +94,11 @@ class ServicesModel {
     "images": images == null ? [] : List<dynamic>.from(images!.map((x) => x)),
     "provider": provider?.toJson(),
   };
+
+  @override
+  String toString() {
+    return 'ServicesModel{id: $id, name: $name, logo: $logo, phones: $phones, details: $details, category: $category, subCategory: $subCategory, rate: $rate, following: $following, followers: $followers, reviews: $reviews, images: $images, provider: $provider}';
+  }
 }
 
 class Provider {

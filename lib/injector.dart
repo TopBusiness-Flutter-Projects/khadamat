@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:khadamat/features/edit_profile/cubit/edit_profile_cubit.dart';
+import 'package:khadamat/features/privacy/cubit/privacy_cubit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'core/api/app_interceptors.dart';
@@ -57,6 +58,14 @@ Future<void> setup() async {
         () => EditProfileCubit(
       serviceLocator(),
     ),
+
+  );
+
+  serviceLocator.registerFactory(
+        () => PrivacyCubit(
+      serviceLocator(),
+    ),
+
   );
 
   ///////////////////////////////////////////////////////////////////////////////

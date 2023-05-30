@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:khadamat/config/routes/app_routes.dart';
 import 'package:khadamat/core/utils/app_colors.dart';
 import 'package:khadamat/core/widgets/show_loading_indicator.dart';
+import 'package:khadamat/features/privacy/cubit/privacy_cubit.dart';
 
 import '../../../core/utils/assets_manager.dart';
 import '../../../core/widgets/network_image.dart';
@@ -82,19 +83,25 @@ class ProfileScreen extends StatelessWidget {
                       ),
                       ProfileListTailWidget(
                         title: 'setting'.tr(),
-                        onclick: () {},
+                        onclick: () {
+                          context.read<PrivacyCubit>().isPrivacy = true;
+                          Navigator.pushNamed(context, Routes.privacyRoute,);
+                        },
                         image: ImageAssets.settingImageIcon,
                         imageColor: AppColors.black,
                       ),
-                      // ProfileListTailWidget(
-                      //   title: 'call'.tr(),
-                      //   onclick: () {},
-                      //   image: ImageAssets.callsImageIcon,
-                      //   imageColor: AppColors.black,
-                      // ),
+                      ProfileListTailWidget(
+                        title: 'call'.tr(),
+                        onclick: () {},
+                        image: ImageAssets.callsImageIcon,
+                        imageColor: AppColors.black,
+                      ),
                       ProfileListTailWidget(
                         title: 'about_app'.tr(),
-                        onclick: () {},
+                        onclick: () {
+                          context.read<PrivacyCubit>().isPrivacy = false;
+                          Navigator.pushNamed(context, Routes.privacyRoute,);
+                        },
                         image: ImageAssets.aboutImageIcon,
                         imageColor: AppColors.black,
                       ),

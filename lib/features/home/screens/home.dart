@@ -108,6 +108,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                               InkWell(
                                 onTap: () {
                                   cubit.selectTap(0);
+                                  cubit.tabController.animateTo(0);
                                   // _tabController.animateTo(0);
                                 },
                                 child: Icon(

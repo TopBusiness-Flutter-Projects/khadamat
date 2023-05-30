@@ -21,6 +21,8 @@ class FavoriteCubit extends Cubit<FavoriteState> {
       (l) => emit(FavoriteError()),
       (r) {
         modelList = r.data!;
+        print("__________________________");
+        print("${r.data}");
         emit(Favoriteloaded());
       },
     );

@@ -9,31 +9,14 @@ import '../models/catigoreis_services.dart';
 import '../models/favorite_model.dart';
 import '../models/home_model.dart';
 import '../models/login_model.dart';
+import '../models/setting_model.dart';
 import '../preferences/preferences.dart';
 
 class ServiceApi {
   final BaseApiConsumer dio;
 
   ServiceApi(this.dio);
-         // Future updateProfileName(LoginModel loginModel)async{
-         //   try{
-         //      dio.post(
-         //       EndPoints.updateProfileUrl,
-         //       body: {
-         //         "phone":loginModel.data?.user?.phone,
-         //         "name":loginModel.data?.user?.name,
-         //        // "image":loginModel.data?.user?.image,
-         //       }
-         //     ).then((value) {
-         //       print("__________ $value ______________________________");
-         //       return value;
-         //      });
-         //     // print("&&&&&&&&&&& $response &&&&&&&&&&&&&&&&&&&&&&&");
-         //     // return response;
-         //   }catch(e) {
-         //     return null;
-         //   }
-         // }
+
   Future<Either<Failure, LoginModel>> postEditProfile(
       String name,String phone) async {
     try {
@@ -108,10 +91,35 @@ class ServiceApi {
           headers: {'Authorization': loginModel.data!.accessToken!},
         ),
       );
-      print(response);
       return Right(FavoriteModel.fromJson(response));
     } on ServerException {
       return Left(ServerFailure());
     }
   }
+
+
+  Future<Either<Failure, SettingModel>> getSettingData() async {
+    LoginModel loginModel = await Preferences.instance.getUserModel();
+    // String lan = await Preferences.in!stance.getSavedLang();
+    try {
+      final response = await dio.get(
+        EndPoints.settingUrl,
+        options: Options(
+          headers: {'Authorization': loginModel.data!.accessToken!},
+        ),
+      );
+      print(response);
+      return Right(SettingModel.fromJson(response));
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
+
 }
+
+
+
+
+
+
+

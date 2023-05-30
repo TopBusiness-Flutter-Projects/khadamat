@@ -45,7 +45,9 @@ class EditProfileCubit extends Cubit<EditProfileState> {
           Preferences.instance.setUser(r);
 
           // sendSmsCode(code: phoneCode, phoneNum: phoneController.text);
-        } else if (r.code == 422) {
+        }
+        //todo
+        else if (r.code == 422) {
           errorGetBar('لا يوجد حساب مرتبط بهذا الهاتف');
         } else {
           errorGetBar('هناك خطئ حاول فى وقت لاحق');

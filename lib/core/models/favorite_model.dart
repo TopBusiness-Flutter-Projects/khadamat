@@ -42,6 +42,11 @@ class FavoriteModelDatum {
   final DateTime? updatedAt;
   final ServicesModel? service;
 
+  @override
+  String toString() {
+    return 'FavoriteModelDatum{id: $id, userId: $userId, serviceId: $serviceId, createdAt: $createdAt, updatedAt: $updatedAt, service: $service}';
+  }
+
   FavoriteModelDatum({
     this.id,
     this.userId,
