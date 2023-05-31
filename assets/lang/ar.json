@@ -19,6 +19,15 @@
   "profile": "عرض وتعديل الملف الشخصي",
   "setting": "الخصوصية",
   "call": "الاتصال بإدارة التطبيق",
-  "about_app": " عن التطبيق"
+  "about_app": " عن التطبيق",
+  "activity_type": "نوع النشاط",
+  "name": "الاسم",
+  "contact_numbers": "ارقام التواصل",
+  "contact_number1": "رقم تواصل 1",
+  "contact_number2": "رقم تواصل 2",
+  "Service_details": "تفاصيل الخدمة",
+  "download_service_logo": "تحميل شعار الخدمة",
+  "geographical_location": "الموقع الجغرافي",
+  "download_service_photos": "تحميل صور الخدمة"
 
 }

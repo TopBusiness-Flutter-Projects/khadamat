@@ -19,6 +19,15 @@
  "profile": "My Profile",
  "setting": "Privacy",
  "call": "Call to App Support",
- "about_app": "About App"
+ "about_app": "About App",
+ "activity_type": "activity type",
+ "name": "Name",
+ "contact_numbers":"contact numbers",
+ "contact_number1":"contact number 1",
+ "contact_number2":"contact number 2",
+ "Service_details":"Service details",
+ "download_service_logo":"Download service logo",
+ "geographical_location":"Geographical location",
+ "download_service_photos":"Download service photos"
 
 }

@@ -7,7 +7,7 @@ import '../utils/app_colors.dart';
 class CustomTextField extends StatelessWidget {
   const CustomTextField({
     Key? key,
-     this.suffixWidget,
+    this.suffixWidget,
     required this.title,
     required this.textInputType,
     this.minLine = 1,
@@ -16,7 +16,10 @@ class CustomTextField extends StatelessWidget {
     this.controller,
     this.imageColor = Colors.grey,
     required this.backgroundColor,
-    this.isEnable = true, this.onchange,
+    this.isEnable = true,
+    this.onchange,
+    this.contentPadding =
+        const EdgeInsets.symmetric(vertical: 14, horizontal: 14),
   }) : super(key: key);
   final Widget? suffixWidget;
   final Color imageColor;
@@ -29,6 +32,7 @@ class CustomTextField extends StatelessWidget {
   final Function(String)? onchange;
   final TextInputType textInputType;
   final TextEditingController? controller;
+  final EdgeInsetsGeometry contentPadding;
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +44,7 @@ class CustomTextField extends StatelessWidget {
         obscureText: isPassword,
         enabled: isEnable,
         decoration: InputDecoration(
-          contentPadding: EdgeInsets.symmetric(vertical: 14, horizontal: 14),
+          contentPadding: contentPadding,
           hintStyle: TextStyle(
             color: AppColors.secondPrimary,
             fontWeight: FontWeight.bold,
@@ -48,7 +52,7 @@ class CustomTextField extends StatelessWidget {
           hintText: title,
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(25.0),
-            borderSide: BorderSide.none,
+            borderSide: BorderSide(color: AppColors.gray2),
           ),
           suffixIcon: suffixWidget,
           fillColor: backgroundColor,
@@ -117,9 +121,9 @@ class ThousandsSeparatorInputFormatter extends TextInputFormatter {
 class CardNumberFormatter extends TextInputFormatter {
   @override
   TextEditingValue formatEditUpdate(
-      TextEditingValue previousValue,
-      TextEditingValue nextValue,
-      ) {
+    TextEditingValue previousValue,
+    TextEditingValue nextValue,
+  ) {
     var inputText = nextValue.text;
 
     if (nextValue.selection.baseOffset == 0) {
