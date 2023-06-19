@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:khadamat/config/routes/app_routes.dart';
 import 'package:khadamat/core/utils/app_colors.dart';
 
 import '../cubit/nottification_cubit.dart';
@@ -21,11 +22,16 @@ class NotificationScreen extends StatelessWidget {
               child: ListView.builder(
                 itemCount: cubit.notificationList.length,
                 itemBuilder: (context, index) {
-                return Card(
-                  child: ListTile(
-                    title: Text("${cubit.notificationList[index].title}"),
-                    subtitle: Text("${cubit.notificationList[index].body}"),
-                  ),);
+                return InkWell(
+                  onTap: () {
+                    Navigator.pushNamed(context, Routes.detailsRoute,arguments: cubit.notificationModel);
+                  },
+                  child: Card(
+                    child: ListTile(
+                      title: Text("${cubit.notificationList[index].title}"),
+                      subtitle: Text("${cubit.notificationList[index].body}"),
+                    ),),
+                );
               },),
             ),
           ),

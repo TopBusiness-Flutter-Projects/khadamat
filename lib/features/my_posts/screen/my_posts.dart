@@ -61,10 +61,10 @@ class MyPosts extends StatelessWidget {
               ...List.generate(
                 cubit.modelList.length,
                     (index) => InkWell(
-                      onTap: () {
-                       // print(cubit.modelList[index].name);
-                         Navigator.pushNamed(context, Routes.details1Route,arguments:cubit.modelList[index] );
-                      },
+                      // onTap: () {
+                      //  // print(cubit.modelList[index].name);
+                      //    Navigator.pushNamed(context, Routes.details1Route,arguments:cubit.modelList[index] );
+                      // },
                         child: MyPostWidget(model: cubit.modelList[index])),
               ),
             ],

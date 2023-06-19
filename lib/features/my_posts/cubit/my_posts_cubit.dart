@@ -30,7 +30,7 @@ class MyPostsCubit extends Cubit<MyPostsState> {
           (l) => emit(MyPostsError()),
           (r) {
         modelList = r.data!;
-        myServicesModel = r;
+       // myServicesModel = r;
         emit(MyPostsLoaded());
       },
     );
@@ -50,10 +50,9 @@ class MyPostsCubit extends Cubit<MyPostsState> {
     );
   }
 
-  updateAd(int id,) async {
+  updateAd(int id,  ServiceToUpdate serviceToUpdate) async {
 
-    ServiceToUpdate serviceToUpdate = ServiceToUpdate(
-    );
+
     emit(EditServiceLoading());
     final response = await api.editService(id,serviceToUpdate);
     response.fold(

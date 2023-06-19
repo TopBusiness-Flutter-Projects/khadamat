@@ -168,12 +168,15 @@ class ServiceApi {
           headers: {'Authorization': loginModel.data!.accessToken!},
         ),
         body: {
-          // "name":serviceToUpdate.name,
-          // "phones[0]":serviceToUpdate.phones?[0],
-          // "phones[1]":serviceToUpdate.phones?[1],
-          // "details":serviceToUpdate.details,
-          // "logo":serviceToUpdate.logo,
-          // "location":serviceToUpdate.location,
+          "name":serviceToUpdate.name,
+          "category_id":serviceToUpdate.categoryId,
+          "sub_category_id":serviceToUpdate.subCategoryId,
+          "phones[0]":serviceToUpdate.phones?[0],
+          "phones[1]":serviceToUpdate.phones?[1],
+          "details":serviceToUpdate.details,
+          "logo":serviceToUpdate.logo,
+          "location":serviceToUpdate.location,
+          "images[]":serviceToUpdate.images
         }
       );
       return Right(UpdatedModel.fromJson(response));

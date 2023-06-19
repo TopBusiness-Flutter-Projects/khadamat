@@ -20,9 +20,13 @@ class ProfileCubit extends Cubit<ProfileState> {
   getUserData()async{
     emit(ProfileUserLoading());
     model =await Preferences.instance.getUserModel();
+
     emit(ProfileUserSuccess());
   }
-
+clearShared() async {
+    await Preferences.instance.clearShared();
+    emit(ClearShared());
+}
   updateTheProfile( context) async {
     emit(EditProfileLoadingState());
     final response = await api.postEditProfile(nameController.text,);

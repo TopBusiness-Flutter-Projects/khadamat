@@ -50,6 +50,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         width: MediaQuery.of(context).size.width,
                         height: 60,
                       ),
+                      // IconButton(onPressed: (){
+                      //   cubit.clearShared();
+                      // }, icon: Icon(Icons.remove)),
                       IconButton(
                         onPressed: (){
                         context.read<HomeCubit>().selectTap(0);
@@ -59,13 +62,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         width: MediaQuery.of(context).size.width,
                         height: 10,
                       ),
-                      cubit.model?.data?.user?.image!=null ?
-                      ManageNetworkImage(
-                        imageUrl: cubit.model!.data!.user!.image!,
-                        height: 130,
-                        width: 130,
-                        borderRadius: 130,
-                      ):Image.asset(ImageAssets.logoImage),
+                      // cubit.model?.data?.user?.image!=null ?
+                      // ManageNetworkImage(
+                      //   imageUrl: cubit.model!.data!.user!.image!,
+                      //   height: 130,
+                      //   width: 130,
+                      //   borderRadius: 130,
+                      // ):
+                      SizedBox(
+                        width: 100,
+                          height: 100,
+                          child: Image.asset(ImageAssets.logoImage)),
                       Text(
                         cubit.model?.data?.user?.name??"name",
                         style: TextStyle(

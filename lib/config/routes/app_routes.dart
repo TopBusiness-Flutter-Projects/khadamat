@@ -29,8 +29,8 @@ class Routes {
   static const String privacyRoute = '/privacy_about';
   static const String myPostsRoute = '/my_posts';
   static const String detailsRoute = '/details';
-  static const String details1Route = '/details1';
-  static const String details2Route = '/details2';
+  // static const String details1Route = '/details1';
+  // static const String details2Route = '/details2';
   static const String contactUsRoute = '/contact_us';
 }
 

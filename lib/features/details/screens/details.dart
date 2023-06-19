@@ -1,3 +1,5 @@
+
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -75,6 +77,23 @@ class Details extends StatelessWidget {
                       ),
                       Text(service.name!),
                       Text(service.category ?? " "),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+
+                        Text("${cubit.getCityName(service.cityId)}"),
+                      // Text("${ cubit.getAddressFromLatLng(double.parse(service.latitude??"30.0459"), double.parse(service.latitude??"31.2243"))}",),
+                          FutureBuilder(
+                            future: cubit.getAddressFromLatLng(double.parse(service.latitude??"30.0459"), double.parse(service.latitude??"31.2243")),
+                            builder: (context, snapshot) {
+                            if(snapshot.connectionState==ConnectionState.done){
+                              return Text("${snapshot.data}");
+                            }
+                            else{
+                              return Text("No Location Provided");
+                            }
+                          },)
+                      ],),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -270,7 +289,6 @@ class Details extends StatelessWidget {
                                 //TODO
                                 Navigator.pushNamed(context, Routes.fullScreenImageRoute,
                                 arguments: service.images![index]);
-                                print("image");
                               },
                               child: ManageNetworkImage(
                                 width: 100,

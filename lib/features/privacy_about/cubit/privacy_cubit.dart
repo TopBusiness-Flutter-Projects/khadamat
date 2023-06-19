@@ -1,3 +1,4 @@
+import 'package:beautiful_soup_dart/beautiful_soup.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:khadamat/core/models/setting_model.dart';
@@ -16,7 +17,7 @@ class PrivacyCubit extends Cubit<PrivacyState> {
 
   bool isPrivacy = true;
   final ServiceApi api;
-
+  var soup;
   SettingModel? settingModel;
   String email = "";
 
@@ -26,7 +27,7 @@ class PrivacyCubit extends Cubit<PrivacyState> {
       (l) => emit(PrivacyError()),
       (r) {
         settingModel = r;
-
+        // soup = BeautifulSoup(r.data!.aboutAr!);
         emit(PrivacyLoading());
       },
     );

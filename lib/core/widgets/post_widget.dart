@@ -16,7 +16,7 @@ class PostWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    int i = 3;
+
     return BlocConsumer<FavoriteCubit, FavoriteState>(
       listener: (context, state) {
         // TODO: implement listener
@@ -82,27 +82,27 @@ class PostWidget extends StatelessWidget {
                         ),
                       ),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Column(
-                            children: [
-                              Text(
-                                model.following.toString(),
-                                style: TextStyle(
-                                  color: AppColors.blueTextColor,
-                                  fontSize: 22,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              Text(
-                                'following'.tr(),
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  color: AppColors.grayTextColor,
-                                ),
-                              ),
-                            ],
-                          ),
+                          // Column(
+                          //   children: [
+                          //     Text(
+                          //       model.following.toString(),
+                          //       style: TextStyle(
+                          //         color: AppColors.blueTextColor,
+                          //         fontSize: 22,
+                          //         fontWeight: FontWeight.bold,
+                          //       ),
+                          //     ),
+                          //     Text(
+                          //       'following'.tr(),
+                          //       style: TextStyle(
+                          //         fontSize: 18,
+                          //         color: AppColors.grayTextColor,
+                          //       ),
+                          //     ),
+                          //   ],
+                          // ),
                           Column(
                             children: [
                               Text(

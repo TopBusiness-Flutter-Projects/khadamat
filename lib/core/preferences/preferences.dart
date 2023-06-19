@@ -30,7 +30,10 @@ class Preferences {
         'user', jsonEncode(LoginModel.fromJson(loginModel.toJson())));
     print(await getUserModel());
   }
-
+ Future<void> clearShared()async{
+   SharedPreferences preferences = await SharedPreferences.getInstance();
+   preferences.clear();
+ }
   Future<LoginModel> getUserModel() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     String? jsonData = preferences.getString('user');

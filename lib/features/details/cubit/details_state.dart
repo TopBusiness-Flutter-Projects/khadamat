@@ -11,3 +11,6 @@ class AddingRateFailure extends DetailsState {}
 class AddingFavouriteFailure extends DetailsState {}
 class AddingFavouriteSuccess extends DetailsState {}
 class AddingFavouriteLoading extends DetailsState {}
+//***********************************************************
+class GettingCitiesFailure extends DetailsState {}
+class GettingCitiesSuccess extends DetailsState {}

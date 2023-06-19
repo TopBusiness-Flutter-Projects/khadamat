@@ -77,7 +77,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                 cubit.modelList.length,
                 (index) => InkWell(
                   onTap: (){
-                   // Navigator.pushNamed(context, Routes.detailsRoute,arguments:cubit.modelList[index].service );
+                    Navigator.pushNamed(context, Routes.detailsRoute,arguments:cubit.modelList[index].service );
                   },
                     child: PostWidget(model: cubit.modelList[index].service!)),
               ),

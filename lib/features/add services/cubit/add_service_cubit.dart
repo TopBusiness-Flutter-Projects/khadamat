@@ -72,10 +72,10 @@ getCities()async{
     emit(CitiesLoading());
     final response = await api.getCities();
     response.fold(
-            (l) => emit(CitiesSuccess()),
+            (l) => emit(CitiesFailure()),
             (r) {
           cities = r.data!;
-          emit(CitiesFailure());
+          emit(CitiesSuccess());
             });
 }
 
@@ -139,6 +139,7 @@ getCities()async{
     contact2Controller.clear();
     locationController.clear();
     categoryController.clear();
+
     detailsController.clear();
      serviceLogoImage = null;
      serviceImages.clear();

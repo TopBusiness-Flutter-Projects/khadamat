@@ -2,7 +2,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-
+import 'package:beautiful_soup_dart/beautiful_soup.dart';
+import 'package:flutter_html/flutter_html.dart';
 import '../../../core/utils/assets_manager.dart';
 import '../cubit/privacy_cubit.dart';
 
@@ -38,7 +39,10 @@ class _PrivacyAboutState extends State<PrivacyAbout> {
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(
+                // mainAxisSize: MainAxisSize.max,
+                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
+               
                   Container(
                     height: 90,
                     decoration: BoxDecoration(
@@ -65,8 +69,9 @@ class _PrivacyAboutState extends State<PrivacyAbout> {
                         ).tr(),
                   cubit.isPrivacy?
                   Text("${cubit.settingModel?.data?.privacyAr}",textAlign: TextAlign.center,):
-                  Text("${cubit.settingModel?.data?.aboutAr}",textAlign: TextAlign.center,),
-                  Image.asset(ImageAssets.privacyImage)
+                  Html(data:cubit.settingModel?.data?.aboutAr ),
+                  Image.asset(ImageAssets.privacyImage),
+
                 ],
               ),
             ),

@@ -7,6 +7,8 @@ class ServiceToUpdate{
   String? details;
   String? location;
   List? images;
+  String? categoryId;
+  String? subCategoryId;
 
   ServiceToUpdate(
       {this.name,
@@ -14,6 +16,8 @@ class ServiceToUpdate{
       this.phones,
       this.details,
       this.location,
+        this.categoryId,
+        this.subCategoryId,
       this.images});
 
   // factory ServiceToUpdate.fromJson(Map<String, dynamic> json) {

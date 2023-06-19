@@ -42,6 +42,8 @@ dependencies:
   flutter_launcher_icons: ^0.12.0
   image_picker: ^0.8.7+5
   path_provider:
+  beautiful_soup_dart:
+  flutter_html:
 #  meta: 1.9.0
 #  xml: ^6.3.0
 #  fluttertoast: ^7.0.0

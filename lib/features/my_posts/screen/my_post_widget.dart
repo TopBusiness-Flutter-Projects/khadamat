@@ -67,8 +67,7 @@ class MyPostWidget extends StatelessWidget {
                             ...List.generate(
                               5,
                                   (index) {
-                                print(index);
-                                print(model.rate);
+
                                 return Padding(
                                   padding: const EdgeInsets.all(4.0),
                                   child: Icon(
@@ -90,11 +89,15 @@ class MyPostWidget extends StatelessWidget {
                           Column(
                             children: [
                               IconButton(onPressed: () async {
+                                print("_________________________________");
+                                print(model.category);
                                 context.read<AddServiceCubit>().nameController.text = model.name!;
-                                context.read<AddServiceCubit>().contact1Controller.text = model.phones![0];
-                                context.read<AddServiceCubit>().contact2Controller.text = model.phones![1];
+                                context.read<AddServiceCubit>().locationController.text = model.location!;
+                                 context.read<AddServiceCubit>().contact1Controller.text =model.phones?[0];
+                                 context.read<AddServiceCubit>().contact2Controller.text = model.phones?[1];
                                 context.read<AddServiceCubit>().detailsController.text = model.details!;
                                 context.read<AddServiceCubit>().currentCategory?.name = model.category;
+                                context.read<AddServiceCubit>().currentCity?.name = model.cityId;
                                 context.read<AddServiceCubit>().serviceLogoImage= XFile(model.logo!);
                                 context.read<AddServiceCubit>().currentCategory?.name= model.category;
                                 context.read<AddServiceCubit>().serviceImages= await convertStringListToXFileList(model.images);

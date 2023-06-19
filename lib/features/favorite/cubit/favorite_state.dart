@@ -12,3 +12,6 @@ class FavoriteError extends FavoriteState {}
 class FavoriteSearchError extends FavoriteState {}
 class FavoriteSearchSuccess extends FavoriteState {}
 class FavoriteSearchLoading extends FavoriteState {}
+//******************************************************
+class GettingCitiesSuccess extends FavoriteState {}
+class GettingCitiesFailure extends FavoriteState {}
