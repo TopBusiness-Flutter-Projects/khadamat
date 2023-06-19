@@ -2,8 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:khadamat/features/contact_us/cubit/contact_us_cubit.dart';
+import 'package:khadamat/features/details/cubit/details_cubit.dart';
 import 'package:khadamat/features/edit_profile/cubit/edit_profile_cubit.dart';
+import 'package:khadamat/features/google_map/cubit/google_maps_cubit.dart';
 import 'package:khadamat/features/my_posts/cubit/my_posts_cubit.dart';
+import 'package:khadamat/features/notification/cubit/nottification_cubit.dart';
 
 
 import 'config/routes/app_routes.dart';
@@ -11,6 +15,7 @@ import 'config/themes/app_theme.dart';
 import 'core/utils/app_strings.dart';
 import 'package:khadamat/injector.dart' as injector;
 
+import 'features/add services/cubit/add_service_cubit.dart';
 import 'features/favorite/cubit/favorite_cubit.dart';
 import 'features/home/cubit/home_cubit.dart';
 import 'features/login/cubit/login_cubit.dart';
@@ -71,6 +76,23 @@ class _KhadamatState extends State<Khadamat> {
         BlocProvider(
           create: (_) => injector.serviceLocator<MyPostsCubit>(),
         ),
+        BlocProvider(
+          create: (_) => injector.serviceLocator<AddServiceCubit>(),
+        ),
+        BlocProvider(
+          create: (_) => injector.serviceLocator<DetailsCubit>(),
+        ),
+        BlocProvider(
+          create: (_) => injector.serviceLocator<ContactUsCubit>(),
+        ),
+        BlocProvider(
+          create: (_) => injector.serviceLocator<NottificationCubit>(),
+        ),
+        BlocProvider(
+          create: (_) => injector.serviceLocator<GoogleMapsCubit>(),
+        ),
+
+
       ],
       child: GetMaterialApp(
         supportedLocales: context.supportedLocales,

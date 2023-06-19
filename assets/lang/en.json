@@ -8,6 +8,8 @@
  "back_btn": "Back",
  "register": "Register",
  "login": "Login",
+ "city": "City",
+ "add_location": "Add geographical location",
  "last_added": "Last Added",
  "choose_services": "Search for the service by rating",
  "search": "Search",
@@ -26,8 +28,30 @@
  "contact_number1":"contact number 1",
  "contact_number2":"contact number 2",
  "Service_details":"Service details",
- "download_service_logo":"Download service logo",
+ "download_service_logo":"Upload service logo",
  "geographical_location":"Geographical location",
- "download_service_photos":"Download service photos"
+ "download_service_photos":"Download service photos",
+ "add":"Add",
+ "name_valid": "Enter Valid Name",
+ "activity_valid": "Enter Valid Activity",
+ "contact_valid": "Enter Valid contact",
+ "details_valid": "Enter Valid details",
+ "location": "Location",
+ "logo_validate": " Please Upload Service Logo",
+ "images_validate": " Please Upload Service image",
+ "share": "Share",
+ "favourite": "Favourite",
+ "call2": "call",
+ "service_evaluation": "Service evaluation",
+ "your_opinion_of_the_service": "Your opinion of the service",
+ "add_rate": "Rate The Service",
+ "rate": "Rate",
+ "close": "Close",
+ "privacy": "Privacy",
+ "about": "About",
+ "contact_management": "Contact management application services",
+ "you_can_contact": "You can contact with the Department of Application Services to provide Support, assistance and suggestions through data the following contact:"
+
+
 
 }

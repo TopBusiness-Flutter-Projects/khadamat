@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:khadamat/config/routes/app_routes.dart';
 import 'package:khadamat/core/utils/app_colors.dart';
 import 'package:khadamat/core/widgets/post_widget.dart';
 import 'package:khadamat/core/widgets/show_loading_indicator.dart';
@@ -47,6 +48,7 @@ class _ServicesOfCategoriesState extends State<ServicesOfCategories> {
                       padding: const EdgeInsets.symmetric(horizontal: 16.0),
                       child: Container(
                         decoration: BoxDecoration(
+                          color:Colors.white,
                           border: Border.all(
                             color: AppColors.gray,
                             width: 1,
@@ -59,6 +61,18 @@ class _ServicesOfCategoriesState extends State<ServicesOfCategories> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text('search'.tr()),
+                            Expanded(
+                              child: TextField(
+                                onChanged: (value) async {
+
+                                  await context.read<PostsCubit>().searchServices(widget.catId, value);
+                                },
+                                decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  fillColor: AppColors.white
+                                ),
+                              ),
+                            ),
                             Icon(Icons.search),
                           ],
                         ),
@@ -67,7 +81,11 @@ class _ServicesOfCategoriesState extends State<ServicesOfCategories> {
                     SizedBox(height: 20),
                     ...List.generate(
                       cubit.servicesList.length,
-                      (index) => PostWidget(model: cubit.servicesList[index]),
+                      (index) => InkWell(
+                         onTap:(){
+                           Navigator.pushNamed(context, Routes.detailsRoute,arguments:cubit.servicesList[index] );
+                         },
+                          child: PostWidget(model: cubit.servicesList[index],)),
                     ),
                   ],
                 );

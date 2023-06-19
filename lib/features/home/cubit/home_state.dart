@@ -8,6 +8,11 @@ class HomeInitial extends HomeState {}
 class HomeLoading extends HomeState {}
 class HomeLoaded extends HomeState {}
 class HomeError extends HomeState {}
+//***************************************************
+class SearchLoading extends HomeState {}
+class SearchSuccess extends HomeState {}
+class SearchFailure extends HomeState {}
+//************************************************
 
 class HomeChangeCurrentIndexTap extends HomeState {}
 

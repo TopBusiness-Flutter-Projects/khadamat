@@ -2,7 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:khadamat/injector.dart' as injector;
-
+import 'package:uni_links/uni_links.dart';
 import 'app.dart';
 import 'app_bloc_observer.dart';
 import 'core/utils/restart_app_class.dart';
@@ -29,6 +29,8 @@ Future<void> main() async {
       child: HotRestartController(child: const Khadamat()),
     ),
   );
+
+
 }
 
 

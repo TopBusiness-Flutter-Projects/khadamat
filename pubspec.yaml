@@ -40,13 +40,21 @@ dependencies:
   shared_preferences: ^2.1.0
   cached_network_image: ^3.2.3
   flutter_launcher_icons: ^0.12.0
+  image_picker: ^0.8.7+5
+  path_provider:
 #  meta: 1.9.0
 #  xml: ^6.3.0
 #  fluttertoast: ^7.0.0
+  flutter_email_sender: ^6.0.0
+  uni_links:
+  google_maps_flutter:
+  geolocator:
+  permission_handler: ^10.3.0
+  geocoding:
+  flutter_linkify:
   easy_localization: ^3.0.1
   curved_navigation_bar: ^1.0.3
   url_launcher: ^6.1.10
-  permission_handler: ^10.2.0
   image_cropper: ^3.0.2
   carousel_slider: ^4.2.1
   lottie: ^2.3.2
@@ -57,6 +65,10 @@ dependencies:
   firebase_messaging: ^14.2.1
   firebase_auth: ^4.2.6
   firebase_core: ^2.5.0
+  fluttertoast: ^8.0.7
+  flutter_rating_bar: ^4.0.1
+  share: ^2.0.4
+
 
 
 
@@ -87,10 +99,10 @@ flutter:
 #    - assets/lottie/
 #    - assets/fonts/
 #
-#  fonts:
-#    - family: Cairo
-#      fonts:
-#        - asset: assets/fonts/Cairo-Black.ttf
+  fonts:
+    - family: Hacen Tunisia
+      fonts:
+        - asset: assets/fonts/Hacen Tunisia.ttf
 #        - asset: assets/fonts/Cairo-Bold.ttf
 #        - asset: assets/fonts/Cairo-ExtraBold.ttf
 #        - asset: assets/fonts/Cairo-ExtraLight.ttf

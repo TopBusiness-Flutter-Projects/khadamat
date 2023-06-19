@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart' as oo;
-import 'package:intl_phone_number_input/intl_phone_number_input.dart';
-
+import 'package:khadamat/features/profile/cubit/profile_cubit.dart';
 import '../../../core/utils/app_colors.dart';
 import '../../../core/utils/assets_manager.dart';
 import '../../../core/widgets/custom_button.dart';
@@ -26,9 +25,9 @@ class EditProfile extends StatelessWidget {
               fit: BoxFit.cover,
             ),
           ),
-          child: BlocBuilder<EditProfileCubit, EditProfileState>(
+          child: BlocBuilder<ProfileCubit, ProfileState>(
             builder: (context, state) {
-              EditProfileCubit cubit = context.read<EditProfileCubit>();
+              ProfileCubit cubit = context.read<ProfileCubit>();
               return SafeArea(
                 child: SingleChildScrollView(
                   child: Column(
@@ -66,14 +65,21 @@ class EditProfile extends StatelessWidget {
                               ),
                               SizedBox(width: 0),
                               Expanded(
-                                child: CustomTextField(
-                                  title: 'username'.tr(),
-                                  backgroundColor: AppColors.white,
-                                  textInputType: TextInputType.text,
-                                   controller:cubit.nameController ,
-                                  validatorMessage: 'username_valid'.tr(),
+                                child: TextField(
+                                  controller:cubit.nameController,
+                                  textAlign: TextAlign.start,
+                                  keyboardType: TextInputType.text,
+                                  decoration: InputDecoration(
+                                    hintStyle: TextStyle(
+                                      color: AppColors.secondPrimary,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    hintText: 'username'.tr(),
+                                    fillColor: AppColors.white,
+
                                 ),
-                              ),
+
+                              ),)
                             ],
                           ),
                         ),
@@ -85,8 +91,7 @@ class EditProfile extends StatelessWidget {
                         paddingHorizontal: 80,
                         borderRadius: 20,
                         onClick: () async {
-                        await  cubit.getUserData();
-                      await cubit.updateProfile();
+                      await cubit.updateTheProfile(context);
                         },
                       ),
                     ],

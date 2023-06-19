@@ -9,6 +9,7 @@ class ManageNetworkImage extends StatelessWidget {
       required this.imageUrl,
       this.height = 0,
       this.width = 0,
+        this.boxFit=BoxFit.cover,
       this.borderRadius = 12})
       : super(key: key);
 
@@ -16,6 +17,7 @@ class ManageNetworkImage extends StatelessWidget {
   final double height;
   final double width;
   final double borderRadius;
+ final BoxFit? boxFit;
 
   @override
   Widget build(BuildContext context) {
@@ -23,9 +25,10 @@ class ManageNetworkImage extends StatelessWidget {
       borderRadius: BorderRadius.circular(borderRadius),
       child: CachedNetworkImage(
         imageUrl: imageUrl,
-        fit: BoxFit.fill,
+        fit:boxFit ,
         height: height != 0 ? height : null,
         width: width != 0 ? width : null,
+
         placeholder: (context, url) => Center(
           child: CircularProgressIndicator(
             color: AppColors.primary,

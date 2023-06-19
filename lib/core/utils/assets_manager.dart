@@ -6,6 +6,8 @@ class ImageAssets {
   //images
   static const String logoImage = '$imagePath/logo.png';
   static const String logoIconImage = '$imagePath/logo_icon.png';
+  static const String googleMapImage = '$imagePath/google_maps.jpg';
+  static const String mapImage = '$imagePath/map.png';
   static const String introBackgroundImage = '$imagePath/intro_background.png';
   static const String topStatusBarImage = '$imagePath/top_status_bar.png';
   static const String postImageIcon = '$imagePath/post.png';
@@ -13,6 +15,10 @@ class ImageAssets {
   static const String settingImageIcon = '$imagePath/setting.png';
   static const String callsImageIcon = '$imagePath/calls.png';
   static const String aboutImageIcon = '$imagePath/about.png';
+  static const String detailsPlaceholder = '$imagePath/details_placeholder.png';
+  static const String privacyImage = '$imagePath/privacy.png';
+  static const String khadamatImage = '$imagePath/khadamat.png';
+  static const String bottomCurveImage = '$imagePath/bottom_curve.png';
 
   // icons
   static const String phoneIcon = '$iconsPath/phone.svg';
@@ -23,6 +29,9 @@ class ImageAssets {
   static const String profileIcon = '$iconsPath/profile.svg';
   static const String settingIcon = '$iconsPath/settings.svg';
   static const String aboutIcon = '$iconsPath/about.svg';
+  static const String call2Icon = '$iconsPath/call2.svg';
+  static const String favouriteIcon = '$iconsPath/favourite.svg';
+  static const String shareIcon = '$iconsPath/share.svg';
 
   //Lottie
   static const String noItems = '$lottiePath/no_item.json';

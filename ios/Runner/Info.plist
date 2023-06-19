@@ -46,6 +46,15 @@
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>For the best user experience for getting the services location address</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Your app needs access to your location even when the app is closed.</string>
 	<true/>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>sms</string>
+		<string>tel</string>
+	</array>
 </dict>
 </plist>

@@ -1,9 +1,11 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:khadamat/config/routes/app_routes.dart';
 import 'package:khadamat/core/utils/app_colors.dart';
 import 'package:khadamat/core/widgets/show_loading_indicator.dart';
+import 'package:khadamat/features/my_posts/cubit/my_posts_cubit.dart';
 import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
 import '../../../core/utils/assets_manager.dart';
 import '../../../core/widgets/network_image.dart';
@@ -12,8 +14,20 @@ import '../../privacy_about/cubit/privacy_cubit.dart';
 import '../cubit/profile_cubit.dart';
 import '../widgets/profile_list_tail_widget.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
+
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  @override
+  void initState() {
+    context.read<ProfileCubit>().getUserData();
+    super.initState();
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -27,15 +41,17 @@ class ProfileScreen extends StatelessWidget {
           return Column(
             children: [
               Expanded(
-                flex: 6,
-                child: SingleChildScrollView(
+               // flex: 6,
+                child:
+                SingleChildScrollView(
                   child: Column(
                     children: [
                       SizedBox(
                         width: MediaQuery.of(context).size.width,
                         height: 60,
                       ),
-                      IconButton(onPressed: (){
+                      IconButton(
+                        onPressed: (){
                         context.read<HomeCubit>().selectTap(0);
                         context.read<HomeCubit>().tabController.animateTo(0);
                       }, icon: Icon(Icons.home,color: AppColors.primary,size: 40,),),
@@ -43,14 +59,15 @@ class ProfileScreen extends StatelessWidget {
                         width: MediaQuery.of(context).size.width,
                         height: 10,
                       ),
+                      cubit.model?.data?.user?.image!=null ?
                       ManageNetworkImage(
                         imageUrl: cubit.model!.data!.user!.image!,
                         height: 130,
                         width: 130,
                         borderRadius: 130,
-                      ),
+                      ):Image.asset(ImageAssets.logoImage),
                       Text(
-                        cubit.model!.data!.user!.name!,
+                        cubit.model?.data?.user?.name??"name",
                         style: TextStyle(
                           color: AppColors.black,
                           fontSize: 20,
@@ -58,7 +75,7 @@ class ProfileScreen extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        cubit.model!.data!.user!.email!,
+                        cubit.model?.data?.user?.email!??"email",
                         style: TextStyle(
                           color: AppColors.gray2,
                           fontSize: 16,
@@ -67,8 +84,10 @@ class ProfileScreen extends StatelessWidget {
                       SizedBox(height: 25),
                       ProfileListTailWidget(
                         title: 'my_posts'.tr(),
-                        onclick: () {
+                        onclick: () async {
+                         await context.read<MyPostsCubit>().getMyPostsList();
                           Navigator.pushNamed(context, Routes.myPostsRoute);
+
                         },
                         image: ImageAssets.postImageIcon,
                         imageColor: AppColors.black,
@@ -94,8 +113,9 @@ class ProfileScreen extends StatelessWidget {
                         title: 'call'.tr(),
                         onclick: () {
                           //todo
-                       var dialNumber = context.read<PrivacyCubit>().settingModel!.data!.whatsapp??0100000000;
-                          UrlLauncher.launch("tel://${dialNumber}");
+                          Navigator.pushNamed(context, Routes.contactUsRoute);
+                       // var dialNumber = context.read<PrivacyCubit>().settingModel!.data!.whatsapp??0100000000;
+                       //    UrlLauncher.launch("tel://${dialNumber}");
                         },
                         image: ImageAssets.callsImageIcon,
                         imageColor: AppColors.black,
@@ -113,42 +133,54 @@ class ProfileScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              Expanded(
-                flex: 2,
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Stack(
-                        children: [
-                          Positioned(
-                            top: 0,
-                            bottom: 0,
-                            right: 0,
-                            left: 0,
-                            child: Image.asset(
-                              ImageAssets.introBackgroundImage,
-                              fit: BoxFit.cover,
-                              width: MediaQuery.of(context).size.width,
-                            ),
-                          ),
-                          Positioned(
-                            top: 0,
-                            bottom: 0,
-                            right: 0,
-                            left: 0,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Image.asset(ImageAssets.logoImage,height: 100,width: 100,),
-                              ],
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              Stack(
+                children: [
+                  Image.asset(ImageAssets.bottomCurveImage),
+
+                  Positioned(
+                      bottom: 50,
+                      top: 50,
+                      right: 50,
+                      left: 50,
+                      child: Image.asset(ImageAssets.logoImage,)),
+                ],
+              )
+              // Expanded(
+              //   flex: 2,
+              //   child: Row(
+              //     children: [
+              //       Expanded(
+              //         child: Stack(
+              //           children: [
+              //             Positioned(
+              //               top: 0,
+              //               bottom: 0,
+              //               right: 0,
+              //               left: 0,
+              //               child: Image.asset(
+              //                 ImageAssets.introBackgroundImage,
+              //                 fit: BoxFit.cover,
+              //                 width: MediaQuery.of(context).size.width,
+              //               ),
+              //             ),
+              //             Positioned(
+              //               top: 0,
+              //               bottom: 0,
+              //               right: 0,
+              //               left: 0,
+              //               child: Row(
+              //                 mainAxisAlignment: MainAxisAlignment.center,
+              //                 children: [
+              //                   Image.asset(ImageAssets.logoImage,height: 100,width: 100,),
+              //                 ],
+              //               ),
+              //             )
+              //           ],
+              //         ),
+              //       ),
+              //     ],
+              //   ),
+              // ),
             ],
           );
         },

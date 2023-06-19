@@ -8,6 +8,8 @@
   "back_btn": "رجوع",
   "register": "انشاء حساب",
   "login": "تسجيل الدخول",
+  "city": "المدينة",
+  "add_location": "اضافة الموقع الجغرافي",
   "last_added": "تم اضافته حديثا",
   "choose_services": "ابحث  عن الخدمة حسب التصنيف",
   "search": "بحث",
@@ -28,6 +30,28 @@
   "Service_details": "تفاصيل الخدمة",
   "download_service_logo": "تحميل شعار الخدمة",
   "geographical_location": "الموقع الجغرافي",
-  "download_service_photos": "تحميل صور الخدمة"
+  "download_service_photos": "تحميل صور الخدمة",
+  "add": "اضافة",
+  "name_valid": "من فضلك ادخل الاسم ",
+  "activity_valid": "من فضلك ادخل اسم النشاط ",
+  "contact_valid": "من فضلك ادخل رقم التواصل ",
+  "details_valid": "من فضلك ادخل تفاصيل الخدمة ",
+  "_valid": "من فضلك ادخل تفاصيل الخدمة ",
+  "location": "العنوان ",
+  "logo_validate": "من فضلك قم بتحميل شعار الخدمة",
+  "image_validate": "من فضلك قم بتحميل صور الخدمة",
+  "share": "مشاركة",
+  "favourite": "مفضلة",
+  "call2": "اتصال",
+  "service_evaluation": "تقييم الخدمة",
+  "your_opinion_of_the_service": "رأيك في الخدمة",
+  "add_rate": "قيم الخدمة",
+  "rate": "تقييم",
+  "close": "اغلاق",
+  "privacy": "الخصوصية",
+  "about": "عن التطبيق",
+  "contact_management": "الاتصال بإدارة تطبيق خدمات",
+  "you_can_contact": "يمكنك الاتصال مع إدارة تطبيق خدمات لتقديم الدعم والمساعدة والاقتراحات من خلال بيانات الاتصال التالية :"
+
 
 }

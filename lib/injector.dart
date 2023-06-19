@@ -1,7 +1,12 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
+import 'package:khadamat/features/add%20services/cubit/add_service_cubit.dart';
+import 'package:khadamat/features/contact_us/cubit/contact_us_cubit.dart';
+import 'package:khadamat/features/details/cubit/details_cubit.dart';
 import 'package:khadamat/features/edit_profile/cubit/edit_profile_cubit.dart';
+import 'package:khadamat/features/google_map/cubit/google_maps_cubit.dart';
 import 'package:khadamat/features/my_posts/cubit/my_posts_cubit.dart';
+import 'package:khadamat/features/notification/cubit/nottification_cubit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'core/api/app_interceptors.dart';
@@ -36,8 +41,13 @@ Future<void> setup() async {
     ),
   );
   serviceLocator.registerFactory(
+        () => GoogleMapsCubit(
+     // serviceLocator(),
+    ),
+  );
+  serviceLocator.registerFactory(
     () => ProfileCubit(
-      // serviceLocator(),
+       serviceLocator(),
     ),
   );
   serviceLocator.registerFactory(
@@ -67,6 +77,18 @@ Future<void> setup() async {
     ),
 
   );
+  serviceLocator.registerFactory(
+        () => AddServiceCubit(
+      serviceLocator(),
+    ),
+
+  );
+  serviceLocator.registerFactory(
+        () => DetailsCubit(
+      serviceLocator(),
+    ),
+
+  );
 
   serviceLocator.registerFactory(
         () => PrivacyCubit(
@@ -74,6 +96,19 @@ Future<void> setup() async {
     ),
 
   );
+  serviceLocator.registerFactory(
+        () => ContactUsCubit(
+      serviceLocator(),
+    ),
+
+  );
+  serviceLocator.registerFactory(
+        () => NottificationCubit(
+      serviceLocator(),
+    ),
+
+  );
+
 
   ///////////////////////////////////////////////////////////////////////////////
 

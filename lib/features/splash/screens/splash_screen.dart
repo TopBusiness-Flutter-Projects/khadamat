@@ -34,7 +34,7 @@ class _SplashScreenState extends State<SplashScreen>
 
   _startDelay() async {
     _timer = Timer(
-      const Duration(milliseconds: 3000),
+      const Duration(milliseconds: 1000),
       () {
         // Preferences.instance.clearAllData();
         _goNext();
@@ -45,7 +45,7 @@ class _SplashScreenState extends State<SplashScreen>
   Future<void> _getStoreUser() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     if (prefs.getString('user') != null) {
-      print(prefs.getString('user'));
+   //   print(prefs.getString('user'));
       Navigator.pushReplacementNamed(
         context,
         Routes.homeRoute

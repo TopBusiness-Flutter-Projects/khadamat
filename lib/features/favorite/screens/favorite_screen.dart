@@ -7,8 +7,24 @@ import 'package:khadamat/core/widgets/show_loading_indicator.dart';
 import 'package:khadamat/features/favorite/cubit/favorite_cubit.dart';
 import 'package:khadamat/features/favorite/cubit/favorite_cubit.dart';
 
-class FavoriteScreen extends StatelessWidget {
+import '../../../config/routes/app_routes.dart';
+
+class FavoriteScreen extends StatefulWidget {
   const FavoriteScreen({Key? key}) : super(key: key);
+
+  @override
+  State<FavoriteScreen> createState() => _FavoriteScreenState();
+}
+
+class _FavoriteScreenState extends State<FavoriteScreen> {
+
+  @override
+  void initState() {
+    context.read<FavoriteCubit>().getFavoriteList();
+    super.initState();
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +44,7 @@ class FavoriteScreen extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Container(
                   decoration: BoxDecoration(
+                    color: Colors.white,
                     border: Border.all(
                       color: AppColors.gray,
                       width: 1,
@@ -39,6 +56,17 @@ class FavoriteScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text('search'.tr()),
+                      Expanded(
+                          child: TextField(
+                        decoration: InputDecoration(
+                          fillColor: Colors.white,
+                          filled: true,
+                          border: InputBorder.none,
+                        ),
+                        onChanged: (value) async {
+                         await cubit.getFavouriteSearchList(value);
+                        },
+                      )),
                       Icon(Icons.search),
                     ],
                   ),
@@ -47,7 +75,11 @@ class FavoriteScreen extends StatelessWidget {
               SizedBox(height: 20),
               ...List.generate(
                 cubit.modelList.length,
-                (index) => PostWidget(model: cubit.modelList[index].service!),
+                (index) => InkWell(
+                  onTap: (){
+                   // Navigator.pushNamed(context, Routes.detailsRoute,arguments:cubit.modelList[index].service );
+                  },
+                    child: PostWidget(model: cubit.modelList[index].service!)),
               ),
             ],
           );

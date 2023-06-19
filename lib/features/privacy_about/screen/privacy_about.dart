@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -5,10 +6,23 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../core/utils/assets_manager.dart';
 import '../cubit/privacy_cubit.dart';
 
-class PrivacyAbout extends StatelessWidget {
+class PrivacyAbout extends StatefulWidget {
   PrivacyAbout({
     Key? key,
   }) : super(key: key);
+
+  @override
+  State<PrivacyAbout> createState() => _PrivacyAboutState();
+}
+
+class _PrivacyAboutState extends State<PrivacyAbout> {
+
+  @override
+  void initState() {
+    context.read<PrivacyCubit>().getPrivacyData();
+    super.initState();
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -34,20 +48,25 @@ class PrivacyAbout extends StatelessWidget {
                           fit: BoxFit.fill,
                         )),
                   ),
+                  SizedBox(
+                    width: 150,
+                      child: Image.asset(ImageAssets.khadamatImage)),
+                  SizedBox(height: 15,),
                   cubit.isPrivacy
                       ? Text(
-                          "privacy_about",
+                          "privacy",
                           style:
                               TextStyle(fontSize: 25, fontWeight: FontWeight.w500),
-                        )
+                        ).tr()
                       : Text(
                           "about",
                           style:
                               TextStyle(fontSize: 25, fontWeight: FontWeight.w500),
-                        ),
+                        ).tr(),
                   cubit.isPrivacy?
-                  Text(cubit.settingModel!.data!.privacyAr.toString(),textAlign: TextAlign.center,):
-                  Text(cubit.settingModel!.data!.aboutAr.toString(),textAlign: TextAlign.center,)
+                  Text("${cubit.settingModel?.data?.privacyAr}",textAlign: TextAlign.center,):
+                  Text("${cubit.settingModel?.data?.aboutAr}",textAlign: TextAlign.center,),
+                  Image.asset(ImageAssets.privacyImage)
                 ],
               ),
             ),

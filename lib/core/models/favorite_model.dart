@@ -5,6 +5,7 @@
 import 'dart:convert';
 
 import 'package:khadamat/core/models/catigoreis_services.dart';
+import 'package:khadamat/core/models/servicemodel.dart';
 
 FavoriteModel favoriteModelFromJson(String str) => FavoriteModel.fromJson(json.decode(str));
 
@@ -14,6 +15,11 @@ class FavoriteModel {
   final List<FavoriteModelDatum>? data;
   final String? message;
   final int? code;
+
+  @override
+  String toString() {
+    return 'FavoriteModel{data: $data, message: $message, code: $code}';
+  }
 
   FavoriteModel({
     this.data,

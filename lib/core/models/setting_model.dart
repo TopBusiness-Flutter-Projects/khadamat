@@ -40,10 +40,12 @@ class Data {
   String? termsEn;
   String? privacyAr;
   String? privacyEn;
+  List<String>? phones;
   dynamic instagram;
   dynamic whatsapp;
   dynamic createdAt;
   dynamic updatedAt;
+  String? email;
 
   Data({
     this.id,
@@ -53,10 +55,12 @@ class Data {
     this.termsEn,
     this.privacyAr,
     this.privacyEn,
+    this.phones,
     this.instagram,
     this.whatsapp,
     this.createdAt,
     this.updatedAt,
+    this.email,
   });
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
@@ -67,8 +71,10 @@ class Data {
     termsEn: json["terms_en"],
     privacyAr: json["privacy_ar"],
     privacyEn: json["privacy_en"],
+    phones: json["phones"] == null ? [] : List<String>.from(json["phones"]!.map((x) => x)),
     instagram: json["instagram"],
     whatsapp: json["whatsapp"],
+    email: json["email"],
     createdAt: json["created_at"],
     updatedAt: json["updated_at"],
   );
@@ -81,8 +87,10 @@ class Data {
     "terms_en": termsEn,
     "privacy_ar": privacyAr,
     "privacy_en": privacyEn,
+    "phones": phones == null ? [] : List<dynamic>.from(phones!.map((x) => x)),
     "instagram": instagram,
     "whatsapp": whatsapp,
+    "email": email,
     "created_at": createdAt,
     "updated_at": updatedAt,
   };

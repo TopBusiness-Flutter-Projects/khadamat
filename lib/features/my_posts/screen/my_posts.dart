@@ -1,11 +1,13 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:khadamat/config/routes/app_routes.dart';
 
 import '../../../core/utils/app_colors.dart';
 import '../../../core/widgets/post_widget.dart';
 import '../../../core/widgets/show_loading_indicator.dart';
 import '../cubit/my_posts_cubit.dart';
+import 'my_post_widget.dart';
 
 class MyPosts extends StatelessWidget {
   const MyPosts({Key? key}) : super(key: key);
@@ -15,7 +17,9 @@ class MyPosts extends StatelessWidget {
     return Scaffold(
       body: BlocBuilder<MyPostsCubit, MyPostsState>(
         builder: (context, state) {
+
           MyPostsCubit cubit = context.read<MyPostsCubit>();
+
           if(state is MyPostsLoading){
             return ShowLoadingIndicator();
           }
@@ -38,6 +42,16 @@ class MyPosts extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text('search'.tr()),
+                      Expanded(
+                        child: TextField(
+                          onChanged: (value) async {
+                          await  cubit.getMyPostsSearchList(value);
+                          },
+                          decoration: InputDecoration(
+                            border: InputBorder.none
+                          ),
+                        ),
+                      ),
                       Icon(Icons.search),
                     ],
                   ),
@@ -46,7 +60,12 @@ class MyPosts extends StatelessWidget {
               SizedBox(height: 20),
               ...List.generate(
                 cubit.modelList.length,
-                    (index) => PostWidget(model: cubit.modelList[index].service!),
+                    (index) => InkWell(
+                      onTap: () {
+                       // print(cubit.modelList[index].name);
+                         Navigator.pushNamed(context, Routes.details1Route,arguments:cubit.modelList[index] );
+                      },
+                        child: MyPostWidget(model: cubit.modelList[index])),
               ),
             ],
           );
