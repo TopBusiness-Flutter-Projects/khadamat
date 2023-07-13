@@ -31,4 +31,7 @@ class CitiesSuccess extends AddServiceState {}
 class CitiesFailure extends AddServiceState {}
 //**************************************************
 class placeState extends AddServiceState{}
+//**************************************************************
+class EditServiceFailure extends AddServiceState{}
+class EditServiceSuccess extends AddServiceState{}
 

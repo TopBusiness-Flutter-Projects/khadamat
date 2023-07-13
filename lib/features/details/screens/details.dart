@@ -77,23 +77,30 @@ class Details extends StatelessWidget {
                       ),
                       Text(service.name!),
                       Text(service.category ?? " "),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width*0.9,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
 
-                        Text("${cubit.getCityName(service.cityId)}"),
-                      // Text("${ cubit.getAddressFromLatLng(double.parse(service.latitude??"30.0459"), double.parse(service.latitude??"31.2243"))}",),
-                          FutureBuilder(
-                            future: cubit.getAddressFromLatLng(double.parse(service.latitude??"30.0459"), double.parse(service.latitude??"31.2243")),
-                            builder: (context, snapshot) {
-                            if(snapshot.connectionState==ConnectionState.done){
-                              return Text("${snapshot.data}");
-                            }
-                            else{
-                              return Text("No Location Provided");
-                            }
-                          },)
-                      ],),
+                          Text("${cubit.getCityName(service.cityId)}"),
+                        // Text("${ cubit.getAddressFromLatLng(double.parse(service.latitude??"30.0459"), double.parse(service.latitude??"31.2243"))}",),
+                            FutureBuilder(
+                              future: cubit.getAddressFromLatLng(double.parse(service.latitude??"30.0459"), double.parse(service.latitude??"31.2243")),
+                              builder: (context, snapshot) {
+                              if(snapshot.connectionState==ConnectionState.done){
+                                return Row(
+                                  children: [
+                                    Text("${snapshot.data}",maxLines: 2,overflow: TextOverflow.ellipsis,),
+                                  ],
+                                );
+                              }
+                              else{
+                                return Text("No Location Provided");
+                              }
+                            },)
+                        ],),
+                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -290,12 +297,15 @@ class Details extends StatelessWidget {
                                 Navigator.pushNamed(context, Routes.fullScreenImageRoute,
                                 arguments: service.images![index]);
                               },
-                              child: ManageNetworkImage(
-                                width: 100,
-                                borderRadius: 10,
-                                imageUrl: service.images!.isNotEmpty
-                                    ? service.images![index]
-                                    : "https://picsum.photos/200",
+                              child: Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: ManageNetworkImage(
+                                  width: 100,
+                                  borderRadius: 10,
+                                  imageUrl: service.images!.isNotEmpty
+                                      ? service.images![index]
+                                      : "https://picsum.photos/200",
+                                ),
                               ),
                             );
                           },

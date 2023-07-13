@@ -6,6 +6,8 @@
  "verification_validator_message": "Please fill up all the cells properly",
  "done_btn": "Done",
  "back_btn": "Back",
+ "logout": "LogOut",
+ "terms_conditions": "Terms and Conditions",
  "register": "Register",
  "login": "Login",
  "city": "City",

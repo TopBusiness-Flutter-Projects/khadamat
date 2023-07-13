@@ -4,6 +4,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:khadamat/features/add%20services/cubit/add_service_cubit.dart';
 import 'package:khadamat/features/google_map/cubit/google_maps_cubit.dart';
 
+import '../../../config/routes/app_routes.dart';
+
 class GoogleMapScreen extends StatefulWidget {
   const GoogleMapScreen({Key? key}) : super(key: key);
 
@@ -16,11 +18,11 @@ class _GoogleMapScreenState extends State<GoogleMapScreen> {
     return true;
   }
   @override
-  void initState() {
-    //context.read<GoogleMapsCubit>().getMyLocation();
-   // context.read<GoogleMapsCubit>().getAddressFromLatLng();
-    super.initState();
-  }
+  // void initState() {
+  //   //context.read<GoogleMapsCubit>().getMyLocation();
+  //  // context.read<GoogleMapsCubit>().getAddressFromLatLng();
+  //   super.initState();
+  // }
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<GoogleMapsCubit, GoogleMapsState>(
@@ -58,10 +60,11 @@ class _GoogleMapScreenState extends State<GoogleMapScreen> {
                 myLocationEnabled: true,
                 mapType: MapType.normal,
                 initialCameraPosition: CameraPosition(
-                  target: LatLng(30.0450, 31.2242),
-                  zoom: 18,
-                  bearing: 100,
-                  tilt: 90,
+                  target:cubit.selectedLocation,
+                  //LatLng(27.1783,31.1859),
+                  zoom: 15,
+                  // bearing: 100,
+                  // tilt: 90,
                 ),
                 markers:
                   cubit.selectedLocation==null?
@@ -70,21 +73,24 @@ class _GoogleMapScreenState extends State<GoogleMapScreen> {
                             Marker(
                               markerId: MarkerId('selected_location'),
                               position: cubit.selectedLocation,
-                              infoWindow: InfoWindow(
-                                title: 'Egypt',
-                              ),
+                              // infoWindow: InfoWindow(
+                              //   title: 'Egypt',
+                              // ),
                             ),
                           }
 
               ),
-              Align(
-                alignment: Alignment.bottomRight,
-                child: ElevatedButton(
-                  child: Icon(Icons.arrow_back_ios),
-                  onPressed: () {
-                    context.read<AddServiceCubit>().setAddress(cubit.place);
-                    Navigator.pop(context);
-                },),
+              Padding(
+                padding: const EdgeInsets.only(top: 38.0),
+                child: Align(
+                  alignment: Alignment.bottomLeft,
+                  child: ElevatedButton(
+                    child: Text("back"),
+                    onPressed: () {
+                      context.read<AddServiceCubit>().setAddress(cubit.place);
+                      Navigator.pop(context);
+                  },),
+                ),
               )
             ],
           ),

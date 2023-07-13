@@ -24,12 +24,12 @@ class GoogleMapsCubit extends Cubit<GoogleMapsState> {
   String? currentAddress = "";
 
   late PermissionStatus permissionStatus;
-  Completer<Placemark> resultCompleter = Completer<Placemark>();
+ // Completer<Placemark> resultCompleter = Completer<Placemark>();
   late Placemark place;
 
   getTheUserPermissionAndLocation() async {
     permissionStatus = await Permission.location.request();
-    print(permissionStatus);
+
     if (permissionStatus == PermissionStatus.granted) {
       // User granted location permission, get user's location
       await _getUserLocation();
@@ -46,6 +46,11 @@ class GoogleMapsCubit extends Cubit<GoogleMapsState> {
       position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high,
       );
+      selectedLocation =  LatLng(position.latitude, position.longitude) ;
+      moveCamera();
+          List<Placemark> placemarks = await placemarkFromCoordinates(
+          selectedLocation.latitude, selectedLocation.longitude);
+      place = placemarks[0];
       print('Latitude: ${position.latitude}, Longitude: ${position.longitude}');
     } catch (e) {
       if (e is PermissionDeniedException) {
@@ -60,7 +65,7 @@ class GoogleMapsCubit extends Cubit<GoogleMapsState> {
 
         CameraUpdate.newCameraPosition(
             CameraPosition(
-                zoom: 10,
+                zoom: 15,
                 tilt: 60,
                 bearing: 100,
                 target: LatLng(position.latitude, position.longitude))));

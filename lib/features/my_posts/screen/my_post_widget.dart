@@ -1,17 +1,12 @@
-import 'dart:io';
 
 import 'package:easy_localization/easy_localization.dart' as tr;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:khadamat/features/add%20services/cubit/add_service_cubit.dart';
-import 'package:khadamat/features/favorite/cubit/favorite_cubit.dart';
 import 'package:http/http.dart' as http;
-import 'package:path_provider/path_provider.dart';
-import '../../../config/routes/app_routes.dart';
-import '../../../core/models/my_services_model.dart';
+import 'package:khadamat/features/add%20services/cubit/add_service_cubit.dart';
 import '../../../core/models/servicemodel.dart';
 import '../../../core/utils/app_colors.dart';
+import '../../../core/utils/dialogs.dart';
 import '../../../core/widgets/network_image.dart';
 import '../../add services/screens/add_services.dart';
 import '../cubit/my_posts_cubit.dart';
@@ -88,27 +83,17 @@ class MyPostWidget extends StatelessWidget {
                         children: [
                           Column(
                             children: [
-                              IconButton(onPressed: () async {
-                                print("_________________________________");
-                                print(model.category);
-                                context.read<AddServiceCubit>().nameController.text = model.name!;
-                                context.read<AddServiceCubit>().locationController.text = model.location!;
-                                 context.read<AddServiceCubit>().contact1Controller.text =model.phones?[0];
-                                 context.read<AddServiceCubit>().contact2Controller.text = model.phones?[1];
-                                context.read<AddServiceCubit>().detailsController.text = model.details!;
-                                context.read<AddServiceCubit>().currentCategory?.name = model.category;
-                                context.read<AddServiceCubit>().currentCity?.name = model.cityId;
-                                context.read<AddServiceCubit>().serviceLogoImage= XFile(model.logo!);
-                                context.read<AddServiceCubit>().currentCategory?.name= model.category;
-                                context.read<AddServiceCubit>().serviceImages= await convertStringListToXFileList(model.images);
-
+                              IconButton(
+                                onPressed: () async {
+                                  //loadingDialog();
+                                 cubit.setData(context,model);
+                                 context.read<AddServiceCubit>().isUpdate = true;
                              // await cubit.updateAd(model.id!,);
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) {
-
-                                return AddServicesScreen(isUpdate: true,id: model.id,);
+                                return AddServicesScreen(id: model.id,);
                               },));
                               },
                                 icon: Icon(
@@ -211,26 +196,28 @@ class MyPostWidget extends StatelessWidget {
       },
     );
   }
-  // convert a List<String> to List<XFile?>
-  Future<List<XFile?>> convertStringListToXFileList(List<String>? stringList) async {
-    if (stringList == null) return [];
 
-    List<XFile?> xFileList = [];
-    for (String imageUrl in stringList) {
-     var imagePath = await downloadAndSaveFile(imageUrl);
-      XFile? xFile = XFile(imagePath!);
-      xFileList.add(xFile);
-    }
-    return xFileList;
-  }
-  //Here's an example of how you can download a file from a URL and save it locally
-  Future<String?> downloadAndSaveFile(String url) async {
-    final response = await http.get(Uri.parse(url));
-    final documentDirectory = await getApplicationDocumentsDirectory();
 
-    final file = File('${documentDirectory.path}/filename.png');
-    await file.writeAsBytes(response.bodyBytes);
-
-    return file.path;
-  }
+  // // convert a List<String> to List<XFile?>
+  // Future<List<XFile?>> convertStringListToXFileList(List<String>? stringList) async {
+  //   if (stringList == null) return [];
+  //
+  //   List<XFile?> xFileList = [];
+  //   for (String imageUrl in stringList) {
+  //    var imagePath = await downloadAndSaveFile(imageUrl);
+  //     XFile? xFile = XFile(imagePath!);
+  //     xFileList.add(xFile);
+  //   }
+  //   return xFileList;
+  // }
+  // //Here's an example of how you can download a file from a URL and save it locally
+  // Future<String?> downloadAndSaveFile(String url) async {
+  //   final response = await http.get(Uri.parse(url));
+  //   final documentDirectory = await getApplicationDocumentsDirectory();
+  //
+  //   final file = File('${documentDirectory.path}/filename.png');
+  //   await file.writeAsBytes(response.bodyBytes);
+  //
+  //   return file.path;
+  // }
 }

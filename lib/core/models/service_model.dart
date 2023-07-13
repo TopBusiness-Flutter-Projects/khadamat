@@ -9,10 +9,14 @@ class ServiceModel {
   XFile logo;
   String? location;
   List<XFile?> images;
+  String? city;
+  int? cityId;
+  double? longitude;
+  double? latitude;
 
   @override
   String toString() {
-    return 'ServiceModel{name: $name, category_id: $category_id, sub_category_id: $sub_category_id, phones: $phones, details: $details, logo: $logo, location: $location, images: $images}';
+    return 'ServiceModel{name: $name, category_id: $category_id, sub_category_id: $sub_category_id, phones: $phones, details: $details, logo: $logo, location: $location, images: $images, city: $city}';
   }
 
   ServiceModel(
@@ -23,6 +27,10 @@ class ServiceModel {
       required this.details,
       required this.logo,
       this.location,
+        this.city,
+        this.longitude,
+        this.latitude,
+        this.cityId,
       required this.images});
   //
   // factory ServiceModel.fromJson(Map<String, dynamic> json) {

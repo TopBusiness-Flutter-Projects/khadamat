@@ -33,7 +33,7 @@ class AddToFavouriteResponseModel {
 }
 
 class Data {
-  String? serviceId;
+  var serviceId;
   int? userId;
   DateTime? updatedAt;
   DateTime? createdAt;

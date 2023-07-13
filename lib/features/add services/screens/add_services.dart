@@ -15,30 +15,41 @@ import 'package:khadamat/features/home/cubit/home_cubit.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:khadamat/features/my_posts/cubit/my_posts_cubit.dart';
 import '../../../config/routes/app_routes.dart';
+import '../../../core/utils/dialogs.dart';
 import '../../../core/widgets/custom_textfield.dart';
 import '../../../core/widgets/network_image.dart';
 import '../../google_map/cubit/google_maps_cubit.dart';
 import '../../google_map/screens/google_map.dart';
 
 class AddServicesScreen extends StatelessWidget {
-  AddServicesScreen({Key? key, this.isUpdate = false, this.id = 0})
-      : super(key: key);
-  bool? isUpdate;
+  AddServicesScreen({Key? key,  this.id }) : super(key: key);
 
-  int? id;
+
+  int? id = 0;
+
   final formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
+
     var size = MediaQuery.of(context).size;
+
     return BlocConsumer<AddServiceCubit, AddServiceState>(
-        listener: (context, state) {
-      if (state is StoreServiceSuccess) {
-        context.read<HomeCubit>().selectTap(0);
-        context.read<HomeCubit>().getHomeData();
-        // Navigator.pushNamed(context, Routes.homeRoute);
-      }
-    }, builder: (context, state) {
+      listener: (context, state) {
+        if(state is StoreServiceSuccess){
+          context.read<HomeCubit>().getHomeData();
+          context.read<HomeCubit>().tabController.animateTo(0);
+
+        }
+        if (state is EditServiceSuccess){
+          print("succcccccccccccccccccccccccccceeeeeeeeeeeeeeeeessssssssssssssssss");
+          Navigator.pop(context);
+          // context.read<HomeCubit>().getHomeData();
+          // context.read<HomeCubit>().tabController.animateTo(0);
+        }
+
+      },
+     builder: (context, state) {
       AddServiceCubit cubit = context.read<AddServiceCubit>();
       return Scaffold(
         body: SingleChildScrollView(
@@ -95,11 +106,11 @@ class AddServicesScreen extends StatelessWidget {
                     SizedBox(
                       width: size.width * 0.68,
                       child: CategoryDropDown(
-                        hint: "kind of activity",
+                        hint: cubit.categoryHint,
                         dropdownValue: cubit.currentCategory,
                         items: cubit.categories,
                         onChanged: (CategoriesDatum? newValue) async {
-                          cubit.changeCategoryName(newValue!);
+                          cubit.changeCategoryName(newValue);
                         },
                       ),
                     )
@@ -120,11 +131,11 @@ class AddServicesScreen extends StatelessWidget {
                     SizedBox(
                       width: size.width * 0.68,
                       child: CitiesDropDown(
-                        hint: "city",
+                        hint: cubit.cityHint,
                         dropdownValue: cubit.currentCity,
                         items: cubit.cities,
                         onChanged: (newValue) async {
-                          cubit.changeCityName(newValue!);
+                          cubit.changeCityName(newValue);
                         },
                       ),
                     )
@@ -215,6 +226,7 @@ class AddServicesScreen extends StatelessWidget {
                           Text("download_service_logo".tr()),
                         ],
                       ),
+                      //logo image
                       SizedBox(
                         width: 90,
                         height: 90,
@@ -224,21 +236,26 @@ class AddServicesScreen extends StatelessWidget {
                           },
                           child: CircleAvatar(
                             backgroundColor: AppColors.white,
-                            child: ClipOval(
-                              child:
-                              cubit.serviceLogoImage!.path.contains("http")?
-                              ManageNetworkImage(
-                                imageUrl: cubit.serviceLogoImage != null
-                                    ? cubit.serviceLogoImage!.path
-                                    : "https://thumbs.dreamstime.com/z/businessman-presenting-word-service-against-glowing-swirl-black-background-39232296.jpg",
-                                width: 160,
-                                height: 160,
-                                borderRadius: 140,
-                              ):
+                            child:
+                            cubit.isUpdate==false?
+                            ClipOval(
+                              child:cubit.serviceLogoImage!=null?
                               CircleAvatar(
                                 radius: 50,
                                 backgroundImage:FileImage(File(cubit.serviceLogoImage!.path)) ,
+                              ):
+                              CircleAvatar(
+                                radius: 50,
+                                backgroundImage:AssetImage(ImageAssets.logoIconImage,) ,
                               ),
+                            ):
+                            ManageNetworkImage(
+                              imageUrl:
+                             // "https://i2.wp.com/beebom.com/wp-content/uploads/2016/01/Reverse-Image-Search-Engines-Apps-And-Its-Uses-2016.jpg",
+                              cubit.serviceLogoImage!.path,
+                              width: 160,
+                              height: 160,
+                              borderRadius: 140,
                             ),
                           ),
                         ),
@@ -268,6 +285,7 @@ class AddServicesScreen extends StatelessWidget {
                           ),
                         ],
                       ),
+                      //map image
                       Container(
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
@@ -322,7 +340,9 @@ class AddServicesScreen extends StatelessWidget {
                         ),
                       ),
                       Expanded(
-                        child: ListView.builder(
+                        child:
+                        cubit.serviceImages.length>=1?
+                        ListView.builder(
                           shrinkWrap: true,
                           scrollDirection: Axis.horizontal,
                           itemCount: cubit.serviceImages.length,
@@ -355,7 +375,7 @@ class AddServicesScreen extends StatelessWidget {
                               ],
                             );
                           },
-                        ),
+                        ):SizedBox(),
                       ),
                     ],
                   ),
@@ -366,9 +386,12 @@ class AddServicesScreen extends StatelessWidget {
                     text: "add".tr(),
                     color: AppColors.primary,
                     onClick: () async {
+                    print("((((((((((((((((((((((((((((((((((((((((((");
                       if (cubit.serviceLogoImage == null) {
+                        print("cubit.serviceLogoImage == null");
                         Fluttertoast.showToast(
-                          msg: "logo_validate".tr(),
+                          //msg: "logo_validate".tr(),
+                          msg: "اضف شعار للخدمة",
                           toastLength: Toast.LENGTH_LONG,
                           gravity: ToastGravity.SNACKBAR,
                           backgroundColor: Colors.grey,
@@ -377,8 +400,34 @@ class AddServicesScreen extends StatelessWidget {
                         );
                       }
                       if (cubit.serviceImages.length == 0) {
+                        print("cubit.serviceImages.length == 0");
                         Fluttertoast.showToast(
-                          msg: "images_validate".tr(),
+                         // msg: "images_validate".tr(),
+                          msg: "اضف صور الخدمة ",
+                          toastLength: Toast.LENGTH_LONG,
+                          gravity: ToastGravity.SNACKBAR,
+                          backgroundColor: Colors.grey,
+                          textColor: Colors.white,
+                          fontSize: 16.0,
+                        );
+                      }
+                      if(cubit.currentCategory==null){
+                        print("cubit.currentCategory == null");
+                        Fluttertoast.showToast(
+                          //msg: "logo_validate".tr(),
+                          msg: "اختر نوع النشاط",
+                          toastLength: Toast.LENGTH_LONG,
+                          gravity: ToastGravity.SNACKBAR,
+                          backgroundColor: Colors.grey,
+                          textColor: Colors.white,
+                          fontSize: 16.0,
+                        );
+                      }
+                      if(cubit.currentCity==null){
+                        print("cubit.currentCity == null");
+                        Fluttertoast.showToast(
+                          //msg: "logo_validate".tr(),
+                          msg: "اختر المدينة",
                           toastLength: Toast.LENGTH_LONG,
                           gravity: ToastGravity.SNACKBAR,
                           backgroundColor: Colors.grey,
@@ -388,40 +437,55 @@ class AddServicesScreen extends StatelessWidget {
                       }
                       if (formKey.currentState!.validate() &&
                           cubit.serviceLogoImage != null &&
-                          cubit.serviceImages.length != 0) {
-                        cubit.serviceModel = ServiceModel(
+                          cubit.serviceImages.length != 0&&
+                          cubit.currentCategory!=null&&cubit.currentCity!=null) {
+                        print("________________________________________");
+                        print( cubit.isUpdate);
+                        print("id = $id");
+                        print(cubit.currentCity);
+
+                        if(cubit.isUpdate){
+                          ServiceToUpdate serviceToUpdate = ServiceToUpdate(
                             name: cubit.nameController.text,
-                            category_id: cubit.currentCategory!.id.toString(),
-                            details: cubit.detailsController.text,
-                            logo: cubit.serviceLogoImage!,
-                            location: cubit.locationController.text,
-                            images: cubit.serviceImages,
+                            cityId: cubit.currentCity?.id,
+                            longitude:context.read<GoogleMapsCubit>().selectedLocation.longitude ,
+                            latitude:context.read<GoogleMapsCubit>().selectedLocation.latitude ,
                             phones: [
                               cubit.contact1Controller.text,
                               cubit.contact2Controller.text
-                            ]);
+                            ],
+                            images: cubit.serviceImages,
+                            location: cubit.locationController.text,
+                            details: cubit.detailsController.text,
+                            logo: cubit.serviceLogoImage,
+                            categoryId: cubit.currentCategory?.id,
+                            subCategoryId: "0",
 
-                        ServiceToUpdate serviceToUpdate = ServiceToUpdate(
-                          name: cubit.nameController.text,
-                          phones: [
-                            cubit.contact1Controller.text,
-                            cubit.contact2Controller.text
-                          ],
-                          images: cubit.serviceImages,
-                          location: cubit.locationController.text,
-                          details: cubit.detailsController.text,
-                          logo: cubit.serviceLogoImage?.path,
-                          categoryId: cubit.categoryController.text,
-                          subCategoryId: "0",
+                          );
+                          await cubit.updateAd(id!, serviceToUpdate);
+                          cubit.isUpdate = false;//todo-->
+                        }
+                        else{
+                          cubit.serviceModel = ServiceModel(
+                            longitude: context.read<GoogleMapsCubit>().selectedLocation.longitude,
+                             latitude:context.read<GoogleMapsCubit>().selectedLocation.latitude ,
+                             cityId: cubit.currentCity?.id,
+                             city: cubit.currentCity?.name,
+                              name: cubit.nameController.text,
+                              category_id: cubit.currentCategory!.id.toString(),
+                              details: cubit.detailsController.text,
+                              logo: cubit.serviceLogoImage!,
+                              location: cubit.locationController.text,
+                              images: cubit.serviceImages,
+                              phones: [
+                                cubit.contact1Controller.text,
+                                cubit.contact2Controller.text
+                              ]);
+                          await cubit.storeService();
+                        }
+                       // cubit.clearService();
+                  //todo-->      //cubit.clearFields();
 
-                        );
-                        isUpdate!
-                            ? await context
-                                .read<MyPostsCubit>()
-                                .updateAd(id!, serviceToUpdate)
-                            : await cubit.storeService();
-                        cubit.clearService();
-                        Navigator.pushNamed(context, Routes.homeRoute);
                       }
                     },
                     paddingHorizontal: 100,
@@ -435,6 +499,8 @@ class AddServicesScreen extends StatelessWidget {
           ),
         ),
       );
-    });
+
+  },
+);
   }
 }

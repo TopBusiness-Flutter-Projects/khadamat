@@ -12,7 +12,7 @@ String updatedModelToJson(UpdatedModel data) => json.encode(data.toJson());
 
 class UpdatedModel {
   ServicesModel? data;
-  String? message;
+  dynamic message;
   int? code;
 
   UpdatedModel({

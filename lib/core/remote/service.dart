@@ -1,8 +1,12 @@
 
+import 'dart:io';
+import 'package:http/http.dart' as http;
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:khadamat/core/models/notification_model.dart';
 import 'package:khadamat/core/models/service_model.dart';
+import 'package:khadamat/core/network/error_message_model.dart';
+import 'package:path_provider/path_provider.dart';
 import '../api/base_api_consumer.dart';
 import '../api/end_points.dart';
 import '../error/exceptions.dart';
@@ -30,7 +34,27 @@ class ServiceApi {
   ServiceApi(this.dio);
 
 
+  Future<Either<Failure, LoginModel>> postRegister(
+      String phone, String phoneCode,String name) async {
+    try {
+      var response = await dio.post(
+        EndPoints.registerUrl,
+        body: {
+          'phone': phone,
+          'phone_code': phoneCode,
+          'name': name,
+          //'role_id': 1,
+        },
+      );
 
+        return Right(LoginModel.fromJson(response));
+
+
+
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
 
   Future<Either<Failure, ServiceStoreModel>> postServiceStore(ServiceModel serviceModel) async {
     LoginModel loginModel = await Preferences.instance.getUserModel();
@@ -55,11 +79,14 @@ class ServiceApi {
           'name': serviceModel.name,
           "category_id":serviceModel.category_id,
           "sub_category_id":serviceModel.sub_category_id,
+          "city_id":serviceModel.cityId,
           "phones[]": phones,
           "details":serviceModel.details,
           "logo": await MultipartFile.fromFile(serviceModel.logo.path),
           "location":serviceModel.location,
           "images[]":images,
+          "longitude":serviceModel.longitude,
+          "latitude":serviceModel.latitude,
         },
       );
       return Right(ServiceStoreModel.fromJson(response));
@@ -69,6 +96,46 @@ class ServiceApi {
     }
   }
 
+  Future<Either<Failure,UpdatedModel >> edit(ServiceToUpdate serviceToUpdate,catId) async {
+    LoginModel loginModel = await Preferences.instance.getUserModel();
+
+    try {
+      List<MultipartFile> images = [];
+      for (int i = 0; i < serviceToUpdate.images!.length; i++) {
+
+        var image =  await MultipartFile.fromFile(serviceToUpdate.images?[i]!.path)  ;
+        images.add(image);
+      }      List phones = [];
+      for(int i = 0 ; i<serviceToUpdate.phones!.length ; i++){
+        phones.add(serviceToUpdate.phones?[i]);
+      }
+      final response = await dio.post(
+        EndPoints.editServicesUrl + catId.toString(),
+
+        formDataIsEnabled: true,
+        options: Options(
+          headers: {'Authorization': loginModel.data!.accessToken!},
+        ),
+        body: {
+          'name': serviceToUpdate.name,
+          "category_id":serviceToUpdate.categoryId,
+         // "sub_category_id":1,
+          "phones[]": phones,
+          "details":serviceToUpdate.details,
+           "city_id":serviceToUpdate.cityId,
+          "longitude":serviceToUpdate.longitude,
+          "latitude":serviceToUpdate.latitude,
+          "logo": serviceToUpdate.logo,
+          "location":serviceToUpdate.location,
+          "images[]":images,
+        },
+      );
+      return Right(UpdatedModel.fromJson(response));
+    } on ServerException {
+
+      return Left(ServerFailure());
+    }
+  }
 
   Future<Either<Failure, RateResponseModel>> postRate({required serviceId,required value,comment}) async {
     LoginModel loginModel = await Preferences.instance.getUserModel();
@@ -134,7 +201,7 @@ class ServiceApi {
       final response = await dio.get(
         EndPoints.homeUrl,
         options: Options(
-          headers: {'Authorization': loginModel.data!.accessToken!},
+          headers: {'Authorization': loginModel.data?.accessToken!},
         ),
       );
       return Right(HomeModel.fromJson(response));
@@ -161,9 +228,31 @@ class ServiceApi {
   Future<Either<Failure, UpdatedModel>> editService(
       int catId,ServiceToUpdate serviceToUpdate) async {
     LoginModel loginModel = await Preferences.instance.getUserModel();
+
     try {
+
+      List<MultipartFile> images = [];
+      for (int i = 0; i < serviceToUpdate.images!.length; i++) {
+
+        var imageFile = serviceToUpdate.images![i];
+        if (imageFile.path.startsWith('http')) {
+          // This is a remote URL, so we need to download the image and save it locally before uploading it
+          var response = await http.get(Uri.parse(imageFile.path));
+          var bytes = response.bodyBytes;
+          var tempDir = await getTemporaryDirectory();
+          var filePath = '${tempDir.path}/${DateTime.now().millisecondsSinceEpoch}.jpg';
+          await File(filePath).writeAsBytes(bytes);
+          var image = await MultipartFile.fromFile(filePath);
+          images.add(image);
+        } else {
+          // This is a local file, so we can create a MultipartFile object from it
+          var image = await MultipartFile.fromFile(imageFile.path);
+          images.add(image);
+        }
+      }
       final response = await dio.post(
         EndPoints.editServicesUrl + catId.toString(),
+
         options: Options(
           headers: {'Authorization': loginModel.data!.accessToken!},
         ),
@@ -174,13 +263,20 @@ class ServiceApi {
           "phones[0]":serviceToUpdate.phones?[0],
           "phones[1]":serviceToUpdate.phones?[1],
           "details":serviceToUpdate.details,
-          "logo":serviceToUpdate.logo,
+         // "logo":serviceToUpdate.logo,
+          //"logo": await MultipartFile.fromFile(serviceToUpdate.logo!),
+          "logo": !serviceToUpdate.logo!.path.startsWith("http")?await MultipartFile.fromFile(serviceToUpdate.logo!.path):null,
           "location":serviceToUpdate.location,
-          "images[]":serviceToUpdate.images
+          "images[]":images,
+
         }
+
       );
+     print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+      print(response);
       return Right(UpdatedModel.fromJson(response));
     } on ServerException {
+      print("erroooooor");
       return Left(ServerFailure());
     }
   }

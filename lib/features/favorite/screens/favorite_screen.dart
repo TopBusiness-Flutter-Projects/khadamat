@@ -55,13 +55,14 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('search'.tr()),
+                     // Text('search'.tr()),
                       Expanded(
                           child: TextField(
                         decoration: InputDecoration(
                           fillColor: Colors.white,
                           filled: true,
                           border: InputBorder.none,
+                          hintText: "search".tr()
                         ),
                         onChanged: (value) async {
                          await cubit.getFavouriteSearchList(value);

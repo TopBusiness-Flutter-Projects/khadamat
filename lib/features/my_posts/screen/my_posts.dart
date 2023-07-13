@@ -14,12 +14,13 @@ class MyPosts extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       body: BlocBuilder<MyPostsCubit, MyPostsState>(
         builder: (context, state) {
 
           MyPostsCubit cubit = context.read<MyPostsCubit>();
-
+           // cubit.modelList.clear();
           if(state is MyPostsLoading){
             return ShowLoadingIndicator();
           }
@@ -41,13 +42,14 @@ class MyPosts extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('search'.tr()),
+                      //Text('search'.tr()),
                       Expanded(
                         child: TextField(
                           onChanged: (value) async {
                           await  cubit.getMyPostsSearchList(value);
                           },
                           decoration: InputDecoration(
+                            hintText: "search".tr(),
                             border: InputBorder.none
                           ),
                         ),

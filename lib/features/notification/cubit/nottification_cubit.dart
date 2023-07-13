@@ -13,6 +13,8 @@ class NottificationCubit extends Cubit<NottificationState> {
   final ServiceApi api;
  late NotificationModel notificationModel ;
  List<NotificationDatum> notificationList = [];
+
+
   getNotification() async {
     emit(NottificationLoading());
     final response =await api.getNotifications();

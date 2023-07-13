@@ -64,11 +64,11 @@ class DetailsCubit extends Cubit<DetailsState> {
   Future<String> getAddressFromLatLng(double latitude, double longitude) async {
     try {
       List<Placemark> placemarks = await placemarkFromCoordinates(latitude, longitude);
-      print("______________________________");
-      print(placemarks);
+
+
       if (placemarks != null && placemarks.isNotEmpty) {
         Placemark placemark = placemarks[0];
-        return '${placemark.street}, ${placemark.locality}, ${placemark.postalCode}, ${placemark.country}';
+        return '${placemark.street}, ${placemark.locality}, ${placemark.country}';
       }
     } catch (e) {
       print(e.toString());

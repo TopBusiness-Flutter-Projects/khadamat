@@ -60,7 +60,7 @@ class _ServicesOfCategoriesState extends State<ServicesOfCategories> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text('search'.tr()),
+                          //  Text('search'.tr()),
                             Expanded(
                               child: TextField(
                                 onChanged: (value) async {
@@ -68,6 +68,7 @@ class _ServicesOfCategoriesState extends State<ServicesOfCategories> {
                                   await context.read<PostsCubit>().searchServices(widget.catId, value);
                                 },
                                 decoration: InputDecoration(
+                                  hintText: "search".tr(),
                                   border: InputBorder.none,
                                   fillColor: AppColors.white
                                 ),

@@ -79,10 +79,11 @@ class ServicesModel {
   String? longitude;
   String? latitude;
   dynamic cityId;
+  String? cityName;
   String? details;
   String? category;
   String? subCategory;
-  int? rate;
+  var rate;
   int? following;
   int? followers;
   int? reviews;
@@ -98,6 +99,7 @@ class ServicesModel {
     this.longitude,
     this.latitude,
     this.cityId,
+    this.cityName,
     this.details,
     this.category,
     this.subCategory,
@@ -119,6 +121,7 @@ class ServicesModel {
     name: json["name"],
     logo: json["logo"],
     phones: json["phones"],
+    cityName: json["city_name"],
     // phones: json["phones"] == null|| json["phones"] is! String
     //     ? [] // Return an empty list if "phones" is null or not a string
     //     : json["phones"].split(",").map((phone) => phone.trim()).toList(), // Split "phones" into a List<String>
@@ -148,6 +151,7 @@ class ServicesModel {
     "longitude": longitude,
     "latitude": latitude,
     "city_id": cityId,
+    "city_name":cityName,
     "details": details,
     "category": category,
     "sub_category": subCategory,

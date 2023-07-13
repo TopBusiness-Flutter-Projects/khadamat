@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:khadamat/core/utils/assets_manager.dart';
 import 'package:khadamat/core/widgets/network_image.dart';
+import 'package:khadamat/features/add%20services/cubit/add_service_cubit.dart';
 import 'package:khadamat/features/home/cubit/home_cubit.dart';
 import 'package:khadamat/features/home/cubit/home_cubit.dart';
 
@@ -38,7 +39,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     return WillPopScope(
       onWillPop: ()async {
         // Call SystemNavigator.pop() to close the app
-        SystemNavigator.pop();
+        if(context.read<HomeCubit>().currentIndex==0){
+          SystemNavigator.pop();
+        }
+
         return true;
       },
       child: Scaffold(
@@ -139,20 +143,26 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                     size: 36,
                                   ),
                                 ),
-                                Column(
-                                  children: [
-                                    SizedBox(
-                                      height: 8,
-                                    ),
-                                    FloatingActionButton(
-                                      onPressed: () {
-                                        cubit.selectTap(2);
-                                        cubit.tabController.animateTo(2);
-                                      },
-                                      child: Icon(Icons.add),
-                                      elevation: 12,
-                                    ),
-                                  ],
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 28.0),
+                                  child: Column(
+                                    children: [
+                                      SizedBox(
+                                        height: 8,
+                                      ),
+                                      FloatingActionButton(
+                                        onPressed: () {
+                                          //TODO== clear the fields
+                                          context.read<AddServiceCubit>().clearFields();
+                                          context.read<AddServiceCubit>().isUpdate=false;
+                                          cubit.selectTap(2);
+                                          cubit.tabController.animateTo(2);
+                                        },
+                                        child: Icon(Icons.add),
+                                        elevation: 12,
+                                      ),
+                                    ],
+                                  ),
                                 ),
                                 SizedBox(width: 1),
                                 InkWell(

@@ -90,7 +90,7 @@ class HomePageWidget extends StatelessWidget {
                             children: [
                               ...List.generate(
                                 state is HomeLoading
-                                    ? 5
+                                    ? 1
                                     : cubit.lastAddServices.length,
                                 (index) => Padding(
                                   padding: const EdgeInsets.symmetric(
@@ -216,9 +216,11 @@ class HomePageWidget extends StatelessWidget {
                                                   ),
                                                   child: Center(
                                                     child: Text(
+                                                      textAlign: TextAlign.center,
                                                       cubit.categories[index]
                                                           .name!,
                                                       style: TextStyle(
+
                                                           color:
                                                               AppColors.black),
                                                     ),
