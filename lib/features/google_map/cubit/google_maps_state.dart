@@ -9,3 +9,4 @@ class LocationPermissionFailed extends GoogleMapsState {}
 //***************************************************************
 class NewLocationSelected extends GoogleMapsState {}
 class CurrentAddressState extends GoogleMapsState {}
+class CameraMoveState extends GoogleMapsState {}

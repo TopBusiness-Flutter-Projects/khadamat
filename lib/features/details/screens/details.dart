@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:khadamat/core/utils/app_colors.dart';
 import 'package:khadamat/core/widgets/my_svg_widget.dart';
 import 'package:khadamat/core/widgets/network_image.dart';
@@ -83,17 +84,17 @@ class Details extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
 
-                          Text("${cubit.getCityName(service.cityId)}"),
+                         // Text("${cubit.getCityName(service.cityId)}"),
                         // Text("${ cubit.getAddressFromLatLng(double.parse(service.latitude??"30.0459"), double.parse(service.latitude??"31.2243"))}",),
                             FutureBuilder(
                               future: cubit.getAddressFromLatLng(double.parse(service.latitude??"30.0459"), double.parse(service.latitude??"31.2243")),
                               builder: (context, snapshot) {
                               if(snapshot.connectionState==ConnectionState.done){
-                                return Row(
-                                  children: [
-                                    Text("${snapshot.data}",maxLines: 2,overflow: TextOverflow.ellipsis,),
-                                  ],
-                                );
+                                return SizedBox(
+                                  width:MediaQuery.of(context).size.width*0.8,
+                                    child: Text("${snapshot.data}",
+                                      textAlign: TextAlign.center,
+                                      maxLines: 2,overflow: TextOverflow.ellipsis,));
                               }
                               else{
                                 return Text("No Location Provided");
@@ -162,6 +163,25 @@ class Details extends StatelessWidget {
                                         imageColor: AppColors.white,
                                         size: 25)),
                                 Text("share".tr()),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          InkWell(
+                            onTap: () {
+
+                              Navigator.pushNamed(context, Routes.googleMapDetailsRoute,arguments: LatLng(double.parse(service.latitude!), double.parse(service.longitude!)
+                              ));
+                            },
+                            child: Column(
+                              children: [
+                                CircleAvatar(
+                                    backgroundColor: Colors.cyan,
+                                    child:Icon(Icons.location_on_outlined,color: Colors.white,)
+                                ),
+                                Text("location".tr()),
                               ],
                             ),
                           ),

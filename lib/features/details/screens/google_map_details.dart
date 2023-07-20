@@ -7,58 +7,59 @@ import 'package:khadamat/features/google_map/cubit/google_maps_cubit.dart';
 
 import '../../../config/routes/app_routes.dart';
 
-class GoogleMapScreen extends StatefulWidget {
-  const GoogleMapScreen({Key? key}) : super(key: key);
+class GoogleMapDetailsScreen extends StatefulWidget {
+  final LatLng latLng;
+   GoogleMapDetailsScreen({Key? key,required this.latLng}) : super(key: key);
 
   @override
-  State<GoogleMapScreen> createState() => _GoogleMapScreenState();
+  State<GoogleMapDetailsScreen> createState() => _GoogleMapDetailsScreenState();
 }
 
-class _GoogleMapScreenState extends State<GoogleMapScreen> {
+class _GoogleMapDetailsScreenState extends State<GoogleMapDetailsScreen> {
   Future<bool> onWillPop()async{
     return true;
   }
   @override
-  void initState() {
-    context.read<GoogleMapsCubit>().isOpened = true;
-   // context.read<GoogleMapsCubit>().getAddressFromLatLng();
-    super.initState();
-  }
+  // void initState() {
+  //   //context.read<GoogleMapsCubit>().getMyLocation();
+  //  // context.read<GoogleMapsCubit>().getAddressFromLatLng();
+  //   super.initState();
+  // }
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<GoogleMapsCubit, GoogleMapsState>(
-        builder: (context, state) {
-      GoogleMapsCubit cubit = context.read<GoogleMapsCubit>();
+
+
+     // GoogleMapsCubit cubit = context.read<GoogleMapsCubit>();
       return WillPopScope(
         onWillPop: () async {
-          context.read<AddServiceCubit>().setAddress(cubit.place);
+         // context.read<AddServiceCubit>().setAddress(cubit.place);
           return true;
         },
 
         child: Scaffold(
-          floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-          floatingActionButton: FloatingActionButton(
-            onPressed: () async {
-              cubit.getTheUserPermissionAndLocation();
-              await cubit.moveCamera2(cubit.selectedLocation);
-            },
-            child: Icon(Icons.directions),
-          ),
+         // floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+          // floatingActionButton: FloatingActionButton(
+          //    onPressed: () async {
+          //   //   cubit.getTheUserPermissionAndLocation();
+          //   //   await cubit.moveCamera2(cubit.selectedLocation);
+          //    },
+          //   child: Icon(Icons.directions),
+          // ),
           body: Stack(
             children: [
               GoogleMap(
                 onMapCreated: (controller) {
-                  cubit.mapController = controller;
+                 // cubit.mapController = controller;
 
                 },
                 onTap: (LatLng location) {
-               cubit.selectedLocation =  location;
-                 cubit.position = Position(longitude:location.longitude ,
-                     latitude:  location.latitude,
-                     timestamp: DateTime(Duration.millisecondsPerDay), accuracy: 1.5,
-                     altitude: 0.8, heading: 100, speed: 12, speedAccuracy: 1);
-                 cubit.getAddressFromLatLng();
-                 cubit.moveCamera2(location);
+               // cubit.selectedLocation =  location;
+               //   cubit.position = Position(longitude:location.longitude ,
+               //       latitude:  location.latitude,
+               //       timestamp: DateTime(Duration.millisecondsPerDay), accuracy: 1.5,
+               //       altitude: 0.8, heading: 100, speed: 12, speedAccuracy: 1);
+               //   cubit.getAddressFromLatLng();
+               //   cubit.moveCamera2(location);
                 },
                    onCameraMove: (position) {
 
@@ -67,19 +68,19 @@ class _GoogleMapScreenState extends State<GoogleMapScreen> {
                 myLocationEnabled: true,
                 mapType: MapType.normal,
                 initialCameraPosition: CameraPosition(
-                  target:cubit.selectedLocation,
-                  //LatLng(27.1783,31.1859),
+                  target:
+                  //cubit.selectedLocation,
+                  LatLng(widget.latLng.latitude,widget.latLng.longitude),
                   zoom: 15,
                   // bearing: 100,
                   // tilt: 90,
                 ),
                 markers:
-                  cubit.selectedLocation==null?
-                      {}:
+
                           {
                             Marker(
                               markerId: MarkerId('selected_location'),
-                              position: cubit.selectedLocation,
+                              position: LatLng(widget.latLng.latitude,widget.latLng.longitude),
                               // infoWindow: InfoWindow(
                               //   title: 'Egypt',
                               // ),
@@ -94,7 +95,7 @@ class _GoogleMapScreenState extends State<GoogleMapScreen> {
                   child: ElevatedButton(
                     child: Text("back"),
                     onPressed: () {
-                      context.read<AddServiceCubit>().setAddress(cubit.place);
+                     // context.read<AddServiceCubit>().setAddress(cubit.place);
                       Navigator.pop(context);
                   },),
                 ),
@@ -103,6 +104,6 @@ class _GoogleMapScreenState extends State<GoogleMapScreen> {
           ),
         ),
       );
-    });
+    ;
   }
 }

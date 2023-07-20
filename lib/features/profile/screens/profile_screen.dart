@@ -81,7 +81,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         SizedBox(
                           width: 100,
                             height: 100,
-                            child: Image.asset(ImageAssets.logoImage)),
+                            child: Image.asset(ImageAssets.logoProfileImage)),
                         Text(
                           cubit.model?.data?.user?.name??"name",
                           style: TextStyle(
@@ -161,14 +161,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 Stack(
                   children: [
-                    Image.asset(ImageAssets.bottomCurveImage),
+                    Image.asset(ImageAssets.bottomCurve2),//todo------->
 
-                    Positioned(
-                        bottom: 50,
-                        top: 50,
-                        right: 50,
-                        left: 50,
-                        child: Image.asset(ImageAssets.logoImage,)),
+                    // Positioned(
+                    //     bottom: 50,
+                    //     top: 50,
+                    //     right: 50,
+                    //     left: 50,
+                    //     child: Image.asset(ImageAssets.logoImage,)),
                   ],
                 )
                 // Expanded(

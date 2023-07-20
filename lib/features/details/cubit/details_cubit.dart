@@ -68,7 +68,7 @@ class DetailsCubit extends Cubit<DetailsState> {
 
       if (placemarks != null && placemarks.isNotEmpty) {
         Placemark placemark = placemarks[0];
-        return '${placemark.street}, ${placemark.locality}, ${placemark.country}';
+        return '${placemark.street}, ${placemark.country}';
       }
     } catch (e) {
       print(e.toString());

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:khadamat/core/widgets/full_screen_image.dart';
 //import 'package:khadamat/features/all_services/screens/all_services.dart';
 import 'package:khadamat/features/contact_us/screen/contact_us.dart';
 import 'package:khadamat/features/details/screens/details.dart';
+import 'package:khadamat/features/details/screens/google_map_details.dart';
 import 'package:khadamat/features/google_map/screens/google_map.dart';
 import 'package:khadamat/features/login/screens/login.dart';
 import 'package:khadamat/features/login/screens/verfiication_screen.dart';
@@ -40,6 +42,7 @@ class Routes {
   static const String myPostsRoute = '/my_posts';
   static const String detailsRoute = '/details';
   static const String contactUsRoute = '/contact_us';
+  static const String googleMapDetailsRoute = '/google_map_details_screen';
 }
 
 class AppRoutes {
@@ -89,6 +92,12 @@ class AppRoutes {
       case Routes.contactUsRoute:
         return MaterialPageRoute(
           builder: (context) => const ContactUs(),
+        );
+      case Routes.googleMapDetailsRoute:
+        final latLng = settings.arguments as LatLng;
+        return MaterialPageRoute(
+
+        builder: (context) =>  GoogleMapDetailsScreen(latLng: latLng),
         );
       case Routes.otpRoute:
         return MaterialPageRoute(

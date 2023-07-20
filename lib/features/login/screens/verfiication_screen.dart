@@ -79,159 +79,168 @@ class _VerificationScreenState extends State<VerificationScreen> {
             //   });
             //   // return const ShowLoadingIndicator();
             // }
-            return Container(
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage(ImageAssets.introBackgroundImage),
-                  fit: BoxFit.cover,
-                ),
-              ),
-              child: Column(
-                children: [
-                  const SizedBox(height: 80),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+            return Stack(
+              children: [
+                Container(
+                  decoration: const BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage(ImageAssets.introBackgroundImage),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  child: Column(
                     children: [
-                      Hero(
-                        tag: 'logo',
-                        child: SizedBox(
-                          width: 200,
-                          height: 200,
-                          child: Image.asset(ImageAssets.logoImage),
+                      const SizedBox(height: 80),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Hero(
+                            tag: 'logo',
+                            child: SizedBox(
+                              width: 200,
+                              height: 200,
+                              child: Image.asset(ImageAssets.logoImage),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 40),
+                      Form(
+                        key: formKey,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 8.0,
+                            horizontal: 30,
+                          ),
+                          child:Directionality(
+                            textDirection: TextDirection.ltr,
+                            child:   PinCodeTextField(
+
+                              // backgroundColor: AppColors.white,
+                              hintCharacter: '-',
+                              textStyle: TextStyle(color: AppColors.white,locale: Locale("en")),
+                              hintStyle: TextStyle(color: AppColors.primary),
+                              pastedTextStyle: TextStyle(
+                                color: AppColors.primary,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              appContext: context,
+                              length: 6,
+                              animationType: AnimationType.fade,
+                              validator: (v) {
+                                if (v!.length < 5) {
+                                  return "";
+                                } else {
+                                  return null;
+                                }
+                              },
+                              pinTheme: PinTheme(
+
+                                inactiveColor: AppColors.white,
+                                activeColor: AppColors.secondPrimary,
+                                shape: PinCodeFieldShape.box,
+                                borderRadius: BorderRadius.circular(15),
+                                selectedColor: AppColors.secondPrimary,
+                              ),
+                              cursorColor: AppColors.secondPrimary,
+                              animationDuration: const Duration(milliseconds: 300),
+                              errorAnimationController: errorController,
+                              keyboardType: TextInputType.number,
+
+
+                              onChanged: (value) {
+                                print(value);
+                                setState(() {
+                                  currentText = value;
+                                });
+                              },
+                            ),
+                          ),
+
                         ),
                       ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                        child: Text(
+                          hasError ? oo.tr('verification_validator_message'): "",
+                          //hasError ? 'verification_validator_message' : "",
+                          style: TextStyle(
+                              color: AppColors.error,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400),
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      CustomButton(
+                        text: oo.tr('done_btn'),
+                       // text: 'تـم',
+                        color: AppColors.secondPrimary,
+                        paddingHorizontal: 40,
+                        textcolor: AppColors.black,
+                        borderRadius: 30,
+                        onClick: () async {
+                          formKey.currentState!.validate();
+                          if (currentText.length != 6) {
+                            errorController!.add(
+                              ErrorAnimationType.shake,
+                            ); // Triggering error shake animation
+                            setState(() => hasError = true);
+                          } else {
+                            //TODO
+                            await context.read<LoginCubit>().verifySmsCode(currentText);
+                           // var model=await  Preferences.instance.getUserModel();
+                           // if(model==null){
+                           //   Navigator.pushNamed(context, Routes.otpRoute);
+                           // }else{
+                           //   Navigator.pushNamed(context, Routes.registerScreenRoute);
+                           // }
+                             setState(
+                               () {
+                                hasError = false;
+                                // Navigator.push(
+                                //   context,
+                                //   MaterialPageRoute(
+                                //       builder: (context) => HomeScreen()),
+                                // );
+                                // context
+                                //     .read<LoginCubit>()
+                                //     .verifySmsCode(currentText);
+                              },
+                             );
+                          }
+                        },
+                      ),
+                      const SizedBox(height: 12),
+                      Align(
+                        alignment: Alignment.center,
+                        // alignment: lang == 'en'
+                        //     ? Alignment.centerRight
+                        //     : Alignment.centerLeft,
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: MediaQuery.of(context).size.width / 8),
+                          child: TextButton(
+                            onPressed: () => Navigator.pop(context),
+                            style: TextButton.styleFrom(
+                              foregroundColor: AppColors.white,
+                            ),
+                            child: Text(
+                              oo.tr("back_btn"),
+                              style: TextStyle(
+                                  fontSize: 22, fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ),
+                      )
                     ],
                   ),
-                  const SizedBox(height: 80),
-                  Form(
-                    key: formKey,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 8.0,
-                        horizontal: 30,
-                      ),
-                      child:Directionality(
-                        textDirection: TextDirection.ltr,
-                        child:   PinCodeTextField(
-
-                          // backgroundColor: AppColors.white,
-                          hintCharacter: '-',
-                          textStyle: TextStyle(color: AppColors.white,locale: Locale("en")),
-                          hintStyle: TextStyle(color: AppColors.primary),
-                          pastedTextStyle: TextStyle(
-                            color: AppColors.primary,
-                            fontWeight: FontWeight.bold,
-                          ),
-                          appContext: context,
-                          length: 6,
-                          animationType: AnimationType.fade,
-                          validator: (v) {
-                            if (v!.length < 5) {
-                              return "";
-                            } else {
-                              return null;
-                            }
-                          },
-                          pinTheme: PinTheme(
-
-                            inactiveColor: AppColors.white,
-                            activeColor: AppColors.secondPrimary,
-                            shape: PinCodeFieldShape.box,
-                            borderRadius: BorderRadius.circular(15),
-                            selectedColor: AppColors.secondPrimary,
-                          ),
-                          cursorColor: AppColors.secondPrimary,
-                          animationDuration: const Duration(milliseconds: 300),
-                          errorAnimationController: errorController,
-                          keyboardType: TextInputType.number,
-
-
-                          onChanged: (value) {
-                            print(value);
-                            setState(() {
-                              currentText = value;
-                            });
-                          },
-                        ),
-                      ),
-
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                    child: Text(
-                      hasError ? oo.tr('verification_validator_message'): "",
-                      //hasError ? 'verification_validator_message' : "",
-                      style: TextStyle(
-                          color: AppColors.error,
-                          fontSize: 12,
-                          fontWeight: FontWeight.w400),
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  CustomButton(
-                    text: oo.tr('done_btn'),
-                   // text: 'تـم',
-                    color: AppColors.secondPrimary,
-                    paddingHorizontal: 40,
-                    textcolor: AppColors.black,
-                    borderRadius: 30,
-                    onClick: () async {
-                      formKey.currentState!.validate();
-                      if (currentText.length != 6) {
-                        errorController!.add(
-                          ErrorAnimationType.shake,
-                        ); // Triggering error shake animation
-                        setState(() => hasError = true);
-                      } else {
-                        //TODO
-                        await context.read<LoginCubit>().verifySmsCode(currentText);
-                       // var model=await  Preferences.instance.getUserModel();
-                       // if(model==null){
-                       //   Navigator.pushNamed(context, Routes.otpRoute);
-                       // }else{
-                       //   Navigator.pushNamed(context, Routes.registerScreenRoute);
-                       // }
-                         setState(
-                           () {
-                            hasError = false;
-                            // Navigator.push(
-                            //   context,
-                            //   MaterialPageRoute(
-                            //       builder: (context) => HomeScreen()),
-                            // );
-                            // context
-                            //     .read<LoginCubit>()
-                            //     .verifySmsCode(currentText);
-                          },
-                         );
-                      }
-                    },
-                  ),
-                  const SizedBox(height: 12),
-                  Align(
-                    alignment: Alignment.center,
-                    // alignment: lang == 'en'
-                    //     ? Alignment.centerRight
-                    //     : Alignment.centerLeft,
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: MediaQuery.of(context).size.width / 8),
-                      child: TextButton(
-                        onPressed: () => Navigator.pop(context),
-                        style: TextButton.styleFrom(
-                          foregroundColor: AppColors.white,
-                        ),
-                        child: Text(
-                          oo.tr("back_btn"),
-                          style: TextStyle(
-                              fontSize: 22, fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                    ),
-                  )
-                ],
-              ),
+                ),
+                Positioned(
+                  bottom: 0,
+                    right: 0,
+                    left: 0,
+                    child: Image.asset(ImageAssets.bottomImage))
+              ],
             );
           },
         ),

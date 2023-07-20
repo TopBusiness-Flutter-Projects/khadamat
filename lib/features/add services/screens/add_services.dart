@@ -435,10 +435,22 @@ class AddServicesScreen extends StatelessWidget {
                           fontSize: 16.0,
                         );
                       }
+                      if(context.read<GoogleMapsCubit>().isOpened == false){
+                        Fluttertoast.showToast(
+                          msg: "اختر الموقع",
+                          toastLength: Toast.LENGTH_LONG,
+                          gravity: ToastGravity.SNACKBAR,
+                          backgroundColor: Colors.grey,
+                          textColor: Colors.white,
+                          fontSize: 16.0,
+                        );
+                      }
                       if (formKey.currentState!.validate() &&
                           cubit.serviceLogoImage != null &&
                           cubit.serviceImages.length != 0&&
-                          cubit.currentCategory!=null&&cubit.currentCity!=null) {
+                          cubit.currentCategory!=null&&cubit.currentCity!=null&&
+                          context.read<GoogleMapsCubit>().isOpened == true
+                      ) {
                         print("________________________________________");
                         print( cubit.isUpdate);
                         print("id = $id");

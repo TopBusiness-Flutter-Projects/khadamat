@@ -5,10 +5,15 @@ const String lottiePath = 'assets/lottie';
 class ImageAssets {
   //images
   static const String logoImage = '$imagePath/logo.png';
+  static const String logoProfileImage = '$imagePath/logo_profile.png';
   static const String logoIconImage = '$imagePath/logo_icon.png';
   static const String googleMapImage = '$imagePath/google_maps.jpg';
   static const String mapImage = '$imagePath/map.png';
+  static const String bottomImage = '$imagePath/bottom_login.png';
   static const String introBackgroundImage = '$imagePath/intro_background.png';
+  static const String introBackgroundImage2 = '$imagePath/intro_background2.png';
+  static const String splash2 = '$imagePath/splash2.jpeg';
+  static const String bottomCurve2 = '$imagePath/bottom_curve2.png';
   static const String topStatusBarImage = '$imagePath/top_status_bar.png';
   static const String postImageIcon = '$imagePath/post.png';
   static const String profilesImageIcon = '$imagePath/profiles.png';

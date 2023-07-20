@@ -72,14 +72,9 @@ class ContactUs extends StatelessWidget {
                       child: Text("${cubit.settingModel?.data?.email}")),
                   Stack(
                     children: [
-                      Image.asset(ImageAssets.bottomCurveImage),
+                      Image.asset(ImageAssets.bottomCurve2),
 
-                      Positioned(
-                          bottom: 50,
-                          top: 50,
-                          right: 50,
-                          left: 50,
-                          child: Image.asset(ImageAssets.logoImage,)),
+
                     ],
                   )
 

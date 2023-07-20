@@ -83,23 +83,23 @@ class _SplashScreenState extends State<SplashScreen>
         height: double.infinity,
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage(ImageAssets.introBackgroundImage),
+            image: AssetImage(ImageAssets.splash2),
             fit: BoxFit.cover,
           ),
         ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Hero(
-              tag: 'logo',
-              child: SizedBox(
-                width: 300,
-                height: 300,
-                child: Image.asset(ImageAssets.logoImage),
-              ),
-            ),
-          ],
-        ),
+        // child: Row(
+        //   mainAxisAlignment: MainAxisAlignment.center,
+        //   children: [
+        //     Hero(
+        //       tag: 'logo',
+        //       child: SizedBox(
+        //         width: 300,
+        //         height: 300,
+        //         child: Image.asset(ImageAssets.logoImage),
+        //       ),
+        //     ),
+        //   ],
+        // ),
       ),
     );
   }
