@@ -140,21 +140,21 @@ class LoginCubit extends Cubit<LoginState> {
     });
   }
 
-  register() async {
-    final response =await  api.postRegister(phoneController.text, phoneCode,nameController.text);
-    response.fold(
-            (l) => emit(RegisterFailedState()),
-            (r) {
-              if(r.code==200){
-                registerModel = r ;
-                Preferences.instance.setUser(registerModel);
-                emit(RegisterSuccessState());
-              }
-              else if(r.code==409){
-              //  registerModel = r ;
-                emit(RegisterFailedUserExistState());
-              }
-
-            });
-  }
+  // register() async {
+  //   final response =await  api.postRegister(phoneController.text, phoneCode,nameController.text);
+  //   response.fold(
+  //           (l) => emit(RegisterFailedState()),
+  //           (r) {
+  //             if(r.code==200){
+  //               registerModel = r ;
+  //               Preferences.instance.setUser(registerModel);
+  //               emit(RegisterSuccessState());
+  //             }
+  //             else if(r.code==409){
+  //             //  registerModel = r ;
+  //               emit(RegisterFailedUserExistState());
+  //             }
+  //
+  //           });
+  // }
 }

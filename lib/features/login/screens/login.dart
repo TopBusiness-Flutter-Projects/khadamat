@@ -10,10 +10,17 @@ import '../../../core/utils/assets_manager.dart';
 import '../../../core/widgets/custom_button.dart';
 import '../../register/screens/register_screen.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   LoginScreen({Key? key}) : super(key: key);
 
-  final formKey = GlobalKey<FormState>();
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  GlobalKey<FormState> formKey = GlobalKey<FormState>(debugLabel: 'loginScreenkey');
+
+
   @override
   Widget build(BuildContext context) {
     String lang = oo.EasyLocalization.of(context)!.locale.languageCode;
@@ -59,7 +66,7 @@ class LoginScreen extends StatelessWidget {
                                         reverseDuration:
                                             const Duration(milliseconds: 500),
                                         child: RegisterScreen(),
-                                        childCurrent: this,
+                                        childCurrent: widget,
                                       ),
                                     );
                                   },
@@ -202,5 +209,10 @@ class LoginScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 }

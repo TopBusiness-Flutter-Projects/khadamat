@@ -7,6 +7,7 @@ import 'package:khadamat/features/edit_profile/cubit/edit_profile_cubit.dart';
 import 'package:khadamat/features/google_map/cubit/google_maps_cubit.dart';
 import 'package:khadamat/features/my_posts/cubit/my_posts_cubit.dart';
 import 'package:khadamat/features/notification/cubit/nottification_cubit.dart';
+import 'package:khadamat/features/register/cubit/register_cubit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'core/api/app_interceptors.dart';
@@ -104,6 +105,12 @@ Future<void> setup() async {
   );
   serviceLocator.registerFactory(
         () => NottificationCubit(
+      serviceLocator(),
+    ),
+
+  );
+  serviceLocator.registerFactory(
+        () => RegisterCubit(
       serviceLocator(),
     ),
 

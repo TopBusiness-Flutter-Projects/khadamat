@@ -21,7 +21,7 @@ class VerificationScreen extends StatefulWidget {
 }
 
 class _VerificationScreenState extends State<VerificationScreen> {
-  final formKey = GlobalKey<FormState>();
+  //final formKey1 = GlobalKey<FormState>();
 
   bool hasError = false;
 
@@ -105,9 +105,10 @@ class _VerificationScreenState extends State<VerificationScreen> {
                         ],
                       ),
                       const SizedBox(height: 40),
-                      Form(
-                        key: formKey,
-                        child: Padding(
+                    //  Form(
+                      //  key: formKey1,
+                       // child:
+                        Padding(
                           padding: const EdgeInsets.symmetric(
                             vertical: 8.0,
                             horizontal: 30,
@@ -158,7 +159,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                           ),
 
                         ),
-                      ),
+                    //  ),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 30.0),
                         child: Text(
@@ -179,7 +180,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                         textcolor: AppColors.black,
                         borderRadius: 30,
                         onClick: () async {
-                          formKey.currentState!.validate();
+                         // formKey1.currentState!.validate();
                           if (currentText.length != 6) {
                             errorController!.add(
                               ErrorAnimationType.shake,

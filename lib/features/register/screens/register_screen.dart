@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:khadamat/core/widgets/my_svg_widget.dart';
-import 'package:khadamat/features/login/cubit/login_cubit.dart';
+
+import 'package:khadamat/features/register/cubit/register_cubit.dart';
 
 import '../../../config/routes/app_routes.dart';
 import '../../../core/utils/app_colors.dart';
@@ -13,41 +14,44 @@ import '../../../core/widgets/custom_button.dart';
 
 class RegisterScreen extends StatelessWidget {
   RegisterScreen({Key? key}) : super(key: key);
-  final form_key = GlobalKey<FormState>();
+  GlobalKey<FormState> form_key2 = GlobalKey<FormState>(debugLabel: 'registerScreenkey');
 
   @override
   Widget build(BuildContext context) {
     String lang = oo.EasyLocalization.of(context)!.locale.languageCode;
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: Container(
-        height: double.infinity,
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage(ImageAssets.introBackgroundImage),
-            fit: BoxFit.cover,
+    return
+      Form(
+
+         key: form_key2,
+      child:
+    Scaffold(
+        resizeToAvoidBottomInset: false,
+        body: Container(
+          height: double.infinity,
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage(ImageAssets.introBackgroundImage),
+              fit: BoxFit.cover,
+            ),
           ),
-        ),
-        child: BlocConsumer<LoginCubit, LoginState>(
-          listener: (context, state) {
-            if (state is RegisterFailedUserExistState) {
-              errorGetBar("Failed,phone number already exists");
-              Navigator.pushNamed(context, Routes.loginRoute);
-            }
-          },
-          builder: (context, state) {
-            LoginCubit cubit = context.read<LoginCubit>();
-            return SafeArea(
-              child: Stack(
-                children: [
-                  Positioned(
-                    top: 0,
-                    right: 0,
-                    left: 0,
-                    bottom: MediaQuery.of(context).size.height / 4,
-                    child: SingleChildScrollView(
-                      child: Form(
-                        key: form_key,
+          child: BlocConsumer<RegisterCubit, RegisterState>(
+            listener: (context, state) {
+              // if (state is RegisterFailedUserExistState) {
+              //   errorGetBar("Failed,phone number already exists");
+              //   Navigator.pushNamed(context, Routes.loginRoute);
+              // }
+            },
+            builder: (context, state) {
+              RegisterCubit cubit = context.read<RegisterCubit>();
+              return SafeArea(
+                child: Stack(
+                  children: [
+                    Positioned(
+                      top: 0,
+                      right: 0,
+                      left: 0,
+                      bottom: MediaQuery.of(context).size.height / 4,
+                      child: SingleChildScrollView(
                         child: Column(
                           children: [
                             SizedBox(height: 20),
@@ -196,7 +200,7 @@ class RegisterScreen extends StatelessWidget {
                               borderRadius: 20,
                               onClick: () async {
                                 //todo register
-                                if (form_key.currentState!.validate()) {
+                               if (form_key2.currentState!.validate()) {
                                   await cubit.register();
                                   Navigator.pushNamed(context, Routes.otpRoute);
                                 }
@@ -206,23 +210,23 @@ class RegisterScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                  ),
-                  Positioned(
-                    bottom: 0,
-                    left: 0,
-                    right: 0,
-                    child: Image.asset(
-                      ImageAssets.bottomImage,
-                      height: MediaQuery.of(context).size.height / 3.2,
-                      fit: BoxFit.fill,
+                    Positioned(
+                      bottom: 0,
+                      left: 0,
+                      right: 0,
+                      child: Image.asset(
+                        ImageAssets.bottomImage,
+                        height: MediaQuery.of(context).size.height / 3.2,
+                        fit: BoxFit.fill,
+                      ),
                     ),
-                  ),
-                ],
-              ),
-            );
-          },
+                  ],
+                ),
+              );
+            },
+          ),
         ),
-      ),
-    );
+      )
+   );
   }
 }
