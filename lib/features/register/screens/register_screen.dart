@@ -201,11 +201,12 @@ class RegisterScreen extends StatelessWidget {
                               onClick: () async {
                                 //todo register
                                if (form_key2.currentState!.validate()) {
-                                  await cubit.register();
-                                  Navigator.pushNamed(context, Routes.otpRoute);
+                                  await cubit.register(context);
+                             //     Navigator.pushNamed(context, Routes.otpRoute);
                                 }
                               },
                             ),
+                            SizedBox(height: 80),
                           ],
                         ),
                       ),

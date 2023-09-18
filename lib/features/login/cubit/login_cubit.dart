@@ -21,6 +21,7 @@ class LoginCubit extends Cubit<LoginState> {
 
   TextEditingController phoneController = TextEditingController();
   TextEditingController nameController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
   String phoneCode = '';
   LoginModel? model;
   var responseCode;

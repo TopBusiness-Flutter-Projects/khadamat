@@ -1,10 +1,13 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:khadamat/core/remote/service.dart';
 import 'package:meta/meta.dart';
 
+import '../../../config/routes/app_routes.dart';
 import '../../../core/models/login_model.dart';
 import '../../../core/preferences/preferences.dart';
+import '../../../core/utils/dialogs.dart';
 
 part 'register_state.dart';
 
@@ -17,14 +20,23 @@ class RegisterCubit extends Cubit<RegisterState> {
   late LoginModel registerModel ;
   String phoneCode = '';
 
-  register() async {
+  register(BuildContext context) async {
+    loadingDialog();
     final response =await  api.postRegister(phoneController.text, phoneCode,nameController.text);
     response.fold(
-            (l) => emit(RegisterFailedState()),
+            (l) =>         {Get.back()
+        ,emit(RegisterFailedState())},
             (r) {
-          if(r.code==200){
+              Get.back();
+
+              if(r.code==200){
             registerModel = r ;
-            Preferences.instance.setUser(registerModel);
+            Preferences.instance.setUser(registerModel).then((value) => {
+            Navigator.pushReplacementNamed(
+            context,
+            Routes.homeRoute
+            )
+            });
             emit(RegisterSuccessState());
           }
           else if(r.code==409){

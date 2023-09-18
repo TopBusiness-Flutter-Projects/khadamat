@@ -8,6 +8,7 @@ import 'package:page_transition/page_transition.dart';
 import '../../../core/utils/app_colors.dart';
 import '../../../core/utils/assets_manager.dart';
 import '../../../core/widgets/custom_button.dart';
+import '../../../core/widgets/custom_textfield.dart';
 import '../../register/screens/register_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -87,8 +88,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                 Hero(
                                   tag: 'logo',
                                   child: SizedBox(
-                                    width: 300,
-                                    height: 300,
+                                  //  width: MediaQuery.of(context).size.width*0.7,
+                                    height: MediaQuery.of(context).size.height*0.32,
                                     child: Image.asset(ImageAssets.logoImage),
                                   ),
                                 ),
@@ -171,9 +172,59 @@ class _LoginScreenState extends State<LoginScreen> {
                                     ),
                                   ],
                                 ),
+
                               ),
                             ),
-                            SizedBox(height: 40),
+                            SizedBox(height: 20,),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 27.0,),
+                              child: TextFormField(
+                                obscureText: true,
+                                style: TextStyle(
+                                  color: AppColors.primary,
+                                  fontSize: 20
+                                ),
+                                textAlign: TextAlign.center,
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'enter_password'.tr();
+                                  }
+                                  return null;
+                                },
+
+                               decoration: InputDecoration(
+                                hintText: "Enter password",
+
+
+                                 prefixIcon: Padding(
+                                   padding: const EdgeInsets.only(right: 25.0,),
+                                   child: Icon(Icons.remove_red_eye_rounded,color: AppColors.primary,size: 30,),
+                                 ),
+                              //   contentPadding: EdgeInsets.symmetric(vertical: 20),
+                                 border:   OutlineInputBorder(
+
+                                   borderSide: BorderSide.none,
+                                   borderRadius: BorderRadius.circular(28),
+                                 ),
+                                 alignLabelWithHint: true,
+                                 contentPadding: EdgeInsets.symmetric(vertical: 18),
+                                 fillColor: AppColors.white,
+                                 filled: true,
+                                 hintTextDirection: TextDirection.ltr,
+                                 hintStyle:
+                                 TextStyle(color: AppColors.primary),
+                               ),
+
+                                // title: 'password'.tr(),
+                                // isPassword: true,
+                                // controller: cubit.passwordController,
+                                // backgroundColor:AppColors.white ,
+                                // textInputType: TextInputType.text,
+
+
+                              ),
+                            ),
+                            SizedBox(height: MediaQuery.of(context).size.height*0.03),
                             CustomButton(
                               text: 'login'.tr(),
                               color: AppColors.secondPrimary,

@@ -33,13 +33,13 @@ apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 //
 //
 //}
-
+//copy
 def keystoreProperties = new Properties()
 def keystorePropertiesFile = rootProject.file('key.properties')
 if (keystorePropertiesFile.exists()) {
     keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 }
-
+//copy
 android {
     compileSdkVersion flutter.compileSdkVersion
     ndkVersion flutter.ndkVersion
@@ -68,7 +68,7 @@ android {
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
     }
-
+//copy
     signingConfigs {
         release {
             keyAlias keystoreProperties['keyAlias']
@@ -81,7 +81,7 @@ android {
         release {
             signingConfig signingConfigs.release
         }
-    }
+    }//copy
 }
 
 flutter {
