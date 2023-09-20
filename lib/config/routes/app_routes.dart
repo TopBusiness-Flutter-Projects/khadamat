@@ -32,7 +32,7 @@ class Routes {
   static const String notificationDetailsRoute = '/notificationDetails';
   static const String registerScreenRoute = '/registerScreen';
   static const String otpScreenRoute = '/otpScreen';
-  static const String verificationScreenRoute = '/verificationScreen';
+//  static const String verificationScreenRoute = '/verificationScreen';
   static const String googleMapScreenRoute = '/googleMapScreen';
   static const String favoriteRoute = '/favorite';
   static const String fullScreenImageRoute = '/fullScreenImageRoute';
@@ -71,10 +71,10 @@ class AppRoutes {
         return MaterialPageRoute(
           builder: (context) =>  RegisterScreen(),
         );
-      case Routes.verificationScreenRoute:
-        return MaterialPageRoute(
-          builder: (context) => const VerificationScreen(),
-        );
+      // case Routes.verificationScreenRoute:
+      //   return MaterialPageRoute(
+      //     builder: (context) => const VerificationScreen(),
+      //   );
       case Routes.googleMapScreenRoute:
         return MaterialPageRoute(
           builder: (context) => const GoogleMapScreen(),

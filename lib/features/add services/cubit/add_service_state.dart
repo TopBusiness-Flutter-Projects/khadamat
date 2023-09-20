@@ -35,3 +35,7 @@ class placeState extends AddServiceState{}
 class EditServiceFailure extends AddServiceState{}
 class EditServiceSuccess extends AddServiceState{}
 
+
+
+class MinimizedOrMaximized extends AddServiceState{}
+

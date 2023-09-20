@@ -181,14 +181,19 @@ class ServiceApi {
 
 
   Future<Either<Failure, LoginModel>> postLogin(
-      String phone, String phoneCode) async {
+      String phone, String phoneCode,String password) async {
     try {
+      print("******************************************");
+      print(password);
       final response = await dio.post(
         EndPoints.loginUrl,
         body: {
           'phone': phone,
+          "password":password
         },
       );
+
+      print(response);
       return Right(LoginModel.fromJson(response));
     } on ServerException {
       return Left(ServerFailure());

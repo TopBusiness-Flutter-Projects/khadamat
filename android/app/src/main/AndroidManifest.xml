@@ -14,12 +14,16 @@
    <application
         android:label="العمدة"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/ic_launcher"
+       >
 
        <meta-data android:name="com.google.android.geo.API_KEY"
            android:value="AIzaSyA6QI378BHt9eqBbiJKtqWHTSAZxcSwN3Q"/>
 
-
+       <activity
+           android:name="com.yalantis.ucrop.UCropActivity"
+           android:screenOrientation="portrait"
+           android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".MainActivity"
             android:exported="true"

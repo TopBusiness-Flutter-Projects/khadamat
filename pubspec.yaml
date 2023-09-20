@@ -39,14 +39,10 @@ dependencies:
   equatable: ^2.0.5
   shared_preferences: ^2.1.0
   cached_network_image: ^3.2.3
-  flutter_launcher_icons: ^0.12.0
   image_picker: ^0.8.7+5
   path_provider:
   beautiful_soup_dart:
   flutter_html:
-#  meta: 1.9.0
-#  xml: ^6.3.0
-#  fluttertoast: ^7.0.0
   flutter_email_sender: ^6.0.0
   uni_links:
   google_maps_flutter:
@@ -61,7 +57,7 @@ dependencies:
   carousel_slider: ^4.2.1
   lottie: ^2.3.2
   get: ^4.6.5
-  intl_phone_number_input: ^0.7.2
+  intl_phone_number_input:
   page_transition: "^2.0.9"
   pin_code_fields: ^7.4.0
   firebase_messaging: ^14.2.1
@@ -70,6 +66,7 @@ dependencies:
   fluttertoast: ^8.0.7
   flutter_rating_bar: ^4.0.1
   share: ^2.0.4
+  multi_image_picker: ^4.7.14
 
 
 
@@ -77,13 +74,14 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+flutter_launcher_icons: ^0.12.0
 
 flutter_icons:
   android: true
   ios: true
   remove_alpha_ios: true
-  image_path: "assets/images/last-icon.png"
-  adaptive_icon_foreground: "assets/images/last-icon.png"
+  image_path: "assets/images/playstore.png"
+  adaptive_icon_foreground: "assets/images/playstore.png"
 
 
 

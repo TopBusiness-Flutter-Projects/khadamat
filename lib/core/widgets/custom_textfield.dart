@@ -39,6 +39,7 @@ class CustomTextField extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 20),
       child: TextFormField(
+
         controller: controller,
         keyboardType: textInputType,
         obscureText: isPassword,
