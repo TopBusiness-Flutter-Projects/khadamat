@@ -208,7 +208,7 @@ class AddServicesScreen extends StatelessWidget {
                         EdgeInsets.symmetric(vertical: 7, horizontal: 7),
                     title: ' ',
                     backgroundColor: AppColors.white,
-                    textInputType: TextInputType.text,
+                    textInputType: TextInputType.multiline,
                     controller: cubit.detailsController,
                     validatorMessage: 'details_valid'.tr(),
                   ),

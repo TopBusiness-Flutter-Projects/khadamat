@@ -41,14 +41,15 @@ class _LoginScreenState extends State<LoginScreen> {
             return Form(
               key: formKey,
               child: SafeArea(
-                child: Stack(
+                child: Column(
                   children: [
-                    Positioned(
-                      top: 0,
-                      right: 0,
-                      left: 0,
-                      bottom: MediaQuery.of(context).size.height / 4,
-                      child: SingleChildScrollView(
+                  //  Positioned(
+                      // top: 0,
+                      // right: 0,
+                      // left: 0,
+                     // bottom: MediaQuery.of(context).size.height / 4,
+                    //  child:
+                      SingleChildScrollView(
                         child: Column(
                           children: [
                             SizedBox(height: 20),
@@ -179,7 +180,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             Padding(
                               padding: const EdgeInsets.symmetric(horizontal: 27.0,),
                               child: TextFormField(
-                                obscureText: true,
+                                controller: cubit.passwordController,
+                                obscureText: cubit.isObscureText,
                                 style: TextStyle(
                                   color: AppColors.primary,
                                   fontSize: 20
@@ -193,16 +195,18 @@ class _LoginScreenState extends State<LoginScreen> {
                                 },
 
                                decoration: InputDecoration(
-                                hintText: "Enter password",
-
-
-                                 prefixIcon: Padding(
-                                   padding: const EdgeInsets.only(right: 25.0,),
-                                   child: Icon(Icons.remove_red_eye_rounded,color: AppColors.primary,size: 30,),
+                                hintText: "enter_password".tr(),
+                                 prefixIcon: InkWell(
+                                   onTap: () {
+                                     cubit.changePasswordIcon();
+                                   },
+                                   child: Padding(
+                                     padding: const EdgeInsets.only(right: 25.0,),
+                                     child: Icon(cubit.passwordIcon,color: AppColors.primary,size: 30,),
+                                   ),
                                  ),
                               //   contentPadding: EdgeInsets.symmetric(vertical: 20),
                                  border:   OutlineInputBorder(
-
                                    borderSide: BorderSide.none,
                                    borderRadius: BorderRadius.circular(28),
                                  ),
@@ -226,30 +230,37 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                             SizedBox(height: MediaQuery.of(context).size.height*0.03),
                             CustomButton(
+
                               text: 'login'.tr(),
                               color: AppColors.secondPrimary,
                               paddingHorizontal: 40,
                               borderRadius: 30,
-                              onClick: () {
+                              onClick: () async {
                                 if(formKey.currentState!.validate()){
-                                 cubit.login();
+                                await cubit.login();
                                 }
                               },
+                            ),
+                            Image.asset(
+                              ImageAssets.bottomImage,
+                              height: MediaQuery.of(context).size.height / 6,
+                              width: MediaQuery.of(context).size.width*0.9 ,
+                              fit: BoxFit.fill,
                             ),
                           ],
                         ),
                       ),
-                    ),
-                    Positioned(
-                      bottom: 0,
-                      left: 0,
-                      right: 0,
-                      child: Image.asset(
-                        ImageAssets.bottomImage,
-                        height: MediaQuery.of(context).size.height / 3.2,
-                        fit: BoxFit.fill,
-                      ),
-                    ),
+                  //  ),
+                    // Positioned(
+                    //   bottom: 0,
+                    //   left: 0,
+                    //   right: 0,
+                    //   child: Image.asset(
+                    //     ImageAssets.bottomImage,
+                    //     height: MediaQuery.of(context).size.height / 5,
+                    //     fit: BoxFit.fill,
+                    //   ),
+                    // ),
 
 
                   ],

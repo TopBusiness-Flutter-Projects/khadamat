@@ -109,6 +109,8 @@ class GoogleMapsCubit extends Cubit<GoogleMapsState> {
     }
   }
 
+
+
 //unused method
 //   getMyLocation() async {
 //     bool isLocationServiceEnabled = await Geolocator.isLocationServiceEnabled();

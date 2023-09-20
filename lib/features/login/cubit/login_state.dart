@@ -22,6 +22,9 @@ class ModelExistState extends LoginState {}
 class ModelDoesNotExist extends LoginState {}
 
 
+class ChangePasswordIconState extends LoginState {}
+
+
 // class RegisterSuccessState extends LoginState {}
 // class RegisterFailedState extends LoginState {}
 // class RegisterFailedUserExistState extends LoginState {}

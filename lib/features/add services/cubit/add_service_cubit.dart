@@ -1,19 +1,24 @@
+import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding_platform_interface/src/models/placemark.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:khadamat/core/models/categories_model.dart';
 import 'package:khadamat/core/models/service_model.dart';
 import 'package:meta/meta.dart';
+import 'package:path_provider/path_provider.dart';
 import '../../../core/models/cities_model.dart';
 import '../../../core/models/serviceToUpdate.dart';
 import '../../../core/models/service_store_model.dart';
 import '../../../core/models/servicemodel.dart';
 import '../../../core/models/updated_model.dart';
 import '../../../core/remote/service.dart';
+import 'package:multi_image_picker/multi_image_picker.dart';
+
 part 'add_service_state.dart';
 
 class AddServiceCubit extends Cubit<AddServiceState> {
@@ -50,7 +55,8 @@ class AddServiceCubit extends Cubit<AddServiceState> {
 
   CategoriesDatum? currentCategory;
   City? currentCity;
-dynamic city_id=0;
+  dynamic city_id = 0;
+
   changeCategoryName(CategoriesDatum? newValue) {
     currentCategory = newValue;
     emit(ChangeCategoriesState());
@@ -70,7 +76,7 @@ dynamic city_id=0;
     contact2Controller.text = "";
     detailsController.text = "";
     serviceLogoImage = null;
-    categoryHint="Kind Of Activity";
+    categoryHint = "Kind Of Activity";
     cityHint = "City";
     serviceImages.clear();
     emit(ClearService());
@@ -130,20 +136,17 @@ dynamic city_id=0;
   updateAd(int id, ServiceToUpdate serviceToUpdate) async {
     loadingDialog();
     final response = await api.edit(serviceToUpdate, id);
-    response.fold(
-            (l) {
-              print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
-          Get.back();
+    response.fold((l) {
+      print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+      Get.back();
 
-          emit(EditServiceFailure());
-        },
-            (r) {
-              emit(EditServiceSuccess());
-              print("/////////////////////////////////////////////////");
-              Get.back();
+      emit(EditServiceFailure());
+    }, (r) {
+      emit(EditServiceSuccess());
+      print("/////////////////////////////////////////////////");
+      Get.back();
       updateServiceModel = r;
       updatedItem = r.data!;
-
     });
   }
 
@@ -207,6 +210,21 @@ dynamic city_id=0;
                   onTap: () async {
                     serviceLogoImage =
                         await picker.pickImage(source: ImageSource.gallery);
+
+                    CroppedFile? croppedFile =
+                        await ImageCropper.platform.cropImage(
+                            sourcePath: serviceLogoImage!.path,
+                            aspectRatioPresets: [
+                              CropAspectRatioPreset.square,
+                              CropAspectRatioPreset.original,
+                              CropAspectRatioPreset.ratio7x5,
+                              CropAspectRatioPreset.ratio16x9
+                            ],
+                            cropStyle: CropStyle.circle,
+                            compressFormat: ImageCompressFormat.png,
+                            compressQuality: 90);
+
+                    serviceLogoImage = XFile(croppedFile!.path);
                     emit(logoImageSuccess());
                     Navigator.of(context).pop();
                   },
@@ -217,6 +235,19 @@ dynamic city_id=0;
                   onTap: () async {
                     serviceLogoImage =
                         await picker.pickImage(source: ImageSource.camera);
+                    CroppedFile? croppedFile =
+                        await ImageCropper.platform.cropImage(
+                            sourcePath: serviceLogoImage!.path,
+                            aspectRatioPresets: [
+                              CropAspectRatioPreset.square,
+                              CropAspectRatioPreset.original,
+                              CropAspectRatioPreset.ratio7x5,
+                              CropAspectRatioPreset.ratio16x9
+                            ],
+                            cropStyle: CropStyle.rectangle,
+                            compressFormat: ImageCompressFormat.png,
+                            compressQuality: 90);
+                    serviceLogoImage = XFile(croppedFile!.path);
                     emit(logoImageSuccess());
                     Navigator.of(context).pop();
                   },
@@ -229,6 +260,7 @@ dynamic city_id=0;
     );
   }
 
+
   removeImage(int index) {
     serviceImages.removeAt(index);
     emit(RemoveImageState());
@@ -236,7 +268,6 @@ dynamic city_id=0;
 
   serviceImagePicker(BuildContext context) {
     emit(ServiceImageLoading());
-
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
@@ -248,9 +279,19 @@ dynamic city_id=0;
                   leading: Icon(Icons.photo_library),
                   title: Text('Pick from gallery'),
                   onTap: () async {
-                    var image =
-                        await picker.pickImage(source: ImageSource.gallery);
-                    serviceImages.add(image);
+                    List<Asset> resultList = await MultiImagePicker.pickImages(
+                      maxImages:
+                          10, // Set the maximum number of images to be selected
+                    );
+                    final List<XFile> xFiles = [];
+                    for (final asset in resultList) {
+                      final byteData = await asset.getByteData();
+                      final xFile = XFile.fromData(byteData.buffer.asUint8List());
+                      xFiles.add(xFile);
+
+                    }
+                    serviceImages = xFiles;
+                   // serviceImages = await transferAssetsToXFiles(resultList);
                     emit(ServiceImageSuccess());
                     Navigator.of(context).pop();
                   },
@@ -274,10 +315,50 @@ dynamic city_id=0;
     );
   }
 
+  Future<String> getAssetFilePath(Asset asset) async {
+    final byteData = await asset.getByteData();
+    final tempDir = await getTemporaryDirectory();
+    final tempFile = File(tempDir.path + '/asset.tmp');
+    await tempFile.writeAsBytes(byteData.buffer.asUint8List());
+    return tempFile.path;
+  }
+
+  Future<XFile> createXFileFromPath(String filePath) async {
+    final file = File(filePath);
+    final byteData = await file.readAsBytes();
+    return XFile.fromData(byteData);
+  }
+
+  Future<List<XFile>> transferAssetsToXFiles(List<Asset> assets) async {
+    final List<XFile> xFiles = [];
+    for (final asset in assets) {
+      final filePath = await getAssetFilePath(asset);
+      final xFile = await createXFileFromPath(filePath);
+      xFiles.add(xFile);
+    }
+    return xFiles;
+  }
+
+  Future<XFile> assetToFile(Asset asset) async {
+//     Directory appDocDirectory = await getApplicationDocumentsDirectory();
+//
+//     new Directory(appDocDirectory.path+'/'+'dir').create(recursive: true)
+// // The created directory is returned as a Future.
+//         .then((Directory directory) {
+//       print('Path of New Dir: '+directory.path);
+//     });
+    final byteData = await asset.getByteData();
+    final file = File('${asset.name}');
+    await file.writeAsBytes(byteData!.buffer.asUint8List());
+    return XFile(file.path);
+  }
+
+
+
+
+
   void setAddress(Placemark place) {
     this.placeToBack = place;
     emit(placeState());
   }
-
-
 }
