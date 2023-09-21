@@ -1,5 +1,6 @@
 class EndPoints {
   static const String baseUrl = 'https://khdamat.topbusiness.io/api/';//khdamat.topbusiness.io  l-3mda.com
+  static const String deepbaseUrl = 'https://khdamat.topbusiness.io/';//khdamat.topbusiness.io  l-3mda.com
   static const String loginUrl = '${baseUrl}auth/login';
   static const String homeUrl = '${baseUrl}home';
   static const String citiesUrl = '${baseUrl}cities';
@@ -13,7 +14,7 @@ class EndPoints {
   static const String categoriesUrl = '${baseUrl}categories';
   static const String rateUrl = '${baseUrl}services/add-rate';
   static const String addToFavouriteUrl = '${baseUrl}services/add-to-favourites';
-  static const String deepLink = '${baseUrl}details/';
+  static const String deepLink = '${deepbaseUrl}details/';
   static const String searchUrl = '${baseUrl}search';
   static const String notificationUrl = '${baseUrl}notifications';
   static const String registerUrl = '${baseUrl}client/auth/register';

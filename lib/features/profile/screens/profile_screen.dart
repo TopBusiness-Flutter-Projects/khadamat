@@ -41,6 +41,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       return true;
       },
       child: Scaffold(
+        backgroundColor: Colors.white,
         body: BlocBuilder<ProfileCubit, ProfileState>(
           builder: (context, state) {
             ProfileCubit cubit = context.read<ProfileCubit>();
@@ -81,7 +82,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         SizedBox(
                           width: 100,
                             height: 100,
-                            child: Image.asset(ImageAssets.logoProfileImage)),
+                            child: Image.asset(ImageAssets.profile22Icon)),
                         Text(
                           cubit.model?.data?.user?.name??"name",
                           style: TextStyle(

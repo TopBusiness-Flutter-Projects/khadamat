@@ -11,6 +11,7 @@
  "register": "Register",
  "login": "Login",
  "location": "الموقع",
+ "confirm": "Confirm",
  "city": "City",
  "add_location": "Add geographical location",
  "last_added": "Last Added",

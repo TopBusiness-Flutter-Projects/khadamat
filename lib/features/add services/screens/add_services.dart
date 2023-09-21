@@ -42,7 +42,7 @@ class AddServicesScreen extends StatelessWidget {
 
         }
         if (state is EditServiceSuccess){
-          print("succcccccccccccccccccccccccccceeeeeeeeeeeeeeeeessssssssssssssssss");
+
           Navigator.pop(context);
           // context.read<HomeCubit>().getHomeData();
           // context.read<HomeCubit>().tabController.animateTo(0);
@@ -386,7 +386,7 @@ class AddServicesScreen extends StatelessWidget {
                     text: "add".tr(),
                     color: AppColors.primary,
                     onClick: () async {
-                    print("((((((((((((((((((((((((((((((((((((((((((");
+
                       if (cubit.serviceLogoImage == null) {
                         print("cubit.serviceLogoImage == null");
                         Fluttertoast.showToast(

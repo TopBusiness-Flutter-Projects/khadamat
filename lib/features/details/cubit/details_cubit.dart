@@ -4,6 +4,7 @@ import 'package:geocoding/geocoding.dart';
 import 'package:khadamat/core/models/cities_model.dart';
 import 'package:khadamat/features/add%20services/cubit/add_service_cubit.dart';
 import 'package:meta/meta.dart';
+import 'package:share/share.dart';
 
 import '../../../core/models/add_to_favourite_model.dart';
 import '../../../core/models/rate_response_model.dart';
@@ -47,6 +48,15 @@ class DetailsCubit extends Cubit<DetailsState> {
           }
   );
  }
+
+  void shareApplication() {
+    // Get the Google Play Store URL or App Store URL for your app
+    //String appStoreUrl = 'https://apps.apple.com/your-app-store-url';
+    String googlePlayUrl = 'https://play.google.com/store/apps/details?id=com.topbusiness.khadamat';
+
+    // Share the application using the Share package
+    Share.share('Check out our awesome app!\nAndroid: $googlePlayUrl');
+  }
 
   String getCityName(cityId)  {
   print("____________________________________________");

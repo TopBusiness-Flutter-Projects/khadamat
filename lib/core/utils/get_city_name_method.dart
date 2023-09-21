@@ -13,18 +13,38 @@ String getCityName(List<City> cities ,cityId)  {
 }
 
 
+// Future<String> getAddressFromLatLng(double latitude, double longitude) async {
+//   try {
+//     List<Placemark> placemarks = await placemarkFromCoordinates(latitude, longitude);
+//
+//     if (placemarks != null && placemarks.isNotEmpty) {
+//       Placemark placemark = placemarks[0];
+//       return '${placemark.street},pppppppppppppp';
+//     }
+//   } catch (e) {
+//     print(e.toString());
+//   }
+//   return '';
+// }
+
 Future<String> getAddressFromLatLng(double latitude, double longitude) async {
   try {
+    print("***************************************************");
+    print("latitude = $latitude");
+    print("longitude = $longitude");
     List<Placemark> placemarks = await placemarkFromCoordinates(latitude, longitude);
 
     if (placemarks != null && placemarks.isNotEmpty) {
       Placemark placemark = placemarks[0];
-      return '${placemark.street}';
+      String address = '${placemark.subThoroughfare} ${placemark.thoroughfare}, ${placemark.subLocality}, ${placemark.locality}, ${placemark.administrativeArea}, ${placemark.country}';
+      print("address = $address");
+      return address;
+    } else {
+      return 'No address found';
     }
   } catch (e) {
-    print(e.toString());
+    return 'Error: ${e.toString()}';
   }
-  return '';
 }
 
 // getCities()async{

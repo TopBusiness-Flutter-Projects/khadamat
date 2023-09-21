@@ -5,6 +5,7 @@ import 'package:khadamat/core/widgets/full_screen_image.dart';
 import 'package:khadamat/features/contact_us/screen/contact_us.dart';
 import 'package:khadamat/features/details/screens/details.dart';
 import 'package:khadamat/features/details/screens/google_map_details.dart';
+import 'package:khadamat/features/details_from_deeplink/screens/details_from_deeplink.dart';
 import 'package:khadamat/features/google_map/screens/google_map.dart';
 import 'package:khadamat/features/login/screens/login.dart';
 import 'package:khadamat/features/login/screens/verfiication_screen.dart';
@@ -43,6 +44,7 @@ class Routes {
   static const String detailsRoute = '/details';
   static const String contactUsRoute = '/contact_us';
   static const String googleMapDetailsRoute = '/google_map_details_screen';
+  static const String detailsFromDeepLinkRoute = '/details_deeplink_screen';
 }
 
 class AppRoutes {
@@ -60,6 +62,8 @@ class AppRoutes {
         );
       case Routes.notificationDetailsRoute:
         final notificationModel = settings.arguments as NotificationDatum;
+        print("___________________________________________________________________");
+        print(notificationModel);
         return MaterialPageRoute(
           builder: (context) =>  NotificationDetails(notificationModel: notificationModel),
         );
@@ -127,8 +131,12 @@ class AppRoutes {
         final service = settings.arguments as ServicesModel;
         return MaterialPageRoute(
           // Extract the service model argument from the settings arguments map
-
           builder: (context) => Details(service: service),
+        );
+      case Routes.detailsFromDeepLinkRoute:
+        final id = settings.arguments as int;
+        return MaterialPageRoute(
+          builder: (context) => DetailsFromDeepLink(id: id),
         );
 
 

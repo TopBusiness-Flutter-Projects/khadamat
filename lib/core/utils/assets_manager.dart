@@ -17,6 +17,7 @@ class ImageAssets {
   static const String topStatusBarImage = '$imagePath/top_status_bar.png';
   static const String postImageIcon = '$imagePath/post.png';
   static const String profilesImageIcon = '$imagePath/profiles.png';
+  static const String profile22Icon = '$imagePath/profile22.png';
   static const String settingImageIcon = '$imagePath/setting.png';
   static const String callsImageIcon = '$imagePath/calls.png';
   static const String aboutImageIcon = '$imagePath/about.png';

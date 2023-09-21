@@ -26,7 +26,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     String lang = oo.EasyLocalization.of(context)!.locale.languageCode;
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+     // resizeToAvoidBottomInset: false,
       body: Container(
         height: double.infinity,
         decoration: const BoxDecoration(
@@ -41,228 +41,203 @@ class _LoginScreenState extends State<LoginScreen> {
             return Form(
               key: formKey,
               child: SafeArea(
-                child: Column(
+                child: ListView(
                   children: [
-                  //  Positioned(
-                      // top: 0,
-                      // right: 0,
-                      // left: 0,
-                     // bottom: MediaQuery.of(context).size.height / 4,
-                    //  child:
-                      SingleChildScrollView(
-                        child: Column(
-                          children: [
-                            SizedBox(height: 20),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                SizedBox(width: 16),
-                                TextButton(
-                                  onPressed: () {
-                                    Navigator.push(
-                                      context,
-                                      PageTransition(
-                                        type: PageTransitionType.topToBottomJoined,
-                                        alignment: Alignment.topCenter,
-                                        duration: const Duration(milliseconds: 500),
-                                        reverseDuration:
-                                            const Duration(milliseconds: 500),
-                                        child: RegisterScreen(),
-                                        childCurrent: widget,
-                                      ),
-                                    );
-                                  },
-                                  child: Text(
-                                    'register'.tr(),
-                                    style: TextStyle(
-                                      fontSize: 25,
-                                      fontWeight: FontWeight.bold,
-                                      color: AppColors.white,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Hero(
-                                  tag: 'logo',
-                                  child: SizedBox(
-                                  //  width: MediaQuery.of(context).size.width*0.7,
-                                    height: MediaQuery.of(context).size.height*0.32,
-                                    child: Image.asset(ImageAssets.logoImage),
-                                  ),
-                                ),
-                              ],
-                            ),
-
-                            Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: AppColors.white,
-                                  borderRadius: BorderRadius.circular(28),
-                                ),
-                                padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                                child: Row(
-                                  children: [
-                                    MySvgWidget(
-                                      path: ImageAssets.phoneIcon,
-                                      imageColor: AppColors.primary,
-                                      size: 35,
-                                    ),
-                                    SizedBox(width: 0),
-                                    Expanded(
-                                      child: InternationalPhoneNumberInput(
-                                        // countries: ['SA', 'EG'],
-                                        inputDecoration: InputDecoration(
-                                          // contentPadding: EdgeInsets.symmetric(horizontal: 12,vertical: 25),
-                                          border: OutlineInputBorder(
-                                            borderSide: BorderSide.none,
-                                            borderRadius: BorderRadius.circular(28),
-                                          ),
-                                          fillColor: AppColors.white,
-                                          hintText: 'phone_number_text'.tr(),
-                                          hintTextDirection: TextDirection.ltr,
-                                          hintStyle:
-                                              TextStyle(color: AppColors.primary),
-                                          filled: true,
-                                        ),
-                                        locale: lang,
-                                        searchBoxDecoration: InputDecoration(
-                                          labelText: 'search_country'.tr(),
-                                        ),
-                                        errorMessage: null,
-                                        isEnabled: true,
-                                        onInputChanged: (PhoneNumber number) {
-                                          cubit.phoneCode = number.dialCode!;
-                                        },
-                                        autoFocusSearch: true,
-                                        initialValue: PhoneNumber(isoCode: 'EG'),
-                                        selectorConfig: SelectorConfig(
-                                          selectorType:
-                                              PhoneInputSelectorType.BOTTOM_SHEET,
-                                          showFlags: false,
-                                          setSelectorButtonAsPrefixIcon: false,
-                                          useEmoji: true,
-                                          trailingSpace: false,
-                                          leadingPadding: 0,
-                                        ),
-                                        ignoreBlank: true,
-                                        selectorTextStyle: TextStyle(
-                                          color: AppColors.primary,
-                                          fontSize: 16,
-                                        ),
-                                        textStyle: TextStyle(color: AppColors.primary),
-
-                                        textAlign: TextAlign.end,
-                                        formatInput: false,
-                                        validator: (value) {
-                                          if (value == null || value.isEmpty) {
-                                            return 'phone_validator_message'.tr();
-                                          }
-                                          return null;
-                                        },
-                                        textFieldController: cubit.phoneController,
-                                        // spaceBetweenSelectorAndTextField: 20,
-                                        keyboardType: TextInputType.phone,
-                                        keyboardAction: TextInputAction.done,
-                                        inputBorder: InputBorder.none,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-
+                    SizedBox(height: 20),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        SizedBox(width: 16),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              PageTransition(
+                                type: PageTransitionType.topToBottomJoined,
+                                alignment: Alignment.topCenter,
+                                duration: const Duration(milliseconds: 500),
+                                reverseDuration:
+                                    const Duration(milliseconds: 500),
+                                child: RegisterScreen(),
+                                childCurrent: widget,
                               ),
+                            );
+                          },
+                          child: Text(
+                            'register'.tr(),
+                            style: TextStyle(
+                              fontSize: 25,
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.white,
                             ),
-                            SizedBox(height: 20,),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 27.0,),
-                              child: TextFormField(
-                                controller: cubit.passwordController,
-                                obscureText: cubit.isObscureText,
-                                style: TextStyle(
-                                  color: AppColors.primary,
-                                  fontSize: 20
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Hero(
+                          tag: 'logo',
+                          child: SizedBox(
+                          //  width: MediaQuery.of(context).size.width*0.7,
+                            height: MediaQuery.of(context).size.height*0.32,
+                            child: Image.asset(ImageAssets.logoImage),
+                          ),
+                        ),
+                      ],
+                    ),
+
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: AppColors.white,
+                          borderRadius: BorderRadius.circular(28),
+                        ),
+                        padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                        child: Row(
+                          children: [
+                            MySvgWidget(
+                              path: ImageAssets.phoneIcon,
+                              imageColor: AppColors.primary,
+                              size: 35,
+                            ),
+                            SizedBox(width: 0),
+                            Expanded(
+                              child: InternationalPhoneNumberInput(
+                                // countries: ['SA', 'EG'],
+                                inputDecoration: InputDecoration(
+                                  // contentPadding: EdgeInsets.symmetric(horizontal: 12,vertical: 25),
+                                  border: OutlineInputBorder(
+                                    borderSide: BorderSide.none,
+                                    borderRadius: BorderRadius.circular(28),
+                                  ),
+                                  fillColor: AppColors.white,
+                                  hintText: 'phone_number_text'.tr(),
+                                  hintTextDirection: TextDirection.ltr,
+                                  hintStyle:
+                                      TextStyle(color: AppColors.primary),
+                                  filled: true,
                                 ),
-                                textAlign: TextAlign.center,
+                                locale: lang,
+                                searchBoxDecoration: InputDecoration(
+                                  labelText: 'search_country'.tr(),
+                                ),
+                                errorMessage: null,
+                                isEnabled: true,
+                                onInputChanged: (PhoneNumber number) {
+                                  cubit.phoneCode = number.dialCode!;
+                                },
+                                autoFocusSearch: true,
+                                initialValue: PhoneNumber(isoCode: 'EG'),
+                                selectorConfig: SelectorConfig(
+                                  selectorType:
+                                      PhoneInputSelectorType.BOTTOM_SHEET,
+                                  showFlags: false,
+                                  setSelectorButtonAsPrefixIcon: false,
+                                  useEmoji: true,
+                                  trailingSpace: false,
+                                  leadingPadding: 0,
+                                ),
+                                ignoreBlank: true,
+                                selectorTextStyle: TextStyle(
+                                  color: AppColors.primary,
+                                  fontSize: 16,
+                                ),
+                                textStyle: TextStyle(color: AppColors.primary),
+
+                                textAlign: TextAlign.end,
+                                formatInput: false,
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
-                                    return 'enter_password'.tr();
+                                    return 'phone_validator_message'.tr();
                                   }
                                   return null;
                                 },
-
-                               decoration: InputDecoration(
-                                hintText: "enter_password".tr(),
-                                 prefixIcon: InkWell(
-                                   onTap: () {
-                                     cubit.changePasswordIcon();
-                                   },
-                                   child: Padding(
-                                     padding: const EdgeInsets.only(right: 25.0,),
-                                     child: Icon(cubit.passwordIcon,color: AppColors.primary,size: 30,),
-                                   ),
-                                 ),
-                              //   contentPadding: EdgeInsets.symmetric(vertical: 20),
-                                 border:   OutlineInputBorder(
-                                   borderSide: BorderSide.none,
-                                   borderRadius: BorderRadius.circular(28),
-                                 ),
-                                 alignLabelWithHint: true,
-                                 contentPadding: EdgeInsets.symmetric(vertical: 18),
-                                 fillColor: AppColors.white,
-                                 filled: true,
-                                 hintTextDirection: TextDirection.ltr,
-                                 hintStyle:
-                                 TextStyle(color: AppColors.primary),
-                               ),
-
-                                // title: 'password'.tr(),
-                                // isPassword: true,
-                                // controller: cubit.passwordController,
-                                // backgroundColor:AppColors.white ,
-                                // textInputType: TextInputType.text,
-
-
+                                textFieldController: cubit.phoneController,
+                                // spaceBetweenSelectorAndTextField: 20,
+                                keyboardType: TextInputType.phone,
+                                keyboardAction: TextInputAction.done,
+                                inputBorder: InputBorder.none,
                               ),
-                            ),
-                            SizedBox(height: MediaQuery.of(context).size.height*0.03),
-                            CustomButton(
-
-                              text: 'login'.tr(),
-                              color: AppColors.secondPrimary,
-                              paddingHorizontal: 40,
-                              borderRadius: 30,
-                              onClick: () async {
-                                if(formKey.currentState!.validate()){
-                                await cubit.login();
-                                }
-                              },
-                            ),
-                            Image.asset(
-                              ImageAssets.bottomImage,
-                              height: MediaQuery.of(context).size.height / 6,
-                              width: MediaQuery.of(context).size.width*0.9 ,
-                              fit: BoxFit.fill,
                             ),
                           ],
                         ),
+
                       ),
-                  //  ),
-                    // Positioned(
-                    //   bottom: 0,
-                    //   left: 0,
-                    //   right: 0,
-                    //   child: Image.asset(
-                    //     ImageAssets.bottomImage,
-                    //     height: MediaQuery.of(context).size.height / 5,
-                    //     fit: BoxFit.fill,
-                    //   ),
-                    // ),
+                    ),
+                    SizedBox(height: 20,),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 27.0,),
+                      child: TextFormField(
+                        controller: cubit.passwordController,
+                        obscureText: cubit.isObscureText,
+                        style: TextStyle(
+                          color: AppColors.primary,
+                          fontSize: 20
+                        ),
+                        textAlign: TextAlign.center,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'enter_password'.tr();
+                          }
+                          return null;
+                        },
+
+                       decoration: InputDecoration(
+                        hintText: "enter_password".tr(),
+                         prefixIcon: InkWell(
+                           onTap: () {
+                             cubit.changePasswordIcon();
+                           },
+                           child: Padding(
+                             padding: const EdgeInsets.only(right: 25.0,),
+                             child: Icon(cubit.passwordIcon,color: AppColors.primary,size: 30,),
+                           ),
+                         ),
+                      //   contentPadding: EdgeInsets.symmetric(vertical: 20),
+                         border:   OutlineInputBorder(
+                           borderSide: BorderSide.none,
+                           borderRadius: BorderRadius.circular(28),
+                         ),
+                         alignLabelWithHint: true,
+                         contentPadding: EdgeInsets.symmetric(vertical: 18),
+                         fillColor: AppColors.white,
+                         filled: true,
+                         hintTextDirection: TextDirection.ltr,
+                         hintStyle:
+                         TextStyle(color: AppColors.primary),
+                       ),
+
+                        // title: 'password'.tr(),
+                        // isPassword: true,
+                        // controller: cubit.passwordController,
+                        // backgroundColor:AppColors.white ,
+                        // textInputType: TextInputType.text,
 
 
+                      ),
+                    ),
+                    SizedBox(height: MediaQuery.of(context).size.height*0.03),
+                    CustomButton(
+
+                      text: 'login'.tr(),
+                      color: AppColors.secondPrimary,
+                      paddingHorizontal: 40,
+                      borderRadius: 30,
+                      onClick: () async {
+                        if(formKey.currentState!.validate()){
+                        await cubit.login();
+                        }
+                      },
+                    ),
+                    Image.asset(
+                      ImageAssets.bottomImage,
+                      height: MediaQuery.of(context).size.height / 3.89,
+                      width: MediaQuery.of(context).size.width*0.99 ,
+                      fit: BoxFit.cover,
+                    ),
                   ],
                 ),
               ),
@@ -273,8 +248,5 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-  }
+
 }

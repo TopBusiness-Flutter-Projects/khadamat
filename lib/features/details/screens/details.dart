@@ -146,13 +146,10 @@ class Details extends StatelessWidget {
                           ),
                           InkWell(
                             onTap: () async {
-                              await Share.share(
-                                  EndPoints.deepLink + service.id.toString());
-                              // if (await canLaunch(EndPoints.deepLink)) {
-                              // await launch(EndPoints.deepLink);
-                              // } else {
-                              // throw 'Could not launch ${EndPoints.deepLink}';
-                              // }
+                              cubit.shareApplication();
+                              // await Share.share(
+                              //     EndPoints.deepLink + service.id.toString());
+
                             },
                             child: Column(
                               children: [
@@ -295,10 +292,10 @@ class Details extends StatelessWidget {
                             vertical: 8.0, horizontal: 16),
                         child: Text(
                           service.details ?? " ",
-                          style: TextStyle(
-                              fontSize: 23,
-                              fontWeight: FontWeight.w400,
-                              color: AppColors.gray),
+                          // style: TextStyle(
+                          //     fontSize: 23,
+                          //     fontWeight: FontWeight.w400,
+                          //     color: AppColors.gray),
                           maxLines: 5,
                           overflow: TextOverflow.ellipsis,
                         ),

@@ -1,6 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:khadamat/features/add%20services/cubit/add_service_cubit.dart';
 import 'package:khadamat/features/google_map/cubit/google_maps_cubit.dart';
@@ -92,7 +94,7 @@ class _GoogleMapScreenState extends State<GoogleMapScreen> {
                 child: Align(
                   alignment: Alignment.bottomLeft,
                   child: ElevatedButton(
-                    child: Text("back"),
+                    child: Text("confirm").tr(),
                     onPressed: () {
                       context.read<AddServiceCubit>().setAddress(cubit.place);
                       Navigator.pop(context);

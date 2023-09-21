@@ -47,7 +47,7 @@ class LoginCubit extends Cubit<LoginState> {
           print("r.code == 200");
           model = r;
           Preferences.instance.setUser(r);
-          Get.toNamed( Routes.homeRoute);
+          Get.offAllNamed( Routes.homeRoute);
           // await sendSmsCode(code: phoneCode, phoneNum: phoneController.text);
           // Get.toNamed( Routes.verificationScreenRoute);
 
