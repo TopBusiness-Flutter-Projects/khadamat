@@ -16,13 +16,28 @@ class RegisterCubit extends Cubit<RegisterState> {
 
   TextEditingController phoneController = TextEditingController();
   TextEditingController nameController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
   ServiceApi api;
   late LoginModel registerModel ;
   String phoneCode = '';
+  bool isObscureText = true;
+  IconData passwordIcon = Icons.visibility;
+  changePasswordIcon(){
+    isObscureText = !isObscureText;
+    if(isObscureText==true){
+      passwordIcon = Icons.visibility_off;
+      emit(ChangePasswordIcon());
+    }
+    else{
+      passwordIcon = Icons.visibility;
+      emit(ChangePasswordIcon());
+    }
+    emit(ChangePasswordIcon());
+  }
 
   register(BuildContext context) async {
     loadingDialog();
-    final response =await  api.postRegister(phoneController.text, phoneCode,nameController.text);
+    final response =await  api.postRegister(phoneController.text, phoneCode,nameController.text,passwordController.text);
     response.fold(
             (l) =>         {Get.back()
         ,emit(RegisterFailedState())},

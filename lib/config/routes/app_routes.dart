@@ -5,12 +5,13 @@ import 'package:khadamat/core/widgets/full_screen_image.dart';
 import 'package:khadamat/features/contact_us/screen/contact_us.dart';
 import 'package:khadamat/features/details/screens/details.dart';
 import 'package:khadamat/features/details/screens/google_map_details.dart';
+import 'package:khadamat/features/details_from_deeplink/screens/details_from_deeplink.dart';
 import 'package:khadamat/features/google_map/screens/google_map.dart';
 import 'package:khadamat/features/login/screens/login.dart';
-import 'package:khadamat/features/login/screens/verfiication_screen.dart';
+import 'package:khadamat/features/reset_password/otp/screen/verfiication_screen.dart';
 import 'package:khadamat/features/my_posts/screen/my_posts.dart';
 import 'package:khadamat/features/notification_details/screens/notification_details.dart';
-import 'package:khadamat/features/otp/screen/otp.dart';
+
 import 'package:khadamat/features/register/screens/register_screen.dart';
 import 'package:khadamat/features/splash/screens/splash_screen.dart';
 import '../../core/models/catigoreis_services.dart';
@@ -23,6 +24,10 @@ import '../../features/edit_profile/screen/edit_profile.dart';
 import '../../features/favorite/screens/favorite_screen.dart';
 import '../../features/home/screens/home.dart';
 import '../../features/privacy_about/screen/privacy_about.dart';
+import '../../features/reset_password/forgot_password/screens/forgot_password.dart';
+import '../../features/reset_password/otp/screen/otp.dart';
+import '../../features/reset_password/reset_password/reset_password_screen.dart';
+
 
 class Routes {
   static const String initialRoute = '/';
@@ -43,6 +48,10 @@ class Routes {
   static const String detailsRoute = '/details';
   static const String contactUsRoute = '/contact_us';
   static const String googleMapDetailsRoute = '/google_map_details_screen';
+  static const String detailsFromDeepLinkRoute = '/detailsdeeplinkscreen';
+  static const String resetPasswordRoute = '/resetPasswordScreen';
+  static const String forgotPasswordRoute = '/forgotPasswordScreen';
+
 }
 
 class AppRoutes {
@@ -60,6 +69,8 @@ class AppRoutes {
         );
       case Routes.notificationDetailsRoute:
         final notificationModel = settings.arguments as NotificationDatum;
+        print("___________________________________________________________________");
+        print(notificationModel);
         return MaterialPageRoute(
           builder: (context) =>  NotificationDetails(notificationModel: notificationModel),
         );
@@ -123,14 +134,27 @@ class AppRoutes {
         return MaterialPageRoute(
           builder: (context) => OtpScreen(),
         );
+        case Routes.resetPasswordRoute:
+        return MaterialPageRoute(
+          builder: (context) => ResetPasswordScreen(),
+        );
+        case Routes.forgotPasswordRoute:
+        return MaterialPageRoute(
+          builder: (context) => ForgotPasswordScreen(),
+        );
+      case Routes.detailsFromDeepLinkRoute:
+        final id = settings.arguments as int;
+        return MaterialPageRoute(
+          builder: (context) => DetailsFromDeepLink(id: id),
+        );
+
+
       case Routes.detailsRoute:
         final service = settings.arguments as ServicesModel;
         return MaterialPageRoute(
           // Extract the service model argument from the settings arguments map
-
           builder: (context) => Details(service: service),
         );
-
 
 
       default:

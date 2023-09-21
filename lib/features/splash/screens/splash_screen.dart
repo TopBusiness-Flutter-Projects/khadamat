@@ -1,8 +1,12 @@
 import 'dart:async';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:khadamat/core/preferences/preferences.dart';
 import 'package:khadamat/core/utils/assets_manager.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:uni_links/uni_links.dart';
 
 import '../../../config/routes/app_routes.dart';
 import '../../login/screens/login.dart';
@@ -16,19 +20,15 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen>
     with TickerProviderStateMixin {
+  bool _initialURILinkHandled = false;
+  Uri? _initialURI;
+  Uri? _currentURI;
+  Object? _err;
+
+  StreamSubscription? _streamSubscription;
   late Timer _timer;
 
   _goNext() {
-    // Navigator.pushReplacement(
-    //   context,
-    //   PageTransition(
-    //     type: PageTransitionType.fade,
-    //     alignment: Alignment.center,
-    //     duration: const Duration(milliseconds: 1300),
-    //     child: NavigatorBar(),
-    //   ),
-    // );
-
     _getStoreUser();
   }
 
@@ -45,11 +45,22 @@ class _SplashScreenState extends State<SplashScreen>
   Future<void> _getStoreUser() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     if (prefs.getString('user') != null) {
-   //   print(prefs.getString('user'));
-      Navigator.pushReplacementNamed(
-        context,
-        Routes.homeRoute
-      );
+  int? serviceId = await Preferences.instance.getServiceId();
+  if(_initialURI!=null&&serviceId==null){
+    print(_initialURI.toString());
+serviceId=int.parse(_initialURI!.path.split("/").last);
+  }
+      if(serviceId!=null){
+        print("kkkkk");
+        Preferences.instance.clearServiceId();
+        Navigator.pushReplacementNamed(context, Routes.detailsFromDeepLinkRoute,arguments:serviceId );
+      }
+    else{
+        Navigator.pushReplacementNamed(
+            context,
+            Routes.homeRoute
+        );
+      }
     } else {
       Navigator.pushReplacement(
         context,
@@ -67,12 +78,101 @@ class _SplashScreenState extends State<SplashScreen>
   void initState() {
     super.initState();
     _startDelay();
+    _initURIHandler();
+    _incomingLinkHandler();
   }
 
   @override
   void dispose() {
     _timer.cancel();
+    _streamSubscription?.cancel();
     super.dispose();
+  }
+
+
+  Future<void> _initURIHandler() async {
+    // 1
+    // print("dddd");
+    //  print(_initialURI);
+    //  if(_initialURI!=null){
+    //    setState(() {
+    //      _initialURI=null;
+    //      _initURIHandler();
+    //    });
+    //
+    //  }
+    if (!_initialURILinkHandled) {
+      _initialURILinkHandled = true;
+      // 2
+      // /  Fluttertoast.showToast(
+      //       msg: "Invoked _initURIHandler",
+      //       toastLength: Toast.LENGTH_SHORT,
+      //       gravity: ToastGravity.BOTTOM,
+      //       timeInSecForIosWeb: 1,
+      //       backgroundColor: Colors.green,
+      //       textColor: Colors.white);
+      try {
+        // 3
+        final initialURI = await getInitialUri();
+        // 4
+        if (initialURI != null) {
+          // debugPrint("Initial URI received $initialURI");
+          //  print("ddkdkkdkdkdkdkfjgjgjhg");
+          //print(initialURI);
+          if (!mounted) {
+            return;
+          }
+          setState(() {
+            _initialURI = initialURI;
+          });
+        } else {
+          //   debugPrint("Null Initial URI received");
+        }
+      } on PlatformException {
+        // 5
+        //debugPrint("Failed to receive initial uri");
+      } on FormatException catch (err) {
+        // 6
+        if (!mounted) {
+          return;
+        }
+        //debugPrint('Malformed Initial URI received');
+        setState(() => _err = err);
+      }
+    }
+  }
+
+  void _incomingLinkHandler() {
+    // 1
+    if (!kIsWeb) {
+      // 2
+      _streamSubscription = uriLinkStream.listen((Uri? uri) {
+        if (!mounted) {
+          return;
+        }
+        // debugPrint('Received URI: $uri');
+        setState(() {
+          _currentURI = uri;
+          // print("llllkkoii");
+          //print(_currentURI);
+          _err = null;
+        });
+        // 3
+      }, onError: (Object err) {
+        if (!mounted) {
+          return;
+        }
+        //  debugPrint('Error occurred: $err');
+        setState(() {
+          _currentURI = null;
+          if (err is FormatException) {
+            _err = err;
+          } else {
+            _err = null;
+          }
+        });
+      });
+    }
   }
 
   @override

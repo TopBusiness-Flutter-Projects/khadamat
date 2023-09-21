@@ -24,7 +24,7 @@ class RegisterScreen extends StatelessWidget {
 
          key: form_key2,
       child:
-    Scaffold(
+         Scaffold(
         resizeToAvoidBottomInset: false,
         body: Container(
           height: double.infinity,
@@ -50,21 +50,34 @@ class RegisterScreen extends StatelessWidget {
                       top: 0,
                       right: 0,
                       left: 0,
-                      bottom: MediaQuery.of(context).size.height / 4,
+                    //  bottom: MediaQuery.of(context).size.height / 4,
                       child: SingleChildScrollView(
                         child: Column(
                           children: [
-                            SizedBox(height: 20),
+                         //   SizedBox(height: 20),
                             Hero(
                               tag: 'logo',
                               child: SizedBox(
-                                width: 300,
-                                height: 300,
+                                // width: MediaQuery.of(context).size.width*0.3,
+                                // height: MediaQuery.of(context).size.height*0.4,
                                 child: Image.asset(
                                   ImageAssets.logoImage,
+                                  fit: BoxFit.cover,
+                                  height:  MediaQuery.of(context).size.height*0.29,
+                                  width: MediaQuery.of(context).size.width*0.5,
                                 ),
                               ),
                             ),
+                        // new account text
+                            TextButton(onPressed: (){
+                              Navigator.pushNamed(context, Routes.registerScreenRoute);
+                            }, child: Text("new_account", style: TextStyle(
+                                  color: AppColors.yellow,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w400
+                              ),).tr()),
+                            SizedBox(height: 15,),
+                            //InternationalPhoneNumberInput
                             Padding(
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 30.0),
@@ -151,7 +164,8 @@ class RegisterScreen extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            SizedBox(height: 25),
+                            SizedBox(height: 15),
+                            //username
                             Padding(
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 30.0),
@@ -192,7 +206,60 @@ class RegisterScreen extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            SizedBox(height: 40),
+                            SizedBox(height: 15),
+                            //password
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 27.0,),
+                              child: TextFormField(
+                                 controller: cubit.passwordController,
+                                 obscureText: cubit.isObscureText,
+                                style: TextStyle(
+                                    color: AppColors.primary,
+                                    fontSize: 20
+                                ),
+                                textAlign: TextAlign.center,
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'enter_password'.tr();
+                                  }
+                                  return null;
+                                },
+
+                                decoration: InputDecoration(
+                                  hintText: "enter_password".tr(),
+                                  prefixIcon: InkWell(
+                                    onTap: () {
+                                      cubit.changePasswordIcon();
+                                    },
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(right: 25.0,),
+                                      child: Icon(cubit.passwordIcon,color: AppColors.primary,size: 30,),
+                                    ),
+                                  ),
+                                  //   contentPadding: EdgeInsets.symmetric(vertical: 20),
+                                  border:   OutlineInputBorder(
+                                    borderSide: BorderSide.none,
+                                    borderRadius: BorderRadius.circular(28),
+                                  ),
+                                  alignLabelWithHint: true,
+                                  contentPadding: EdgeInsets.symmetric(vertical: 18),
+                                  fillColor: AppColors.white,
+                                  filled: true,
+                                  hintTextDirection: TextDirection.ltr,
+                                  hintStyle:
+                                  TextStyle(color: AppColors.primary),
+                                ),
+
+                                // title: 'password'.tr(),
+                                // isPassword: true,
+                                // controller: cubit.passwordController,
+                                // backgroundColor:AppColors.white ,
+                                // textInputType: TextInputType.text,
+
+
+                              ),
+                            ),
+                            SizedBox(height: 20),
                             CustomButton(
                               text: 'done_btn'.tr(),
                               color: AppColors.primary,
@@ -206,21 +273,28 @@ class RegisterScreen extends StatelessWidget {
                                 }
                               },
                             ),
-                            SizedBox(height: 80),
+                            Image.asset(
+                              ImageAssets.bottomImage,
+                              height: MediaQuery.of(context).size.height / 4,
+                              width: double.infinity,
+                              fit: BoxFit.cover,
+                            ),
+                          //  SizedBox(height: 80),
                           ],
                         ),
                       ),
                     ),
-                    Positioned(
-                      bottom: 0,
-                      left: 0,
-                      right: 0,
-                      child: Image.asset(
-                        ImageAssets.bottomImage,
-                        height: MediaQuery.of(context).size.height / 3.2,
-                        fit: BoxFit.fill,
-                      ),
-                    ),
+                    // Positioned(
+                    //   bottom: 0,
+                    //   left: 0,
+                    //   right: 0,
+                    //   top: MediaQuery.of(context).size.height *0.6 ,
+                    //   child: Image.asset(
+                    //     ImageAssets.bottomImage,
+                    //     height: MediaQuery.of(context).size.height / 3.2,
+                    //     fit: BoxFit.fill,
+                    //   ),
+                    // ),
                   ],
                 ),
               );

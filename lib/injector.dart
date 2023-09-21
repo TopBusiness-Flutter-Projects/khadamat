@@ -17,6 +17,7 @@ import 'core/remote/service.dart';
 import 'features/favorite/cubit/favorite_cubit.dart';
 import 'features/home/cubit/home_cubit.dart';
 import 'features/login/cubit/login_cubit.dart';
+import 'features/notification_details/cubit/notification_details_cubit.dart';
 import 'features/posts/cubit/posts_cubit.dart';
 import 'features/privacy_about/cubit/privacy_cubit.dart';
 import 'features/profile/cubit/profile_cubit.dart';
@@ -111,6 +112,12 @@ Future<void> setup() async {
   );
   serviceLocator.registerFactory(
         () => RegisterCubit(
+      serviceLocator(),
+    ),
+
+  );
+  serviceLocator.registerFactory(
+        () => NotificationDetailsCubit(
       serviceLocator(),
     ),
 

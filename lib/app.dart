@@ -20,6 +20,7 @@ import 'features/add services/cubit/add_service_cubit.dart';
 import 'features/favorite/cubit/favorite_cubit.dart';
 import 'features/home/cubit/home_cubit.dart';
 import 'features/login/cubit/login_cubit.dart';
+import 'features/notification_details/cubit/notification_details_cubit.dart';
 import 'features/posts/cubit/posts_cubit.dart';
 import 'features/privacy_about/cubit/privacy_cubit.dart';
 import 'features/profile/cubit/profile_cubit.dart';
@@ -94,6 +95,9 @@ class _KhadamatState extends State<Khadamat> {
         ),
         BlocProvider(
           create: (_) => injector.serviceLocator<RegisterCubit>(),
+        ),
+        BlocProvider(
+          create: (_) => injector.serviceLocator<NotificationDetailsCubit>(),
         ),
 
 

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
@@ -93,7 +94,7 @@ class _GoogleMapDetailsScreenState extends State<GoogleMapDetailsScreen> {
                 child: Align(
                   alignment: Alignment.bottomLeft,
                   child: ElevatedButton(
-                    child: Text("back"),
+                    child: Text("confirm").tr(),
                     onPressed: () {
                      // context.read<AddServiceCubit>().setAddress(cubit.place);
                       Navigator.pop(context);

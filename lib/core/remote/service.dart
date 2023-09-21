@@ -35,7 +35,7 @@ class ServiceApi {
 
 
   Future<Either<Failure, LoginModel>> postRegister(
-      String phone, String phoneCode,String name) async {
+      String phone, String phoneCode,String name,String password) async {
     try {
       var response = await dio.post(
         EndPoints.registerUrl,
@@ -43,6 +43,7 @@ class ServiceApi {
           'phone': phone,
           'phone_code': phoneCode,
           'name': name,
+          'password':password
           //'role_id': 1,
         },
       );

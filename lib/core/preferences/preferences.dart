@@ -24,6 +24,22 @@ class Preferences {
   //   return jsonData;
   // }
 
+  Future<void> setServiceId(int id)async{
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    preferences.setInt("service_id", id);
+    print("++++++__________________*************************///////////");
+    print(await getServiceId());
+  }
+  Future<int?>? getServiceId() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    return preferences.getInt("service_id");
+  }
+
+  Future<void> clearServiceId()async{
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    preferences.remove("service_id");
+  }
+
   Future<void> setUser(LoginModel loginModel) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     preferences.setString(

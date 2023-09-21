@@ -99,19 +99,7 @@ class AddServiceCubit extends Cubit<AddServiceState> {
     final response = await api.getCities();
     response.fold((l) => emit(CitiesFailure()), (r) {
       cities = r.data!;
-      // if (isUpdate) {
-      //   print("cllcl");
-      //   for (var city in cities) {
-      //
-      //     if (city_id== city.id) {
-      //       print("cllcl");
-      //       print(city.name);
-      //       changeCityName(city);
-      //       //  context.read<AddServiceCubit>().currentCity = city.name;
-      //       //context.read<AddServiceCubit>().changeCityName (city.name);
-      //     }
-      //   }
-      // }
+
       emit(CitiesSuccess());
     });
   }
@@ -283,15 +271,12 @@ class AddServiceCubit extends Cubit<AddServiceState> {
                       maxImages:
                           10, // Set the maximum number of images to be selected
                     );
-                    final List<XFile> xFiles = [];
-                    for (final asset in resultList) {
-                      final byteData = await asset.getByteData();
-                      final xFile = XFile.fromData(byteData.buffer.asUint8List());
-                      xFiles.add(xFile);
 
+                    for (final asset in resultList) {
+                 File image = await  getImageFileFromAssets(asset);
+                 serviceImages.add(XFile(image.path));
                     }
-                    serviceImages = xFiles;
-                   // serviceImages = await transferAssetsToXFiles(resultList);
+
                     emit(ServiceImageSuccess());
                     Navigator.of(context).pop();
                   },
@@ -315,46 +300,19 @@ class AddServiceCubit extends Cubit<AddServiceState> {
     );
   }
 
-  Future<String> getAssetFilePath(Asset asset) async {
+
+  Future<File> getImageFileFromAssets(Asset asset) async {
     final byteData = await asset.getByteData();
-    final tempDir = await getTemporaryDirectory();
-    final tempFile = File(tempDir.path + '/asset.tmp');
-    await tempFile.writeAsBytes(byteData.buffer.asUint8List());
-    return tempFile.path;
+
+    final tempFile =
+    File("${(await getTemporaryDirectory()).path}/${asset.name}");
+    final file = await tempFile.writeAsBytes(
+      byteData.buffer
+          .asUint8List(byteData.offsetInBytes, byteData.lengthInBytes),
+    );
+
+    return file;
   }
-
-  Future<XFile> createXFileFromPath(String filePath) async {
-    final file = File(filePath);
-    final byteData = await file.readAsBytes();
-    return XFile.fromData(byteData);
-  }
-
-  Future<List<XFile>> transferAssetsToXFiles(List<Asset> assets) async {
-    final List<XFile> xFiles = [];
-    for (final asset in assets) {
-      final filePath = await getAssetFilePath(asset);
-      final xFile = await createXFileFromPath(filePath);
-      xFiles.add(xFile);
-    }
-    return xFiles;
-  }
-
-  Future<XFile> assetToFile(Asset asset) async {
-//     Directory appDocDirectory = await getApplicationDocumentsDirectory();
-//
-//     new Directory(appDocDirectory.path+'/'+'dir').create(recursive: true)
-// // The created directory is returned as a Future.
-//         .then((Directory directory) {
-//       print('Path of New Dir: '+directory.path);
-//     });
-    final byteData = await asset.getByteData();
-    final file = File('${asset.name}');
-    await file.writeAsBytes(byteData!.buffer.asUint8List());
-    return XFile(file.path);
-  }
-
-
-
 
 
   void setAddress(Placemark place) {
