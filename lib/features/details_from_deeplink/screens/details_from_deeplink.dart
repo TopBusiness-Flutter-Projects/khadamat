@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:khadamat/config/routes/app_routes.dart';
+import 'package:khadamat/config/routes/app_routes.dart';
 
 class DetailsFromDeepLink extends StatelessWidget {
   final int? id ;

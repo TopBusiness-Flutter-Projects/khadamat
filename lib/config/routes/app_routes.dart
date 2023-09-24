@@ -155,6 +155,11 @@ class AppRoutes {
           // Extract the service model argument from the settings arguments map
           builder: (context) => Details(service: service),
         );
+      case Routes.detailsFromDeepLinkRoute:
+        final id = settings.arguments as int;
+        return MaterialPageRoute(
+          builder: (context) => DetailsFromDeepLink(id: id),
+        );
 
 
       default:
