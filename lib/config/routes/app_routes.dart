@@ -36,8 +36,8 @@ class Routes {
   static const String otpRoute = '/otp';
   static const String notificationDetailsRoute = '/notificationDetails';
   static const String registerScreenRoute = '/registerScreen';
-  static const String otpScreenRoute = '/otpScreen';
-//  static const String verificationScreenRoute = '/verificationScreen';
+ // static const String otpScreenRoute = '/otpScreen';
+  static const String verificationScreenRoute = '/verificationScreen';
   static const String googleMapScreenRoute = '/googleMapScreen';
   static const String favoriteRoute = '/favorite';
   static const String fullScreenImageRoute = '/fullScreenImageRoute';
@@ -82,10 +82,10 @@ class AppRoutes {
         return MaterialPageRoute(
           builder: (context) =>  RegisterScreen(),
         );
-      // case Routes.verificationScreenRoute:
-      //   return MaterialPageRoute(
-      //     builder: (context) => const VerificationScreen(),
-      //   );
+      case Routes.verificationScreenRoute:
+        return MaterialPageRoute(
+          builder: (context) => const VerificationScreen(),
+        );
       case Routes.googleMapScreenRoute:
         return MaterialPageRoute(
           builder: (context) => const GoogleMapScreen(),
@@ -130,10 +130,10 @@ class AppRoutes {
         return MaterialPageRoute(
           builder: (context) => MyPosts(),
         );
-      case Routes.otpScreenRoute:
-        return MaterialPageRoute(
-          builder: (context) => OtpScreen(),
-        );
+      // case Routes.otpScreenRoute:
+      //   return MaterialPageRoute(
+      //     builder: (context) => OtpScreen(),
+      //   );
         case Routes.resetPasswordRoute:
         return MaterialPageRoute(
           builder: (context) => ResetPasswordScreen(),

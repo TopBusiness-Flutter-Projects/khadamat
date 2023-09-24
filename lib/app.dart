@@ -24,6 +24,7 @@ import 'features/notification_details/cubit/notification_details_cubit.dart';
 import 'features/posts/cubit/posts_cubit.dart';
 import 'features/privacy_about/cubit/privacy_cubit.dart';
 import 'features/profile/cubit/profile_cubit.dart';
+import 'features/reset_password/cubit/reset_password_cubit.dart';
 import 'features/splash/cubit/splash_cubit.dart';
 
 class Khadamat extends StatefulWidget {
@@ -98,6 +99,9 @@ class _KhadamatState extends State<Khadamat> {
         ),
         BlocProvider(
           create: (_) => injector.serviceLocator<NotificationDetailsCubit>(),
+        ),
+        BlocProvider(
+          create: (_) => injector.serviceLocator<ResetPasswordCubit>(),
         ),
 
 

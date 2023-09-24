@@ -8,6 +8,7 @@ import 'package:khadamat/features/google_map/cubit/google_maps_cubit.dart';
 import 'package:khadamat/features/my_posts/cubit/my_posts_cubit.dart';
 import 'package:khadamat/features/notification/cubit/nottification_cubit.dart';
 import 'package:khadamat/features/register/cubit/register_cubit.dart';
+import 'package:khadamat/features/reset_password/cubit/reset_password_cubit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'core/api/app_interceptors.dart';
@@ -122,7 +123,12 @@ Future<void> setup() async {
     ),
 
   );
+  serviceLocator.registerFactory(
+        () => ResetPasswordCubit(
+      serviceLocator(),
+    ),
 
+  );
 
   ///////////////////////////////////////////////////////////////////////////////
 

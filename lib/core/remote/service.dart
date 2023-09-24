@@ -57,6 +57,49 @@ class ServiceApi {
     }
   }
 
+ Future<Either<Failure,LoginModel>> checkPhone( String phone, String phoneCode)async{
+    try {
+      var response = await dio.post(
+        EndPoints.checkPhoneUrl,
+        body: {
+          'phone': phone,
+          'phone_code': phoneCode,
+
+        },
+      );
+
+      return Right(LoginModel.fromJson(response));
+
+
+
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+                }
+
+
+  Future<Either<Failure,LoginModel>> resetPassword(String phone, String password1, String password2)async{
+    try {
+      var response = await dio.post(
+        EndPoints.resetPasswordUrl,
+        body: {
+          'phone':phone,
+          'password': password1,
+          'password_confirmation': password2,
+
+        },
+      );
+
+      return Right(LoginModel.fromJson(response));
+
+
+
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
+
+
   Future<Either<Failure, ServiceStoreModel>> postServiceStore(ServiceModel serviceModel) async {
     LoginModel loginModel = await Preferences.instance.getUserModel();
 

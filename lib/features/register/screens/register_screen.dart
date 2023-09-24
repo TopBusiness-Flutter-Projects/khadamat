@@ -196,6 +196,11 @@ class RegisterScreen extends StatelessWidget {
                                       },
                                       decoration: InputDecoration(
                                         hintText: 'username'.tr(),
+                                        hintStyle:  TextStyle(
+                                          color: AppColors.primary,
+                                          fontSize: 19,
+                                          fontWeight: FontWeight.w600
+                                        ),
                                         border: OutlineInputBorder(
                                           borderSide: BorderSide.none,
                                         ),
