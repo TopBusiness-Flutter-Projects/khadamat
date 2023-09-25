@@ -17,6 +17,7 @@ import 'core/utils/app_strings.dart';
 import 'package:khadamat/injector.dart' as injector;
 
 import 'features/add services/cubit/add_service_cubit.dart';
+import 'features/details_from_deeplink/details_deeplink/details_deeplink_cubit.dart';
 import 'features/favorite/cubit/favorite_cubit.dart';
 import 'features/home/cubit/home_cubit.dart';
 import 'features/login/cubit/login_cubit.dart';
@@ -102,6 +103,10 @@ class _KhadamatState extends State<Khadamat> {
         ),
         BlocProvider(
           create: (_) => injector.serviceLocator<ResetPasswordCubit>(),
+        ),
+
+        BlocProvider(
+          create: (_) => injector.serviceLocator<DetailsDeeplinkCubit>(),
         ),
 
 

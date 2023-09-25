@@ -19,7 +19,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+3
 
 environment:
-  sdk: '>=2.19.5 <3.0.0'
+  sdk: '>=3.0.6 <4.0.0'
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -60,9 +60,9 @@ dependencies:
   intl_phone_number_input:
   page_transition: "^2.0.9"
   pin_code_fields: ^7.4.0
-  firebase_messaging: ^14.2.1
-  firebase_auth: ^4.2.6
-  firebase_core: ^2.5.0
+  firebase_messaging: ^14.6.8
+  firebase_auth: ^4.10.0
+  firebase_core: ^2.16.0
   fluttertoast: ^8.0.7
   flutter_rating_bar: ^4.0.1
   share: ^2.0.4

@@ -15,6 +15,7 @@ import 'core/api/app_interceptors.dart';
 import 'core/api/base_api_consumer.dart';
 import 'core/api/dio_consumer.dart';
 import 'core/remote/service.dart';
+import 'features/details_from_deeplink/details_deeplink/details_deeplink_cubit.dart';
 import 'features/favorite/cubit/favorite_cubit.dart';
 import 'features/home/cubit/home_cubit.dart';
 import 'features/login/cubit/login_cubit.dart';
@@ -125,6 +126,11 @@ Future<void> setup() async {
   );
   serviceLocator.registerFactory(
         () => ResetPasswordCubit(
+      serviceLocator(),
+    ),
+
+  );  serviceLocator.registerFactory(
+        () => DetailsDeeplinkCubit(
       serviceLocator(),
     ),
 

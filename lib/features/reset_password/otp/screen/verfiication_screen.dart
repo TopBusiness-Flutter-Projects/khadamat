@@ -42,21 +42,22 @@ class _VerificationScreenState extends State<VerificationScreen> {
     //String lang = EasyLocalization.of(context)!.locale.languageCode;
     return BlocConsumer<ResetPasswordCubit,ResetPasswordState>(
       listener: (context, state) {
-      if(state is ModelExistState){
-        Navigator.pushNamed(context, Routes.homeRoute);
-      }
-      if(state is ModelDoesNotExist){
-        Navigator.pushNamed(context, Routes.registerScreenRoute);
-      }
+
       },
       builder: (context, state) {
 
      return
        Scaffold(
         resizeToAvoidBottomInset: false,
-        body: BlocBuilder<LoginCubit, LoginState>(
+        body: BlocBuilder<ResetPasswordCubit, ResetPasswordState>(
           builder: (context, state) {
             ResetPasswordCubit cubit = context.read<ResetPasswordCubit>();
+            if(state is OnSmsCodeSent){
+              if(state.sms.isNotEmpty){
+              setState(() {
+                currentText=state.sms;
+              });
+            }}
             // if (state is CheckCodeSuccessfully) {
             //   Future.delayed(const Duration(milliseconds: 500), () {
             //     context.read<RegisterCubit>().isCodeSend = true;
@@ -183,16 +184,15 @@ class _VerificationScreenState extends State<VerificationScreen> {
                         borderRadius: 30,
                         onClick: () async {
                          // formKey1.currentState!.validate();
+
                           if (currentText.length != 6) {
                             errorController!.add(
                               ErrorAnimationType.shake,
                             ); // Triggering error shake animation
                             setState(() => hasError = true);
-                          } else {
-                            //TODO
-
-                         //   await context.read<ResetPasswordCubit>().verifySmsCode(currentText);
-
+                          }
+                          else {
+                            await context.read<ResetPasswordCubit>().verifySmsCode(currentText);
                              setState(
                                () {
                                 hasError = false;

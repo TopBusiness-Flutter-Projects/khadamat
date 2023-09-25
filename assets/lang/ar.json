@@ -11,6 +11,8 @@
   "forgot_password": "نسيت كلمة المرور",
   "have_no_account": "ليس لديك حساب معنا ؟ انشاء حساب",
   "new_account": "تسجيل حساب جديد",
+  "enter_new_password": "كلمة المرور الجديدة",
+  "confirm_new_password": "تأكيد كلمة المرور",
   "register": "انشاء حساب",
   "login": "تسجيل الدخول",
   "city": "المدينة",

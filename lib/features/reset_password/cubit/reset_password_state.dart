@@ -20,7 +20,7 @@ class ModelDoesNotExist extends ResetPasswordState {}
 class CheckCodeSuccessfully extends ResetPasswordState {}
 
 class OnSmsCodeSent extends ResetPasswordState {
-  final String sms;
+   String sms;
 
   OnSmsCodeSent(this.sms);
 }

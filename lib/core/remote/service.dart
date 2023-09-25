@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:khadamat/core/models/notification_model.dart';
+import 'package:khadamat/core/models/service_details.dart';
 import 'package:khadamat/core/models/service_model.dart';
 import 'package:khadamat/core/network/error_message_model.dart';
 import 'package:path_provider/path_provider.dart';
@@ -79,6 +80,7 @@ class ServiceApi {
 
 
   Future<Either<Failure,LoginModel>> resetPassword(String phone, String password1, String password2)async{
+    print("phone = $phone pass1 = $password1 , pass2 = $password2");
     try {
       var response = await dio.post(
         EndPoints.resetPasswordUrl,
@@ -89,7 +91,8 @@ class ServiceApi {
 
         },
       );
-
+      print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAa");
+    print(response);
       return Right(LoginModel.fromJson(response));
 
 
@@ -274,6 +277,23 @@ class ServiceApi {
       return Left(ServerFailure());
     }
   }
+
+  Future<Either<Failure, ServiceDetails>> serviceDetails(
+      int serviceId) async {
+    LoginModel loginModel = await Preferences.instance.getUserModel();
+    try {
+      final response = await dio.get(
+        EndPoints.getServiceDetailsUrl + serviceId.toString(),
+        options: Options(
+          headers: {'Authorization': loginModel.data!.accessToken!},
+        ),
+      );
+      return Right(ServiceDetails.fromJson(response));
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
+
   Future<Either<Failure, UpdatedModel>> editService(
       int catId,ServiceToUpdate serviceToUpdate) async {
     LoginModel loginModel = await Preferences.instance.getUserModel();

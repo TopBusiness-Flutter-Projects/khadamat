@@ -20,7 +20,9 @@ class ResetPasswordCubit extends Cubit<ResetPasswordState> {
   TextEditingController phoneController = TextEditingController();
   TextEditingController passwordController1 = TextEditingController();
   TextEditingController passwordController2 = TextEditingController();
+  TextEditingController codecontrol = TextEditingController();
   LoginModel? model;
+  LoginModel? model2;
   var responseCode;
   bool isObscureText = true;
   IconData passwordIcon = Icons.visibility;
@@ -105,15 +107,19 @@ sendSmsCode({String? code, String? phoneNum}) async {
     forceResendingToken: resendToken,
     phoneNumber:
         '${code ?? phoneCode}' + "${phoneNum ?? phoneController.text}",
-     timeout: Duration(seconds: 15),
+     timeout: Duration(seconds: 25),
 
     verificationCompleted: (PhoneAuthCredential credential) {
       smsCode = credential.smsCode!;
+      print("sms code = $smsCode");
       verification_Id = credential.verificationId;
       print("_____________________________________________ $verification_Id");
       print("verificationId=$verification_Id");
+      if(codecontrol.hasListeners){
+      codecontrol.text=smsCode.toString();}
+      verifySmsCode(smsCode);
       emit(OnSmsCodeSent(smsCode));
-       //verifySmsCode(smsCode);
+     //  verifySmsCode(smsCode);
     },
     verificationFailed: (FirebaseAuthException e) {
       emit(CheckCodeInvalidCode());
@@ -124,6 +130,7 @@ sendSmsCode({String? code, String? phoneNum}) async {
       this.verification_Id = verificationId;
 
       print("verificationId=>${verificationId}");
+
       emit(OnSmsCodeSent(''));
     },
 
@@ -143,18 +150,19 @@ verifySmsCode(String smsCode) async {
   await _mAuth.signInWithCredential(credential).then((value) async {
     var model= await Preferences.instance.getUserModel();
     emit(CheckCodeSuccessfully());
-    if(model.data==null){
-      print("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
-      print(model.data);
-      emit(ModelDoesNotExist());
-     // Navigator.pushNamed(context, Routes.otpRoute);
-    }else{
-      print("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
-      print(model.data!.user!.name);
-      emit(ModelExistState());
-      Get.offAndToNamed(Routes.homeRoute);
-
-    }
+    Get.offAndToNamed(Routes.resetPasswordRoute);
+   //  if(model.data==null){
+   //    print("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+   //    print(model.data);
+   //    emit(ModelDoesNotExist());
+   //
+   //  }else{
+   //    print("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+   //    print(model.data!.user!.name);
+   //    emit(ModelExistState());
+   //    Get.offAndToNamed(Routes.homeRoute);
+   //
+   // }
 
 
   }).catchError((error) {
@@ -176,8 +184,23 @@ verifySmsCode(String smsCode) async {
           emit(resetPasswordLoaded());
           responseCode = 200;
           print("r.code == 200");
-          model = r;
+          model2 = r;
+          var model= await Preferences.instance.getUserModel();
+          emit(CheckCodeSuccessfully());
+          //Get.offAndToNamed(Routes.resetPasswordRoute);
+          if(model.data==null){
+            print("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+            print(model.data);
+            emit(ModelDoesNotExist());
 
+
+          }else{
+            print("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+            print(model.data!.user!.name);
+            emit(ModelExistState());
+            Get.offAndToNamed(Routes.homeRoute);
+
+          }
           Get.toNamed( Routes.homeRoute);
 
         }

@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart'as oo;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../config/routes/app_routes.dart';
 import '../../../core/utils/app_colors.dart';
 import '../../../core/utils/assets_manager.dart';
 import '../../../core/widgets/custom_button.dart';
@@ -27,7 +28,15 @@ class ResetPasswordScreen extends StatelessWidget {
             fit: BoxFit.cover,
           ),
         ),
-        child: BlocBuilder<ResetPasswordCubit, ResetPasswordState>(
+        child: BlocConsumer<ResetPasswordCubit, ResetPasswordState>(
+          listener: (context, state) {
+            if(state is ModelExistState){
+              Navigator.pushNamed(context, Routes.homeRoute);
+            }
+            if(state is ModelDoesNotExist){
+              Navigator.pushNamed(context, Routes.registerScreenRoute);
+            }
+          },
           builder: (context, state) {
             ResetPasswordCubit cubit = context.read<ResetPasswordCubit>();
             return Form(
@@ -52,7 +61,7 @@ class ResetPasswordScreen extends StatelessWidget {
                     ),
 
                     SizedBox(height: 20,),
-                    //password
+                    //password 1
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 27.0,),
                       child: TextFormField(
@@ -71,7 +80,7 @@ class ResetPasswordScreen extends StatelessWidget {
                         },
 
                         decoration: InputDecoration(
-                          hintText: "enter_password".tr(),
+                          hintText: "enter_new_password".tr(),
                           prefixIcon: InkWell(
                             onTap: () {
                               cubit.changePasswordIcon();
@@ -97,7 +106,7 @@ class ResetPasswordScreen extends StatelessWidget {
                       ),
                     ),
                     SizedBox(height: 20,),
-                    //password
+                    //password 2
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 27.0,),
                       child: TextFormField(
@@ -116,7 +125,7 @@ class ResetPasswordScreen extends StatelessWidget {
                         },
 
                         decoration: InputDecoration(
-                          hintText: "enter_password".tr(),
+                          hintText: "confirm_new_password".tr(),
                           prefixIcon: InkWell(
                             onTap: () {
                               cubit.changePasswordIcon();
@@ -146,7 +155,7 @@ class ResetPasswordScreen extends StatelessWidget {
 
                     SizedBox(height: MediaQuery.of(context).size.height*0.03),
                     CustomButton(
-                      text: 'send'.tr(),
+                      text: 'confirm'.tr(),
                       color: AppColors.secondPrimary,
                       paddingHorizontal: 40,
                       borderRadius: 30,

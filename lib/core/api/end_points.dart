@@ -3,6 +3,7 @@ class EndPoints {
   static const String deepbaseUrl = 'https://khdamat.topbusiness.io/';//khdamat.topbusiness.io  l-3mda.com
   static const String loginUrl = '${baseUrl}auth/login';
   static const String homeUrl = '${baseUrl}home';
+  static const String getServiceDetailsUrl = '${baseUrl}services/get_service';
   static const String resetPasswordUrl = '${baseUrl}auth/resetPassword';
   static const String checkPhoneUrl = '${baseUrl}auth/checkPhone';
   static const String citiesUrl = '${baseUrl}cities';

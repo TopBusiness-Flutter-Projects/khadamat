@@ -57,6 +57,7 @@ class RegisterCubit extends Cubit<RegisterState> {
           else if(r.code==409){
             //  registerModel = r ;
             emit(RegisterFailedUserExistState());
+            errorGetBar('المستخدم موجود بالفعل');
           }
 
         });

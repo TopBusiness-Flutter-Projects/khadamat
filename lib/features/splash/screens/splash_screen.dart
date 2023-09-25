@@ -2,13 +2,16 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:khadamat/core/preferences/preferences.dart';
 import 'package:khadamat/core/utils/assets_manager.dart';
+import 'package:khadamat/features/reset_password/cubit/reset_password_cubit.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uni_links/uni_links.dart';
 
 import '../../../config/routes/app_routes.dart';
+import '../../details_from_deeplink/details_deeplink/details_deeplink_cubit.dart';
 import '../../login/screens/login.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -53,6 +56,8 @@ serviceId=int.parse(_initialURI!.path.split("/").last);
       if(serviceId!=null){
         print("kkkkk");
         Preferences.instance.clearServiceId();
+        await context.read<DetailsDeeplinkCubit>().getServiceDetails(serviceId);
+
         Navigator.pushReplacementNamed(context, Routes.detailsFromDeepLinkRoute,arguments:serviceId );
       }
     else{
