@@ -283,11 +283,16 @@ class ServiceApi {
     LoginModel loginModel = await Preferences.instance.getUserModel();
     try {
       final response = await dio.get(
-        EndPoints.getServiceDetailsUrl + serviceId.toString(),
+        EndPoints.getServiceDetailsUrl,
+        queryParameters: {
+          "service_id":serviceId
+        },
         options: Options(
           headers: {'Authorization': loginModel.data!.accessToken!},
         ),
       );
+      print("🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓");
+      print(response);
       return Right(ServiceDetails.fromJson(response));
     } on ServerException {
       return Left(ServerFailure());

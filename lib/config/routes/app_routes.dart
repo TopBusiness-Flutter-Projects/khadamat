@@ -55,7 +55,7 @@ class Routes {
 }
 
 class AppRoutes {
-  static String route = '';
+  //static String route = '';
 
   static Route onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -155,16 +155,17 @@ class AppRoutes {
           // Extract the service model argument from the settings arguments map
           builder: (context) => Details(service: service),
         );
-      case Routes.detailsFromDeepLinkRoute:
-        final id = settings.arguments as int;
-        return MaterialPageRoute(
-          builder: (context) => DetailsFromDeepLink(id: id),
-        );
+      // case Routes.detailsFromDeepLinkRoute:
+      //   final id = settings.arguments as int;
+      //   return MaterialPageRoute(
+      //     builder: (context) => DetailsFromDeepLink(id: id),
+      //   );
 
 
       default:
-        return undefinedRoute();
-    }
+        return MaterialPageRoute(
+          builder: (context) => const SplashScreen(),
+        );    }
   }
 
   static Route<dynamic> undefinedRoute() {

@@ -24,7 +24,7 @@ Future<void> main() async {
   await injector.setup();
   Bloc.observer = AppBlocObserver();
   // Call the function to initialize the uni_links package
-  initUniLinks2();
+
 
   runApp(
     EasyLocalization(
@@ -73,37 +73,5 @@ Future<void> main() async {
 // }
 
 //*******************************************************************
-void initUniLinks2() async {
-  try {
-    // Request permission to handle incoming links if needed
-    await uriLinkStream.listen((Uri? uri) {
-      // Handle the received deep link
-      handleDeepLink(uri);
-    }, onError: (err) {
-      print("Error handling deep link: $err");
-    });
 
-    // Get the initial deep link if the app was opened from a deep link
-    Uri? initialUri = await getInitialUri();
-    if (initialUri != null) {
-      // Handle the initial deep link
-      handleDeepLink(initialUri);
-    }
-  } on PlatformException {
-    print('Error initializing deep link handling.');
-  }
-}
-void handleDeepLink(Uri? uri) {
-  // Parse the deep link and extract the relevant data
-
-print(uri.toString());
-  // Navigate to the appropriate screen based on the extracted data
-  // For example, you can use a Navigator.push() method to navigate to the details screen
-  if (uri != null) {
-    String? serviceId = uri.toString().split("/").last;
-    int id = int.parse(serviceId);
-    Preferences.instance.setServiceId(id);
-
-  }
-}
 

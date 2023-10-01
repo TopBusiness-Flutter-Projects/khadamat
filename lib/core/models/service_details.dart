@@ -38,6 +38,9 @@ class Data {
   final int? cityId;
   final int? categoryId;
   final dynamic subCategoryId;
+  final dynamic following;
+  final dynamic followers;
+  final dynamic reviews;
   final String? name;
   final String? location;
   final String? longitude;
@@ -63,6 +66,9 @@ class Data {
     this.longitude,
     this.latitude,
     this.phones,
+    this.following,
+    this.followers,
+    this.reviews,
     this.details,
     this.logo,
     this.images,
@@ -83,6 +89,9 @@ class Data {
     location: json["location"],
     longitude: json["longitude"],
     latitude: json["latitude"],
+    following:json["following"]??"10",
+    followers:json["followers"]??"20",
+    reviews:json["reviews"]??"30",
     phones: json["phones"] == null ? [] : List<String>.from(json["phones"]!.map((x) => x)),
     details: json["details"],
     logo: json["logo"],
@@ -97,6 +106,9 @@ class Data {
   Map<String, dynamic> toJson() => {
     "id": id,
     "user_id": userId,
+    "following":following,
+    "followers":followers,
+    "reviews":reviews,
     "city_id": cityId,
     "category_id": categoryId,
     "sub_category_id": subCategoryId,

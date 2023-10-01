@@ -31,34 +31,48 @@ class _SplashScreenState extends State<SplashScreen>
   StreamSubscription? _streamSubscription;
   late Timer _timer;
 
-  _goNext() {
-    _getStoreUser();
-  }
+  // _goNext() {
+  //   _getStoreUser();
+  // }
 
   _startDelay() async {
     _timer = Timer(
       const Duration(milliseconds: 1000),
       () {
+        print("🥳🥳🥳🥳🥳🥳🥳🥳🥳🥳🥳🥳🥳🥳🥳🥳🥳");
+        getStoreUser();
         // Preferences.instance.clearAllData();
-        _goNext();
+       // _goNext();
       },
     );
   }
 
-  Future<void> _getStoreUser() async {
+  Future<void> getStoreUser() async {
+    print("(((((((((((((((((((((((((((((((((((((((((((((((((((((((");
     SharedPreferences prefs = await SharedPreferences.getInstance();
     if (prefs.getString('user') != null) {
   int? serviceId = await Preferences.instance.getServiceId();
+
   if(_initialURI!=null&&serviceId==null){
+
     print(_initialURI.toString());
 serviceId=int.parse(_initialURI!.path.split("/").last);
   }
-      if(serviceId!=null){
-        print("kkkkk");
-        Preferences.instance.clearServiceId();
-        await context.read<DetailsDeeplinkCubit>().getServiceDetails(serviceId);
+  print("kkkkkSSSS");
+print(serviceId.toString());
+if(serviceId==null){
+  Navigator.pushReplacementNamed(
+      context,
+      Routes.homeRoute
+  );
+}
+ else if(serviceId>0){
+        print("kkkkkSSSS");
+        Preferences.instance.setServiceId(0);
+      //  await context.read<DetailsDeeplinkCubit>().getServiceDetails(serviceId);
 
         Navigator.pushReplacementNamed(context, Routes.detailsFromDeepLinkRoute,arguments:serviceId );
+         context.read<DetailsDeeplinkCubit>().getServiceDetails(serviceId);
       }
     else{
         Navigator.pushReplacementNamed(
@@ -66,7 +80,9 @@ serviceId=int.parse(_initialURI!.path.split("/").last);
             Routes.homeRoute
         );
       }
-    } else {
+    }
+    //go to login
+    else {
       Navigator.pushReplacement(
         context,
         PageTransition(
@@ -82,9 +98,11 @@ serviceId=int.parse(_initialURI!.path.split("/").last);
   @override
   void initState() {
     super.initState();
-    _startDelay();
     _initURIHandler();
     _incomingLinkHandler();
+    _startDelay();
+
+
   }
 
   @override

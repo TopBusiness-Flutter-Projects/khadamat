@@ -142,15 +142,17 @@ sendSmsCode({String? code, String? phoneNum}) async {
 }
 
 verifySmsCode(String smsCode) async {
+  print(smsCode);
   print(verification_Id);
   PhoneAuthCredential credential = PhoneAuthProvider.credential(
     verificationId: verification_Id!,
     smsCode: smsCode,
   );
   await _mAuth.signInWithCredential(credential).then((value) async {
-    var model= await Preferences.instance.getUserModel();
-    emit(CheckCodeSuccessfully());
+   // var model= await Preferences.instance.getUserModel();
     Get.offAndToNamed(Routes.resetPasswordRoute);
+
+    emit(CheckCodeSuccessfully());
    //  if(model.data==null){
    //    print("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
    //    print(model.data);
@@ -170,7 +172,7 @@ verifySmsCode(String smsCode) async {
   });
 }
 
-  resetPassword()async{
+  resetPassword(BuildContext context)async{
     final response = await api.resetPassword(phoneController.text,passwordController1.text,passwordController2.text);
     response.fold(
           (l) {
@@ -185,23 +187,24 @@ verifySmsCode(String smsCode) async {
           responseCode = 200;
           print("r.code == 200");
           model2 = r;
-          var model= await Preferences.instance.getUserModel();
-          emit(CheckCodeSuccessfully());
+          Navigator.pushNamedAndRemoveUntil(context, Routes.loginRoute, (route) => false);
+        //  var model= await Preferences.instance.getUserModel();
+
           //Get.offAndToNamed(Routes.resetPasswordRoute);
-          if(model.data==null){
-            print("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
-            print(model.data);
-            emit(ModelDoesNotExist());
+          // if(model.data==null){
+          //   print("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+          //   print(model.data);
+          //   emit(ModelDoesNotExist());
+          //
+          //
+          // }else{
+          //   print("111111111111111111111111111111111111");
+          //   print(model.data!.user!.name);
+          //   emit(ModelExistState());
+          //  // Get.offAndToNamed(Routes.homeRoute);
+          //
+          // }
 
-
-          }else{
-            print("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
-            print(model.data!.user!.name);
-            emit(ModelExistState());
-            Get.offAndToNamed(Routes.homeRoute);
-
-          }
-          Get.toNamed( Routes.homeRoute);
 
         }
         else if (r.code == 408) {

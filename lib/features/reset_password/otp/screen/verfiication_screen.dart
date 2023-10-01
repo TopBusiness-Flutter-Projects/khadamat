@@ -174,42 +174,47 @@ class _VerificationScreenState extends State<VerificationScreen> {
                               fontWeight: FontWeight.w400),
                         ),
                       ),
-                      const SizedBox(height: 20),
+                      const SizedBox(height: 6),
                       CustomButton(
                         text: oo.tr('done_btn'),
                        // text: 'تـم',
-                        color: AppColors.secondPrimary,
+                        color: AppColors.primary,
                         paddingHorizontal: 40,
                         textcolor: AppColors.black,
                         borderRadius: 30,
-                        onClick: () async {
-                         // formKey1.currentState!.validate();
-
+                        onClick: ()  {
+                        //  Navigator.pushNamed(context, Routes.resetPasswordRoute);
                           if (currentText.length != 6) {
+                           // print("lllll");
                             errorController!.add(
                               ErrorAnimationType.shake,
                             ); // Triggering error shake animation
                             setState(() => hasError = true);
                           }
                           else {
-                            await context.read<ResetPasswordCubit>().verifySmsCode(currentText);
-                             setState(
-                               () {
-                                hasError = false;
-                                // Navigator.push(
-                                //   context,
-                                //   MaterialPageRoute(
-                                //       builder: (context) => HomeScreen()),
-                                // );
-                                // context
-                                //     .read<LoginCubit>()
-                                //     .verifySmsCode(currentText);
-                              },
-                             );
+                             context.read<ResetPasswordCubit>().verifySmsCode(currentText);
+                             // setState(
+                             //   () {
+                             //    hasError = false;
+                             //    // Navigator.push(
+                             //    //   context,
+                             //    //   MaterialPageRoute(
+                             //    //       builder: (context) => HomeScreen()),
+                             //    // );
+                             //    // context
+                             //    //     .read<LoginCubit>()
+                             //    //     .verifySmsCode(currentText);
+                             //  },
+                             // );
                           }
                         },
                       ),
-                      const SizedBox(height: 12),
+                       SizedBox(height: MediaQuery.of(context).size.height*0.065),
+                      Image.asset(ImageAssets.bottomImage,
+                        height:MediaQuery.of(context).size.height*0.32,
+                        width: double.infinity,
+                        fit: BoxFit.cover,
+                      )
                       // Align(
                       //   alignment: Alignment.center,
                       //   // alignment: lang == 'en'
@@ -236,11 +241,11 @@ class _VerificationScreenState extends State<VerificationScreen> {
                     ],
                   ),
                 ),
-                Positioned(
-                  bottom: 0,
-                    right: 0,
-                    left: 0,
-                    child: Image.asset(ImageAssets.bottomImage))
+                // Positioned(
+                //   bottom: 0,
+                //     right: 0,
+                //     left: 0,
+                //     child: Image.asset(ImageAssets.bottomImage))
               ],
             );
           },
