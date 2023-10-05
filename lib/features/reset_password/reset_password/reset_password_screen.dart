@@ -34,7 +34,7 @@ class ResetPasswordScreen extends StatelessWidget {
               Navigator.pushNamed(context, Routes.homeRoute);
             }
             if(state is ModelDoesNotExist){
-              Navigator.pushNamed(context, Routes.registerScreenRoute);
+              Navigator.pushNamed(context, Routes.loginRoute);
             }
           },
           builder: (context, state) {
@@ -161,7 +161,7 @@ class ResetPasswordScreen extends StatelessWidget {
                       borderRadius: 30,
                       onClick: () async {
                         if(formKey5.currentState!.validate()){
-                          await cubit.resetPassword();
+                          await cubit.resetPassword(context);
                         }
                       },
                     ),

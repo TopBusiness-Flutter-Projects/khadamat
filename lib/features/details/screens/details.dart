@@ -87,7 +87,7 @@ class Details extends StatelessWidget {
                          // Text("${cubit.getCityName(service.cityId)}"),
                         // Text("${ cubit.getAddressFromLatLng(double.parse(service.latitude??"30.0459"), double.parse(service.latitude??"31.2243"))}",),
                             FutureBuilder(
-                              future: cubit.getAddressFromLatLng(double.parse(service.latitude??"30.0459"), double.parse(service.latitude??"31.2243")),
+                              future: cubit.getAddressFromLatLng(double.parse(service.latitude??"30.0459"), double.parse(service.longitude??"31.2243")),
                               builder: (context, snapshot) {
                               if(snapshot.connectionState==ConnectionState.done){
                                 return SizedBox(
@@ -146,7 +146,7 @@ class Details extends StatelessWidget {
                           ),
                           InkWell(
                             onTap: () async {
-                              cubit.shareApplication();
+                              cubit.shareApplication(service.id);
                               // await Share.share(
                               //     EndPoints.deepLink + service.id.toString());
 

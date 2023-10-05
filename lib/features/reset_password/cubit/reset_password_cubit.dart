@@ -23,7 +23,6 @@ class ResetPasswordCubit extends Cubit<ResetPasswordState> {
   TextEditingController codecontrol = TextEditingController();
   LoginModel? model;
   LoginModel? model2;
-  String currentText = "";
   var responseCode;
   bool isObscureText = true;
   IconData passwordIcon = Icons.visibility;
@@ -116,9 +115,9 @@ sendSmsCode({String? code, String? phoneNum}) async {
       verification_Id = credential.verificationId;
       print("_____________________________________________ $verification_Id");
       print("verificationId=$verification_Id");
-     // if(codecontrol.hasListeners){
-      // codecontrol.text=smsCode.toString();}
-     // verifySmsCode();
+      if(codecontrol.hasListeners){
+      codecontrol.text=smsCode.toString();}
+      verifySmsCode(smsCode);
       emit(OnSmsCodeSent(smsCode));
      //  verifySmsCode(smsCode);
     },
@@ -142,17 +141,18 @@ sendSmsCode({String? code, String? phoneNum}) async {
   );
 }
 
-verifySmsCode() async {
-  print("verification_Id");
+verifySmsCode(String smsCode) async {
+  print(smsCode);
   print(verification_Id);
   PhoneAuthCredential credential = PhoneAuthProvider.credential(
     verificationId: verification_Id!,
-    smsCode: currentText,
+    smsCode: smsCode,
   );
   await _mAuth.signInWithCredential(credential).then((value) async {
-    var model= await Preferences.instance.getUserModel();
-    emit(CheckCodeSuccessfully());
+   // var model= await Preferences.instance.getUserModel();
     Get.offAndToNamed(Routes.resetPasswordRoute);
+
+    emit(CheckCodeSuccessfully());
    //  if(model.data==null){
    //    print("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
    //    print(model.data);
@@ -172,7 +172,7 @@ verifySmsCode() async {
   });
 }
 
-  resetPassword()async{
+  resetPassword(BuildContext context)async{
     final response = await api.resetPassword(phoneController.text,passwordController1.text,passwordController2.text);
     response.fold(
           (l) {
@@ -187,23 +187,24 @@ verifySmsCode() async {
           responseCode = 200;
           print("r.code == 200");
           model2 = r;
-          var model= await Preferences.instance.getUserModel();
-          emit(CheckCodeSuccessfully());
+          Navigator.pushNamedAndRemoveUntil(context, Routes.loginRoute, (route) => false);
+        //  var model= await Preferences.instance.getUserModel();
+
           //Get.offAndToNamed(Routes.resetPasswordRoute);
-          if(model.data==null){
-            print("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
-            print(model.data);
-            emit(ModelDoesNotExist());
+          // if(model.data==null){
+          //   print("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+          //   print(model.data);
+          //   emit(ModelDoesNotExist());
+          //
+          //
+          // }else{
+          //   print("111111111111111111111111111111111111");
+          //   print(model.data!.user!.name);
+          //   emit(ModelExistState());
+          //  // Get.offAndToNamed(Routes.homeRoute);
+          //
+          // }
 
-
-          }else{
-            print("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
-            print(model.data!.user!.name);
-            emit(ModelExistState());
-            Get.offAndToNamed(Routes.homeRoute);
-
-          }
-          Get.toNamed( Routes.homeRoute);
 
         }
         else if (r.code == 408) {

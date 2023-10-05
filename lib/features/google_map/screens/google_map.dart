@@ -41,7 +41,7 @@ class _GoogleMapScreenState extends State<GoogleMapScreen> {
           floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
           floatingActionButton: FloatingActionButton(
             onPressed: () async {
-              cubit.getTheUserPermissionAndLocation();
+             await cubit.getTheUserPermissionAndLocation();
               await cubit.moveCamera2(cubit.selectedLocation);
             },
             child: Icon(Icons.directions),
@@ -96,8 +96,9 @@ class _GoogleMapScreenState extends State<GoogleMapScreen> {
                   child: ElevatedButton(
                     child: Text("confirm").tr(),
                     onPressed: () {
-                      context.read<AddServiceCubit>().setAddress(cubit.place);
                       Navigator.pop(context);
+                      context.read<AddServiceCubit>().setAddress(cubit.place);
+
                   },),
                 ),
               )

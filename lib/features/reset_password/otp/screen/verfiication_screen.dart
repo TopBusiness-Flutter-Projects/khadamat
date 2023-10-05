@@ -28,7 +28,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
   bool hasError = false;
 
   StreamController<ErrorAnimationType>? errorController;
-
+  String currentText = "";
 
   @override
   void dispose() {
@@ -54,9 +54,9 @@ class _VerificationScreenState extends State<VerificationScreen> {
             ResetPasswordCubit cubit = context.read<ResetPasswordCubit>();
             if(state is OnSmsCodeSent){
               if(state.sms.isNotEmpty){
-             // setState(() {
-                cubit.currentText=state.sms;
-             // });
+              setState(() {
+                currentText=state.sms;
+              });
             }}
             // if (state is CheckCodeSuccessfully) {
             //   Future.delayed(const Duration(milliseconds: 500), () {
@@ -154,9 +154,9 @@ class _VerificationScreenState extends State<VerificationScreen> {
 
                               onChanged: (value) {
                                 print(value);
-                              //  setState(() {
-                                  cubit.currentText = value;
-                               // });
+                                setState(() {
+                                  currentText = value;
+                                });
                               },
                             ),
                           ),
@@ -183,30 +183,29 @@ class _VerificationScreenState extends State<VerificationScreen> {
                         textcolor: AppColors.black,
                         borderRadius: 30,
                         onClick: () async {
-                        //  Navigator.pushReplacementNamed(context, Routes.resetPasswordRoute);
                          // formKey1.currentState!.validate();
 
-                          if (cubit.currentText.length != 6) {
-                            // errorController!.add(
-                            //   ErrorAnimationType.shake,
-                            // ); // Triggering error shake animation
-                            // setState(() => hasError = true);
+                          if (currentText.length != 6) {
+                            errorController!.add(
+                              ErrorAnimationType.shake,
+                            ); // Triggering error shake animation
+                            setState(() => hasError = true);
                           }
                           else {
-                            await context.read<ResetPasswordCubit>().verifySmsCode();
-                             // setState(
-                             //   () {
-                             //    hasError = false;
-                             //    // Navigator.push(
-                             //    //   context,
-                             //    //   MaterialPageRoute(
-                             //    //       builder: (context) => HomeScreen()),
-                             //    // );
-                             //    // context
-                             //    //     .read<LoginCubit>()
-                             //    //     .verifySmsCode(currentText);
-                             //  },
-                             // );
+                            await context.read<ResetPasswordCubit>().verifySmsCode(currentText);
+                             setState(
+                               () {
+                                hasError = false;
+                                // Navigator.push(
+                                //   context,
+                                //   MaterialPageRoute(
+                                //       builder: (context) => HomeScreen()),
+                                // );
+                                // context
+                                //     .read<LoginCubit>()
+                                //     .verifySmsCode(currentText);
+                              },
+                             );
                           }
                         },
                       ),
