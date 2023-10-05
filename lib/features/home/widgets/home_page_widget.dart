@@ -42,7 +42,7 @@ class HomePageWidget extends StatelessWidget {
                           MaterialPageRoute(
                             builder: (context) =>
                                 ServicesOfCategories(
-                                  catId:0
+                                  catId: 0
                                   //cubit.categories[index].id!,
                                 ),
                           ),

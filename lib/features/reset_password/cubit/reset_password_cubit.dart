@@ -23,6 +23,7 @@ class ResetPasswordCubit extends Cubit<ResetPasswordState> {
   TextEditingController codecontrol = TextEditingController();
   LoginModel? model;
   LoginModel? model2;
+  String currentText = "";
   var responseCode;
   bool isObscureText = true;
   IconData passwordIcon = Icons.visibility;
@@ -115,9 +116,9 @@ sendSmsCode({String? code, String? phoneNum}) async {
       verification_Id = credential.verificationId;
       print("_____________________________________________ $verification_Id");
       print("verificationId=$verification_Id");
-      if(codecontrol.hasListeners){
-      codecontrol.text=smsCode.toString();}
-      verifySmsCode(smsCode);
+     // if(codecontrol.hasListeners){
+      // codecontrol.text=smsCode.toString();}
+     // verifySmsCode();
       emit(OnSmsCodeSent(smsCode));
      //  verifySmsCode(smsCode);
     },
@@ -141,11 +142,12 @@ sendSmsCode({String? code, String? phoneNum}) async {
   );
 }
 
-verifySmsCode(String smsCode) async {
+verifySmsCode() async {
+  print("verification_Id");
   print(verification_Id);
   PhoneAuthCredential credential = PhoneAuthProvider.credential(
     verificationId: verification_Id!,
-    smsCode: smsCode,
+    smsCode: currentText,
   );
   await _mAuth.signInWithCredential(credential).then((value) async {
     var model= await Preferences.instance.getUserModel();
