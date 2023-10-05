@@ -75,7 +75,8 @@ class _PrivacyAboutState extends State<PrivacyAbout> {
                                     TextStyle(fontSize: 25, fontWeight: FontWeight.w500),
                               ).tr(),
                         cubit.isPrivacy?
-                        Text("${cubit.settingModel?.data?.privacyAr}",textAlign: TextAlign.center,):
+                       // Text("${cubit.settingModel?.data?.privacyAr}",textAlign: TextAlign.center,):
+                        cubit.settingModel?.data?.privacyAr==null?CircularProgressIndicator():   Html(data:cubit.settingModel?.data?.privacyAr):
                         cubit.settingModel?.data?.aboutAr==null?CircularProgressIndicator():   Html(data:cubit.settingModel?.data?.aboutAr ),
 
 
