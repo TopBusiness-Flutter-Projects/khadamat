@@ -278,7 +278,8 @@ class AddServicesScreen extends StatelessWidget {
                            // height: 110,
                             width: 200,
                             child: Text(
-                              "${cubit.placeToBack?.street??""}  ${cubit.placeToBack?.country??""}",
+
+                              "${cubit.place?.street??""}  ${cubit.place?.country??""}",
                               maxLines: 1,
                               style: TextStyle(color: Colors.black),
                             ),
@@ -435,7 +436,7 @@ class AddServicesScreen extends StatelessWidget {
                           fontSize: 16.0,
                         );
                       }
-                      if(context.read<GoogleMapsCubit>().isOpened == false){
+                      if(cubit.isOpened == false){
                         Fluttertoast.showToast(
                           msg: "اختر الموقع",
                           toastLength: Toast.LENGTH_LONG,
@@ -449,7 +450,7 @@ class AddServicesScreen extends StatelessWidget {
                           cubit.serviceLogoImage != null &&
                           cubit.serviceImages.length != 0&&
                           cubit.currentCategory!=null&&cubit.currentCity!=null&&
-                          context.read<GoogleMapsCubit>().isOpened == true
+                          cubit.isOpened == true
                       ) {
                         print("________________________________________");
                         print( cubit.isUpdate);
@@ -460,8 +461,8 @@ class AddServicesScreen extends StatelessWidget {
                           ServiceToUpdate serviceToUpdate = ServiceToUpdate(
                             name: cubit.nameController.text,
                             cityId: cubit.currentCity?.id,
-                            longitude:context.read<GoogleMapsCubit>().selectedLocation.longitude ,
-                            latitude:context.read<GoogleMapsCubit>().selectedLocation.latitude ,
+                            longitude:cubit.selectedLocation.longitude ,
+                            latitude:cubit.selectedLocation.latitude ,
                             phones: [
                               cubit.contact1Controller.text,
                               cubit.contact2Controller.text
@@ -479,8 +480,8 @@ class AddServicesScreen extends StatelessWidget {
                         }
                         else{
                           cubit.serviceModel = ServiceModel(
-                            longitude: context.read<GoogleMapsCubit>().selectedLocation.longitude,
-                             latitude:context.read<GoogleMapsCubit>().selectedLocation.latitude ,
+                            longitude: cubit.selectedLocation.longitude,
+                             latitude:cubit.selectedLocation.latitude ,
                              cityId: cubit.currentCity?.id,
                              city: cubit.currentCity?.name,
                               name: cubit.nameController.text,

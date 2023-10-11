@@ -10,104 +10,104 @@ part 'google_maps_state.dart';
 
 class GoogleMapsCubit extends Cubit<GoogleMapsState> {
   GoogleMapsCubit() : super(GoogleMapsInitial()) {
-    getTheUserPermissionAndLocation();
+    // getTheUserPermissionAndLocation();
   }
- bool isOpened = false;
-  late GoogleMapController mapController;
+ // bool isOpened = false;
+ //  late GoogleMapController mapController;
+ //
+ //   Position position = Position(longitude:31.189283 , latitude:  27.180134,
+ //       timestamp: DateTime(Duration.millisecondsPerDay), accuracy: 1.5,
+ //       altitude: 0.8, heading: 100, speed: 12, speedAccuracy: 1);
+ //
+ //      LatLng selectedLocation = LatLng(31.189283, 27.180134);
+ //
+ //  //this variable used in getMyLocation method
+ // // late Position myPosition ;
+ //
+ //  String address = "";
+ // // String? currentAddress = "";
+ //
+ //   PermissionStatus permissionStatus =PermissionStatus.denied ;
+ // // Completer<Placemark> resultCompleter = Completer<Placemark>();
+ //  late Placemark place;
+ //
+ //  getTheUserPermissionAndLocation() async {
+ //    permissionStatus = await Permission.location.request();
+ //
+ //    if (permissionStatus == PermissionStatus.granted) {
+ //      // User granted location permission, get user's location
+ //      await _getUserLocation();
+ //      emit(LocationPermissionSuccess());
+ //    } else {
+ //      emit(LocationPermissionFailed());
+ //      // User denied location permission, display error message
+ //    }
+ //  }
+ //
+ //  _getUserLocation() async {
+ //    try {
+ //      // await  getTheUserPermission();
+ //      position = await Geolocator.getCurrentPosition(
+ //        desiredAccuracy: LocationAccuracy.high,
+ //      );
+ //      selectedLocation =  LatLng(position.latitude, position.longitude) ;
+ //      moveCamera();
+ //          List<Placemark> placemarks = await placemarkFromCoordinates(
+ //          selectedLocation.latitude, selectedLocation.longitude);
+ //      place = placemarks[0];
+ //      print('Latitude: ${position.latitude}, Longitude: ${position.longitude}');
+ //    } catch (e) {
+ //      if (e is PermissionDeniedException) {
+ //        print('User denied permission to access location');
+ //      }
+ //    }
+ //  }
+ //
+ //  moveCamera() async {
+ //    //await getTheUserPermission();
+ //      mapController.animateCamera(
+ //
+ //        CameraUpdate.newCameraPosition(
+ //            CameraPosition(
+ //                zoom: 15,
+ //                // tilt: 60,
+ //                // bearing: 100,
+ //                target: LatLng(position.latitude, position.longitude))));
+ //      emit(CameraMoveState());
+ //  }
 
-   Position position = Position(longitude:31.189283 , latitude:  27.180134,
-       timestamp: DateTime(Duration.millisecondsPerDay), accuracy: 1.5,
-       altitude: 0.8, heading: 100, speed: 12, speedAccuracy: 1);
-
-      LatLng selectedLocation = LatLng(31.189283, 27.180134);
-
-  //this variable used in getMyLocation method
- // late Position myPosition ;
-
-  String address = "";
- // String? currentAddress = "";
-
-   PermissionStatus permissionStatus =PermissionStatus.denied ;
- // Completer<Placemark> resultCompleter = Completer<Placemark>();
-  late Placemark place;
-
-  getTheUserPermissionAndLocation() async {
-    permissionStatus = await Permission.location.request();
-
-    if (permissionStatus == PermissionStatus.granted) {
-      // User granted location permission, get user's location
-      await _getUserLocation();
-      emit(LocationPermissionSuccess());
-    } else {
-      emit(LocationPermissionFailed());
-      // User denied location permission, display error message
-    }
-  }
-
-  _getUserLocation() async {
-    try {
-      // await  getTheUserPermission();
-      position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high,
-      );
-      selectedLocation =  LatLng(position.latitude, position.longitude) ;
-      moveCamera();
-          List<Placemark> placemarks = await placemarkFromCoordinates(
-          selectedLocation.latitude, selectedLocation.longitude);
-      place = placemarks[0];
-      print('Latitude: ${position.latitude}, Longitude: ${position.longitude}');
-    } catch (e) {
-      if (e is PermissionDeniedException) {
-        print('User denied permission to access location');
-      }
-    }
-  }
-
-  moveCamera() async {
-    //await getTheUserPermission();
-      mapController.animateCamera(
-
-        CameraUpdate.newCameraPosition(
-            CameraPosition(
-                zoom: 15,
-                // tilt: 60,
-                // bearing: 100,
-                target: LatLng(position.latitude, position.longitude))));
-      emit(CameraMoveState());
-  }
-
-  moveCamera2(LatLng latLng) async {
-    //await getTheUserPermission();
-    mapController.animateCamera(
-
-        CameraUpdate.newCameraPosition(
-            CameraPosition(
-                zoom: 15,
-                // tilt: 60,
-                // bearing: 100,
-                target: latLng)));
-    emit(CameraMoveState());
-  }
+  // moveCamera2(LatLng latLng) async {
+  //   //await getTheUserPermission();
+  //   mapController.animateCamera(
+  //
+  //       CameraUpdate.newCameraPosition(
+  //           CameraPosition(
+  //               zoom: 15,
+  //               // tilt: 60,
+  //               // bearing: 100,
+  //               target: latLng)));
+  //   emit(CameraMoveState());
+  // }
 
   // selectLocation(LatLng newLocation) {
   //   selectedLocation = newLocation;
   //   emit(NewLocationSelected());
   // }
-
-  Future<void> getAddressFromLatLng() async {
-    try {
-      List<Placemark> placemarks = await placemarkFromCoordinates(
-          selectedLocation.latitude, selectedLocation.longitude);
-      place = placemarks[0];
-      address =
-      '${place.name},${place.street}, ${place.subLocality}, ${place
-          .subAdministrativeArea}, ${place.postalCode}';
-      // "${place.administrativeArea} , ${place.name} ${place.street}, ${place.locality}, ${place.postalCode}, ${place.country}";
-
-    } catch (e) {
-      print(e);
-    }
-  }
+  //
+  // Future<void> getAddressFromLatLng() async {
+  //   try {
+  //     List<Placemark> placemarks = await placemarkFromCoordinates(
+  //         selectedLocation.latitude, selectedLocation.longitude);
+  //     place = placemarks[0];
+  //     address =
+  //     '${place.name},${place.street}, ${place.subLocality}, ${place
+  //         .subAdministrativeArea}, ${place.postalCode}';
+  //     // "${place.administrativeArea} , ${place.name} ${place.street}, ${place.locality}, ${place.postalCode}, ${place.country}";
+  //
+  //   } catch (e) {
+  //     print(e);
+  //   }
+  // }
 
 
 

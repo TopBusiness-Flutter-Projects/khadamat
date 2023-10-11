@@ -5,9 +5,7 @@ import 'package:khadamat/features/profile/cubit/profile_cubit.dart';
 import '../../../core/utils/app_colors.dart';
 import '../../../core/utils/assets_manager.dart';
 import '../../../core/widgets/custom_button.dart';
-import '../../../core/widgets/custom_textfield.dart';
-import '../../../core/widgets/my_svg_widget.dart';
-import '../cubit/edit_profile_cubit.dart';
+
 
 class EditProfile extends StatelessWidget {
   const EditProfile({Key? key}) : super(key: key);

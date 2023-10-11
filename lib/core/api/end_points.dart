@@ -1,6 +1,6 @@
 class EndPoints {
-  static const String baseUrl = 'https://khdamat.topbusiness.io/api/';//khdamat.topbusiness.io  l-3mda.com
-  static const String deepbaseUrl = 'https://khdamat.topbusiness.io/';//khdamat.topbusiness.io  l-3mda.com
+  static const String baseUrl = 'https://el-3mda.com/api/';//khdamat.topbusiness.io  l-3mda.com
+  static const String deepbaseUrl = 'https://el-3mda.com/';//khdamat.topbusiness.io  l-3mda.com
   static const String loginUrl = '${baseUrl}auth/login';
   static const String homeUrl = '${baseUrl}home';
   static const String getServiceDetailsUrl = '${baseUrl}services/get_service';

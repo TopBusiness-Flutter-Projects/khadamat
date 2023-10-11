@@ -24,7 +24,9 @@ class MyPosts extends StatelessWidget {
           if(state is MyPostsLoading){
             return ShowLoadingIndicator();
           }
-
+          else if (state is MyPostsError){
+            return Center(child: Text("Error During Loading My Ads"));
+          }
           return ListView(
             children: [
               SizedBox(height: 100),

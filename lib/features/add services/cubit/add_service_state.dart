@@ -38,4 +38,12 @@ class EditServiceSuccess extends AddServiceState{}
 
 
 class MinimizedOrMaximized extends AddServiceState{}
+//**********************************************************************
+class GoogleMapsInitial extends AddServiceState {}
+class LocationPermissionSuccess extends AddServiceState {}
+class LocationPermissionFailed extends AddServiceState {}
+
+class NewLocationSelected extends AddServiceState {}
+class CurrentAddressState extends AddServiceState {}
+class CameraMoveState extends AddServiceState {}
 

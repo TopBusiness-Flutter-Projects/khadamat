@@ -22,15 +22,15 @@ class _GoogleMapScreenState extends State<GoogleMapScreen> {
   }
   @override
   void initState() {
-    context.read<GoogleMapsCubit>().isOpened = true;
+    context.read<AddServiceCubit>().isOpened = true;
    // context.read<GoogleMapsCubit>().getAddressFromLatLng();
     super.initState();
   }
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<GoogleMapsCubit, GoogleMapsState>(
+    return BlocBuilder<AddServiceCubit, AddServiceState>(
         builder: (context, state) {
-      GoogleMapsCubit cubit = context.read<GoogleMapsCubit>();
+      AddServiceCubit cubit = context.read<AddServiceCubit>();
       return WillPopScope(
         onWillPop: () async {
           context.read<AddServiceCubit>().setAddress(cubit.place);
@@ -95,9 +95,9 @@ class _GoogleMapScreenState extends State<GoogleMapScreen> {
                   alignment: Alignment.bottomLeft,
                   child: ElevatedButton(
                     child: Text("confirm").tr(),
-                    onPressed: () {
-                      Navigator.pop(context);
-                      context.read<AddServiceCubit>().setAddress(cubit.place);
+                    onPressed: () async {
+                    //  context.read<AddServiceCubit>().setAddress(cubit.place);
+                    Navigator.pop(context);
 
                   },),
                 ),
