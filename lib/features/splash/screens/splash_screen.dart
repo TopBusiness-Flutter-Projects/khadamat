@@ -37,7 +37,7 @@ class _SplashScreenState extends State<SplashScreen>
 
   _startDelay() async {
     _timer = Timer(
-      const Duration(milliseconds: 1000),
+      const Duration(milliseconds: 3000),
       () {
         print("🥳🥳🥳🥳🥳🥳🥳🥳🥳🥳🥳🥳🥳🥳🥳🥳🥳");
         getStoreUser();
