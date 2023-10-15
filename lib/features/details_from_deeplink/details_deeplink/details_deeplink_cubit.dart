@@ -19,7 +19,7 @@ class DetailsDeeplinkCubit extends Cubit<DetailsDeeplinkState> {
   late RateResponseModel rateResponseModel;
   late AddToFavouriteResponseModel addToFavouriteResponseModel;
   getServiceDetails(int serviceId)async{
-
+    emit(LoadingServiceDetails());
     final response = await api.serviceDetails(serviceId);
     response.fold(
             (l) => emit(getServiceDetailsFailure()),

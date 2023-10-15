@@ -30,7 +30,7 @@ class Preferences {
     print("++++++__________________*************************///////////");
     print(await getServiceId());
   }
-  Future<int?>? getServiceId() async {
+  Future<int?> getServiceId() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     return preferences.getInt("service_id");
   }

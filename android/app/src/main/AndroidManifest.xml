@@ -69,6 +69,10 @@
                     android:host="el-3mda.com"
                     android:pathPrefix="/service"
                     />
+                <data android:scheme="https" />
+                <data
+                    android:host="el-3mda.com"
+                    android:pathPrefix="/service" />
 <!--                <data android:scheme="https" />-->
 <!--                <data-->
 <!--                    android:host="khdamat.topbusiness.io"-->

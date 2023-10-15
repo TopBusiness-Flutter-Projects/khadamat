@@ -72,7 +72,6 @@ if(serviceId==null){
       //  await context.read<DetailsDeeplinkCubit>().getServiceDetails(serviceId);
 
         Navigator.pushReplacementNamed(context, Routes.detailsFromDeepLinkRoute,arguments:serviceId );
-         context.read<DetailsDeeplinkCubit>().getServiceDetails(serviceId);
       }
     else{
         Navigator.pushReplacementNamed(

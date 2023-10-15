@@ -12,3 +12,4 @@ class AddingFavouriteSuccessState extends DetailsDeeplinkState {}
 class AddingRateLoadingState extends DetailsDeeplinkState {}
 class AddingRateFailureState extends DetailsDeeplinkState {}
 class AddingRateSuccessState extends DetailsDeeplinkState {}
+class LoadingServiceDetails extends DetailsDeeplinkState {}
