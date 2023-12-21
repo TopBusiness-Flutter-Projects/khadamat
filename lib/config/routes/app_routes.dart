@@ -28,7 +28,6 @@ import '../../features/reset_password/forgot_password/screens/forgot_password.da
 import '../../features/reset_password/otp/screen/otp.dart';
 import '../../features/reset_password/reset_password/reset_password_screen.dart';
 
-
 class Routes {
   static const String initialRoute = '/';
   static const String loginRoute = '/login';
@@ -36,7 +35,7 @@ class Routes {
   static const String otpRoute = '/otp';
   static const String notificationDetailsRoute = '/notificationDetails';
   static const String registerScreenRoute = '/registerScreen';
- // static const String otpScreenRoute = '/otpScreen';
+  // static const String otpScreenRoute = '/otpScreen';
   static const String verificationScreenRoute = '/verificationScreen';
   static const String googleMapScreenRoute = '/googleMapScreen';
   static const String favoriteRoute = '/favorite';
@@ -51,7 +50,6 @@ class Routes {
   static const String detailsFromDeepLinkRoute = '/detailsdeeplinkscreen';
   static const String resetPasswordRoute = '/resetPasswordScreen';
   static const String forgotPasswordRoute = '/forgotPasswordScreen';
-
 }
 
 class AppRoutes {
@@ -65,14 +63,16 @@ class AppRoutes {
         );
       case Routes.loginRoute:
         return MaterialPageRoute(
-          builder: (context) =>  LoginScreen(),
+          builder: (context) => LoginScreen(),
         );
       case Routes.notificationDetailsRoute:
         final notificationModel = settings.arguments as NotificationDatum;
-        print("___________________________________________________________________");
+        print(
+            "___________________________________________________________________");
         print(notificationModel);
         return MaterialPageRoute(
-          builder: (context) =>  NotificationDetails(notificationModel: notificationModel),
+          builder: (context) =>
+              NotificationDetails(notificationModel: notificationModel),
         );
       case Routes.homeRoute:
         return MaterialPageRoute(
@@ -80,7 +80,7 @@ class AppRoutes {
         );
       case Routes.registerScreenRoute:
         return MaterialPageRoute(
-          builder: (context) =>  RegisterScreen(),
+          builder: (context) => RegisterScreen(),
         );
       case Routes.verificationScreenRoute:
         return MaterialPageRoute(
@@ -93,7 +93,7 @@ class AppRoutes {
       case Routes.fullScreenImageRoute:
         final imageUrl = settings.arguments as String;
         return MaterialPageRoute(
-          builder: (context) =>  FullScreenImage(imageUrl: imageUrl),
+          builder: (context) => FullScreenImage(imageUrl: imageUrl),
         );
 
       // case Routes.allServicesRoute:
@@ -107,8 +107,7 @@ class AppRoutes {
       case Routes.googleMapDetailsRoute:
         final latLng = settings.arguments as LatLng;
         return MaterialPageRoute(
-
-        builder: (context) =>  GoogleMapDetailsScreen(latLng: latLng),
+          builder: (context) => GoogleMapDetailsScreen(latLng: latLng),
         );
       case Routes.otpRoute:
         return MaterialPageRoute(
@@ -134,11 +133,11 @@ class AppRoutes {
       //   return MaterialPageRoute(
       //     builder: (context) => OtpScreen(),
       //   );
-        case Routes.resetPasswordRoute:
+      case Routes.resetPasswordRoute:
         return MaterialPageRoute(
           builder: (context) => ResetPasswordScreen(),
         );
-        case Routes.forgotPasswordRoute:
+      case Routes.forgotPasswordRoute:
         return MaterialPageRoute(
           builder: (context) => ForgotPasswordScreen(),
         );
@@ -147,7 +146,6 @@ class AppRoutes {
         return MaterialPageRoute(
           builder: (context) => DetailsFromDeepLink(id: id),
         );
-
 
       case Routes.detailsRoute:
         final service = settings.arguments as ServicesModel;
@@ -161,11 +159,11 @@ class AppRoutes {
       //     builder: (context) => DetailsFromDeepLink(id: id),
       //   );
 
-
       default:
         return MaterialPageRoute(
           builder: (context) => const SplashScreen(),
-        );    }
+        );
+    }
   }
 
   static Route<dynamic> undefinedRoute() {

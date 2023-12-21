@@ -35,13 +35,10 @@ class PrivacyCubit extends Cubit<PrivacyState> {
 
   toLaunchURL() async {
     final Email email = Email(
-
-subject: "message",
+      subject: "message",
       recipients: [settingModel!.data!.email!],
-
       isHTML: false,
     );
-
     await FlutterEmailSender.send(email);
     // final url =
     // Uri.encodeFull('mailto:${settingModel!.data!.email}?subject=News&body=New plugin');
@@ -50,5 +47,12 @@ subject: "message",
     // } else {
     //   //throw 'Could not launch $url';
     // }
+  }
+
+  lanchUrlSocial({required String url}) async {
+    if (!await launchUrl(Uri.parse(url),
+        mode: LaunchMode.externalApplication)) {
+      throw Exception('Could not launch $url');
+    }
   }
 }

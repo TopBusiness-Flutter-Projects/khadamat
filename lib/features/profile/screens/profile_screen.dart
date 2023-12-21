@@ -29,16 +29,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
     super.initState();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop:() async{
-      //  Navigator.pop(context);
+      onWillPop: () async {
+        //  Navigator.pop(context);
         context.read<HomeCubit>().selectTap(0);
-           context.read<HomeCubit>().tabController.animateTo(0);  //
-       await Navigator.pushNamed(context, Routes.homeRoute);
-      return true;
+        context.read<HomeCubit>().tabController.animateTo(0); //
+        await Navigator.pushNamed(context, Routes.homeRoute);
+        return true;
       },
       child: Scaffold(
         backgroundColor: Colors.white,
@@ -51,9 +50,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
             return Column(
               children: [
                 Expanded(
-                 // flex: 6,
-                  child:
-                  SingleChildScrollView(
+                  // flex: 6,
+                  child: SingleChildScrollView(
                     child: Column(
                       children: [
                         SizedBox(
@@ -64,10 +62,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         //   cubit.clearShared();
                         // }, icon: Icon(Icons.remove)),
                         IconButton(
-                          onPressed: (){
-                          context.read<HomeCubit>().selectTap(0);
-                          context.read<HomeCubit>().tabController.animateTo(0);
-                        }, icon: Icon(Icons.home,color: AppColors.primary,size: 40,),),
+                          onPressed: () {
+                            context.read<HomeCubit>().selectTap(0);
+                            context
+                                .read<HomeCubit>()
+                                .tabController
+                                .animateTo(0);
+                          },
+                          icon: Icon(
+                            Icons.home,
+                            color: AppColors.primary,
+                            size: 40,
+                          ),
+                        ),
                         SizedBox(
                           width: MediaQuery.of(context).size.width,
                           height: 10,
@@ -80,11 +87,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         //   borderRadius: 130,
                         // ):
                         SizedBox(
-                          width: 100,
+                            width: 100,
                             height: 100,
                             child: Image.asset(ImageAssets.profile22Icon)),
                         Text(
-                          cubit.model?.data?.user?.name??"name",
+                          cubit.model?.data?.user?.name ?? "name",
                           style: TextStyle(
                             color: AppColors.black,
                             fontSize: 20,
@@ -92,7 +99,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
                         ),
                         Text(
-                          cubit.model?.data?.user?.phone??"phone",
+                          cubit.model?.data?.user?.phone ?? "phone",
                           style: TextStyle(
                             color: AppColors.gray2,
                             fontSize: 16,
@@ -102,9 +109,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ProfileListTailWidget(
                           title: 'my_posts'.tr(),
                           onclick: () async {
-                           await context.read<MyPostsCubit>().getMyPostsList();
+                            await context.read<MyPostsCubit>().getMyPostsList();
                             Navigator.pushNamed(context, Routes.myPostsRoute);
-
                           },
                           image: ImageAssets.postImageIcon,
                           imageColor: AppColors.black,
@@ -112,7 +118,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ProfileListTailWidget(
                           title: 'profile'.tr(),
                           onclick: () {
-                            Navigator.pushNamed(context, Routes.editProfileRoute);
+                            Navigator.pushNamed(
+                                context, Routes.editProfileRoute);
                           },
                           image: ImageAssets.profilesImageIcon,
                           imageColor: AppColors.black,
@@ -121,7 +128,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           title: 'terms_conditions'.tr(),
                           onclick: () {
                             context.read<PrivacyCubit>().isPrivacy = true;
-                            Navigator.pushNamed(context, Routes.privacyRoute,);
+                            Navigator.pushNamed(
+                              context,
+                              Routes.privacyRoute,
+                            );
                           },
                           image: ImageAssets.settingImageIcon,
                           imageColor: AppColors.black,
@@ -131,8 +141,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           onclick: () {
                             //todo
                             Navigator.pushNamed(context, Routes.contactUsRoute);
-                         // var dialNumber = context.read<PrivacyCubit>().settingModel!.data!.whatsapp??0100000000;
-                         //    UrlLauncher.launch("tel://${dialNumber}");
+                            // var dialNumber = context.read<PrivacyCubit>().settingModel!.data!.whatsapp??0100000000;
+                            //    UrlLauncher.launch("tel://${dialNumber}");
                           },
                           image: ImageAssets.callsImageIcon,
                           imageColor: AppColors.black,
@@ -141,7 +151,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           title: 'about_app'.tr(),
                           onclick: () {
                             context.read<PrivacyCubit>().isPrivacy = false;
-                            Navigator.pushNamed(context, Routes.privacyRoute,);
+                            Navigator.pushNamed(
+                              context,
+                              Routes.privacyRoute,
+                            );
                           },
                           image: ImageAssets.aboutImageIcon,
                           imageColor: AppColors.black,
@@ -149,8 +162,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ProfileListTailWidget(
                           title: 'logout'.tr(),
                           onclick: () async {
-                          await  Preferences.instance.clearShared();
-                          
+                            await Preferences.instance.clearShared();
+
                             Navigator.pushNamed(context, Routes.loginRoute);
                           },
                           image: ImageAssets.profilesImageIcon,
@@ -162,7 +175,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 Stack(
                   children: [
-                    Image.asset(ImageAssets.bottomCurve2),//todo------->
+                    Image.asset(ImageAssets.bottomCurve2), //todo------->
 
                     // Positioned(
                     //     bottom: 50,

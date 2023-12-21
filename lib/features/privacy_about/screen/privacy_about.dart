@@ -17,13 +17,11 @@ class PrivacyAbout extends StatefulWidget {
 }
 
 class _PrivacyAboutState extends State<PrivacyAbout> {
-
   @override
   void initState() {
     context.read<PrivacyCubit>().getPrivacyData();
     super.initState();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +39,7 @@ class _PrivacyAboutState extends State<PrivacyAbout> {
                 top: 0,
                 left: 0,
                 right: 0,
-                bottom: MediaQuery.of(context).size.height/2.8,
+                bottom: MediaQuery.of(context).size.height / 2.8,
                 child: SingleChildScrollView(
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -49,37 +47,44 @@ class _PrivacyAboutState extends State<PrivacyAbout> {
                       // mainAxisSize: MainAxisSize.max,
                       // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-
                         Container(
                           height: 90,
                           decoration: BoxDecoration(
                               color: Colors.transparent,
                               image: DecorationImage(
-                                image: AssetImage(ImageAssets.topStatusBarImage),
+                                image:
+                                    AssetImage(ImageAssets.topStatusBarImage),
                                 fit: BoxFit.fill,
                               )),
                         ),
                         SizedBox(
-                          width: 150,
-                            child: Image.asset(ImageAssets.khadamatImage)),//todo-->
-                        SizedBox(height: 15,),
+                            width: 150,
+                            child: Image.asset(
+                                ImageAssets.khadamatImage)), //todo-->
+                        SizedBox(
+                          height: 15,
+                        ),
                         cubit.isPrivacy
                             ? Text(
                                 "privacy",
-                                style:
-                                    TextStyle(fontSize: 25, fontWeight: FontWeight.w500),
+                                style: TextStyle(
+                                    fontSize: 25, fontWeight: FontWeight.w500),
                               ).tr()
                             : Text(
                                 "about",
-                                style:
-                                    TextStyle(fontSize: 25, fontWeight: FontWeight.w500),
+                                style: TextStyle(
+                                    fontSize: 25, fontWeight: FontWeight.w500),
                               ).tr(),
-                        cubit.isPrivacy?
-                       // Text("${cubit.settingModel?.data?.privacyAr}",textAlign: TextAlign.center,):
-                        cubit.settingModel?.data?.privacyAr==null?CircularProgressIndicator():   Html(data:cubit.settingModel?.data?.privacyAr):
-                        cubit.settingModel?.data?.aboutAr==null?CircularProgressIndicator():   Html(data:cubit.settingModel?.data?.aboutAr ),
-
-
+                        cubit.isPrivacy
+                            ?
+                            // Text("${cubit.settingModel?.data?.privacyAr}",textAlign: TextAlign.center,):
+                            cubit.settingModel?.data?.privacyAr == null
+                                ? CircularProgressIndicator()
+                                : Html(
+                                    data: cubit.settingModel?.data?.privacyAr)
+                            : cubit.settingModel?.data?.aboutAr == null
+                                ? CircularProgressIndicator()
+                                : Html(data: cubit.settingModel?.data?.aboutAr),
                       ],
                     ),
                   ),
@@ -89,7 +94,8 @@ class _PrivacyAboutState extends State<PrivacyAbout> {
                 bottom: 0,
                 left: 0,
                 right: 0,
-                child:    Image.asset(ImageAssets.bottomCurve2),)
+                child: Image.asset(ImageAssets.bottomCurve2),
+              )
             ],
           );
         },

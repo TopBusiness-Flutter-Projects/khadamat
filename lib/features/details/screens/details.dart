@@ -1,5 +1,3 @@
-
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -19,7 +17,6 @@ import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
 import 'package:share/share.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
 
-
 class Details extends StatelessWidget {
   final ServicesModel service;
 
@@ -27,11 +24,8 @@ class Details extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return BlocConsumer<DetailsCubit, DetailsState>(
-
       listener: (context, state) {
-
         if (state is AddingRateSuccess) {
           Fluttertoast.showToast(
             msg: "Adding Rate Successfully",
@@ -76,31 +70,62 @@ class Details extends StatelessWidget {
                               )),
                         ),
                       ),
-                      Text(service.name!),
-                      Text(service.category ?? " "),
+                      Text(
+                        service.name!,
+                        textAlign: TextAlign.center,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                            fontSize: MediaQuery.of(context).size.width / 20,
+                            fontWeight: FontWeight.w500),
+                      ),
+                      Text(
+                        service.category ?? " ",
+                        textAlign: TextAlign.center,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                            // color: Colors.red,
+                            fontSize: MediaQuery.of(context).size.width / 24,
+                            fontWeight: FontWeight.w100),
+                      ),
                       SizedBox(
-                        width: MediaQuery.of(context).size.width*0.9,
+                        width: MediaQuery.of(context).size.width * 0.9,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-
-                         // Text("${cubit.getCityName(service.cityId)}"),
-                        // Text("${ cubit.getAddressFromLatLng(double.parse(service.latitude??"30.0459"), double.parse(service.latitude??"31.2243"))}",),
+                            // Text("${cubit.getCityName(service.cityId)}"),
+                            // Text("${ cubit.getAddressFromLatLng(double.parse(service.latitude??"30.0459"), double.parse(service.latitude??"31.2243"))}",),
                             FutureBuilder(
-                              future: cubit.getAddressFromLatLng(double.parse(service.latitude??"30.0459"), double.parse(service.longitude??"31.2243")),
+                              future: cubit.getAddressFromLatLng(
+                                  double.parse(service.latitude ?? "30.0459"),
+                                  double.parse(service.longitude ?? "31.2243")),
                               builder: (context, snapshot) {
-                              if(snapshot.connectionState==ConnectionState.done){
-                                return SizedBox(
-                                  width:MediaQuery.of(context).size.width*0.8,
-                                    child: Text("${snapshot.data}",
-                                      textAlign: TextAlign.center,
-                                      maxLines: 2,overflow: TextOverflow.ellipsis,));
-                              }
-                              else{
-                                return Text("No Location Provided");
-                              }
-                            },)
-                        ],),
+                                if (snapshot.connectionState ==
+                                    ConnectionState.done) {
+                                  return SizedBox(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.8,
+                                      child: Text(
+                                        "${snapshot.data}",
+                                        textAlign: TextAlign.center,
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(
+                                            color: Colors.red,
+                                            fontSize: MediaQuery.of(context)
+                                                    .size
+                                                    .width /
+                                                24,
+                                            fontWeight: FontWeight.normal),
+                                      ));
+                                } else {
+                                  return Text("ليس هناك تحديد لموقعك");
+                                }
+                              },
+                            )
+                          ],
+                        ),
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -149,7 +174,6 @@ class Details extends StatelessWidget {
                               cubit.shareApplication(service.id);
                               // await Share.share(
                               //     EndPoints.deepLink + service.id.toString());
-
                             },
                             child: Column(
                               children: [
@@ -168,21 +192,24 @@ class Details extends StatelessWidget {
                           ),
                           InkWell(
                             onTap: () {
-
-                              Navigator.pushNamed(context, Routes.googleMapDetailsRoute,arguments: LatLng(double.parse(service.latitude!), double.parse(service.longitude!)
-                              ));
+                              Navigator.pushNamed(
+                                  context, Routes.googleMapDetailsRoute,
+                                  arguments: LatLng(
+                                      double.parse(service.latitude!),
+                                      double.parse(service.longitude!)));
                             },
                             child: Column(
                               children: [
                                 CircleAvatar(
                                     backgroundColor: Colors.cyan,
-                                    child:Icon(Icons.location_on_outlined,color: Colors.white,)
-                                ),
+                                    child: Icon(
+                                      Icons.location_on_outlined,
+                                      color: Colors.white,
+                                    )),
                                 Text("location".tr()),
                               ],
                             ),
                           ),
-
                         ],
                       ),
                       RatingBar.builder(
@@ -311,8 +338,9 @@ class Details extends StatelessWidget {
                             return InkWell(
                               onTap: () {
                                 //TODO
-                                Navigator.pushNamed(context, Routes.fullScreenImageRoute,
-                                arguments: service.images![index]);
+                                Navigator.pushNamed(
+                                    context, Routes.fullScreenImageRoute,
+                                    arguments: service.images![index]);
                               },
                               child: Padding(
                                 padding: const EdgeInsets.all(4.0),
