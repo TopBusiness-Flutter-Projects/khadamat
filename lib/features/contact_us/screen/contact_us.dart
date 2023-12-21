@@ -1,5 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
 import 'package:khadamat/features/edit_profile/screen/widget/phone_widget.dart';
 import 'package:khadamat/features/privacy_about/cubit/privacy_cubit.dart';
@@ -22,8 +24,7 @@ class ContactUs extends StatelessWidget {
         return Scaffold(
           body: SafeArea(
             child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 12.0, horizontal: 7),
+              padding: const EdgeInsets.all(0),
               child: Column(
                 children: [
                   Text(
@@ -48,36 +49,88 @@ class ContactUs extends StatelessWidget {
                   SizedBox(
                     height: 20,
                   ),
-                  Expanded(
+                  Flexible(
+                    fit: FlexFit.tight,
+                    child: Container(
+                      height: MediaQuery.of(context).size.width / 4,
                       child: ListView.builder(
-                    itemCount: cubit.settingModel?.data?.phones?.length,
-                    itemBuilder: (context, index) {
-                      return InkWell(
-                          onTap: () {
-                            UrlLauncher.launchUrl(Uri.parse("tel://${cubit.settingModel?.data?.phones?[index]}"));
-                          },
-                          child: PhoneWidget(
-                              phone: cubit.settingModel?.data?.phones?[index]));
-                    },
-                  )),
+                        shrinkWrap: true,
+                        physics: const BouncingScrollPhysics(),
+                        itemCount: cubit.settingModel?.data?.phones?.length,
+                        itemBuilder: (context, index) {
+                          return InkWell(
+                              onTap: () {
+                                UrlLauncher.launchUrl(Uri.parse(
+                                    "tel://${cubit.settingModel?.data?.phones?[index]}"));
+                              },
+                              child: PhoneWidget(
+                                  phone: cubit
+                                      .settingModel?.data?.phones?[index]));
+                        },
+                      ),
+                    ),
+                  ),
+                  Container(
+                    // color: Colors.red,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        cubit.settingModel?.data?.facebook == null
+                            ? ContactUs()
+                            : IconButton(
+                                onPressed: () async {
+                                  await cubit.lanchUrlSocial(
+                                      url: cubit.settingModel?.data?.facebook);
+                                },
+                                icon: FaIcon(
+                                  FontAwesomeIcons.facebook,
+                                  color: Colors.blue,
+                                )),
+                        cubit.settingModel?.data?.youtube == null
+                            ? ContactUs()
+                            : IconButton(
+                                onPressed: () async {
+                                  await cubit.lanchUrlSocial(
+                                      url: cubit.settingModel?.data?.youtube);
+                                },
+                                icon: FaIcon(FontAwesomeIcons.youtube,
+                                    color: Colors.red)),
+                        cubit.settingModel?.data?.instagram == null
+                            ? ContactUs()
+                            : IconButton(
+                                onPressed: () async {
+                                  await cubit.lanchUrlSocial(
+                                      url: cubit.settingModel?.data?.instagram);
+                                },
+                                icon: FaIcon(
+                                  FontAwesomeIcons.instagram,
+                                  color: Color(0xffc13584),
+                                )),
+                        cubit.settingModel?.data?.whatsapp == null
+                            ? ContactUs()
+                            : IconButton(
+                                onPressed: () async {
+                                  await cubit.lanchUrlSocial(
+                                      url: cubit.settingModel?.data?.whatsapp);
+                                },
+                                icon: FaIcon(
+                                  FontAwesomeIcons.whatsapp,
+                                  color: Colors.green,
+                                ))
+                      ],
+                    ),
+                  ),
                   Text("كما يمكنك مراسلتنا على الايميل الرسمي للإدارة"),
                   InkWell(
-                    onTap: () async {
-                      print("******************************");
-                      print("${cubit.settingModel?.data?.email}");
-                      //TODO
-                    await  cubit.toLaunchURL();
-                     // UrlLauncher.launchUrl(Uri.parse('mailto:${cubit.settingModel?.data?.email}?subject=Hello%20World&body=I%20just%20wanted%20to%20say%20hi!'));
-                    },
+                      onTap: () async {
+                        print("******************************");
+                        print("${cubit.settingModel?.data?.email}");
+                        //TODO
+                        await cubit.toLaunchURL();
+                        // UrlLauncher.launchUrl(Uri.parse('mailto:${cubit.settingModel?.data?.email}?subject=Hello%20World&body=I%20just%20wanted%20to%20say%20hi!'));
+                      },
                       child: Text("${cubit.settingModel?.data?.email}")),
-                  Stack(
-                    children: [
-                      Image.asset(ImageAssets.bottomCurve2),
-
-
-                    ],
-                  )
-
+                  Image.asset(ImageAssets.bottomCurve2)
                 ],
               ),
             ),
