@@ -11,20 +11,17 @@ import 'core/utils/restart_app_class.dart';
 import 'package:uni_links/uni_links.dart';
 import 'package:flutter/services.dart' show PlatformException, MethodChannel;
 
-
 // void main() {
 //   runApp(const MyApp());
 // }
 
-
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
- await Firebase.initializeApp();
+  await Firebase.initializeApp();
   await injector.setup();
   Bloc.observer = AppBlocObserver();
   // Call the function to initialize the uni_links package
-
 
   runApp(
     EasyLocalization(
@@ -36,8 +33,6 @@ Future<void> main() async {
       child: HotRestartController(child: const Khadamat()),
     ),
   );
-
-
 }
 
 //
