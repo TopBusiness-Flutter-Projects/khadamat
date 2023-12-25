@@ -468,7 +468,6 @@ class ServiceApi {
             headers: {'Authorization': loginModel.data!.accessToken!},
           ),
 
-
       );
 
       return Right(NotificationModel.fromJson(response));

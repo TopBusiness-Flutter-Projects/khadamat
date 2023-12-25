@@ -1,5 +1,3 @@
-
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -25,420 +23,456 @@ import 'package:flutter/services.dart' show PlatformException, MethodChannel;
 
 import '../../../core/utils/get_city_name_method.dart';
 
-
 class NotificationDetails extends StatelessWidget {
   final NotificationDatum notificationModel;
 
-  NotificationDetails({Key? key, required this.notificationModel}) : super(key: key);
+  NotificationDetails({Key? key, required this.notificationModel})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-
-    return    BlocConsumer<NotificationDetailsCubit, NotificationDetailsState>(
-  listener: (context, state) {
-
-    if (state is RateSuccess) {
-      Fluttertoast.showToast(
-        msg: "Added Rate Successfully",
-        toastLength: Toast.LENGTH_SHORT,
-      );
-    }
-    if (state is AddFavouriteSuccess) {
-      Fluttertoast.showToast(
-        msg: "Added To Favourites",
-        toastLength: Toast.LENGTH_SHORT,
-      );
-    }
-  },
-  builder: (context, state) {
-    NotificationDetailsCubit cubit = context.read<NotificationDetailsCubit>();
-    return Scaffold(
-      body: Stack(
-
-        children: [
-          Positioned(
-            top: MediaQuery.of(context).size.height * 0.3,
-            bottom: 0,
-            right: 0,
-            left: 0,
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  CircleAvatar(
-                    radius: 61,
-                    backgroundColor: AppColors.avatarColor,
-                    child: CircleAvatar(
-                      radius: 59,
-                      backgroundColor: AppColors.avatarColor,
-                      child: CircleAvatar(
-                          radius: 58,
-                          backgroundColor: AppColors.white,
-                          child: ClipOval(
-                            child: ManageNetworkImage(
-                              imageUrl: notificationModel.service!.logo!,
-                              width: 116,
-                              height: 116,
-                            ),
-                          )),
-                    ),
-                  ),
-                 // Text(notificationModel.title!),
-                  Text(notificationModel.body ?? " ",textAlign: TextAlign.center,),
-                //  Text(notificationModel.service?.cityName??" "),
-                  SizedBox(
-                    height: 30,
-                    child: FutureBuilder(
-                      future: getAddressFromLatLng(double.parse(notificationModel.service?.latitude??"37.773972"), double.parse(notificationModel.service?.longitude??"-122.431297")),
-                      builder: (context, snapshot) {
-                        if(snapshot.connectionState==ConnectionState.done){
-                          return Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 18.0),
-                            child: Text("${snapshot.data}",maxLines: 2,
-                            textAlign: TextAlign.center,),
-                          );
-                        }
-                        else{
-                          return Text("No Location Provided");
-                        }
-                      },),
-                  ),
-
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+    return BlocConsumer<NotificationDetailsCubit, NotificationDetailsState>(
+      listener: (context, state) {
+        if (state is RateSuccess) {
+          Fluttertoast.showToast(
+            msg: "Added Rate Successfully",
+            toastLength: Toast.LENGTH_SHORT,
+          );
+        }
+        if (state is AddFavouriteSuccess) {
+          Fluttertoast.showToast(
+            msg: "Added To Favourites",
+            toastLength: Toast.LENGTH_SHORT,
+          );
+        }
+      },
+      builder: (context, state) {
+        NotificationDetailsCubit cubit =
+            context.read<NotificationDetailsCubit>();
+        return Scaffold(
+          body: Stack(
+            children: [
+              Positioned(
+                top: MediaQuery.of(context).size.height * 0.3,
+                bottom: 0,
+                right: 0,
+                left: 0,
+                child: SingleChildScrollView(
+                  child: Column(
                     children: [
-                      InkWell(
-                        onTap: () async {
-                          await _showDialog(context, notificationModel.service!.phones?[0]??"201099604045",
-                              notificationModel.service!.phones?[1]??"201099604045");
-                        },
-                        child: Column(
+                      CircleAvatar(
+                        radius: 61,
+                        backgroundColor: AppColors.avatarColor,
+                        child: CircleAvatar(
+                          radius: 59,
+                          backgroundColor: AppColors.avatarColor,
+                          child: CircleAvatar(
+                            radius: 58,
+                            backgroundColor: AppColors.white,
+                            child: ClipOval(
+                              child: ManageNetworkImage(
+                                imageUrl: notificationModel.service!.logo!,
+                                width: 116,
+                                height: 116,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      // Text(notificationModel.title!),
+                      Text(
+                        notificationModel.body ?? " ",
+                        textAlign: TextAlign.center,
+                      ),
+                      //  Text(notificationModel.service?.cityName??" "),
+                      SizedBox(
+                        height: 30,
+                        child: FutureBuilder(
+                          future: getAddressFromLatLng(
+                              double.parse(
+                                  notificationModel.service?.latitude ??
+                                      "37.773972"),
+                              double.parse(
+                                  notificationModel.service?.longitude ??
+                                      "-122.431297")),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.done) {
+                              return Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 18.0),
+                                child: Text(
+                                  "${snapshot.data}",
+                                  maxLines: 2,
+                                  textAlign: TextAlign.center,
+                                ),
+                              );
+                            } else {
+                              return Text("No Location Provided");
+                            }
+                          },
+                        ),
+                      ),
+
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          InkWell(
+                            onTap: () async {
+                              await _showDialog(
+                                  context,
+                                  notificationModel.service!.phones?[0] ??
+                                      "201099604045",
+                                  notificationModel.service!.phones?[1] ??
+                                      "201099604045");
+                            },
+                            child: Column(
+                              children: [
+                                CircleAvatar(
+                                    backgroundColor: Colors.green,
+                                    child: MySvgWidget(
+                                        path: ImageAssets.call2Icon,
+                                        imageColor: AppColors.white,
+                                        size: 25)),
+                                Text("call2".tr()),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          InkWell(
+                            onTap: () async {
+                              await cubit
+                                  .addToFavourite(notificationModel.serviceId);
+                            },
+                            child: Column(
+                              children: [
+                                CircleAvatar(
+                                    backgroundColor: Colors.red,
+                                    child: MySvgWidget(
+                                        path: ImageAssets.favouriteIcon,
+                                        imageColor: AppColors.white,
+                                        size: 25)),
+                                Text("favourite".tr()),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          InkWell(
+                            onTap: () async {
+                              //  await cubit.shareDeepLink();
+                              cubit.shareApplication(notificationModel.id);
+                            },
+                            child: Column(
+                              children: [
+                                CircleAvatar(
+                                    backgroundColor: Colors.blueAccent,
+                                    child: MySvgWidget(
+                                        path: ImageAssets.shareIcon,
+                                        imageColor: AppColors.white,
+                                        size: 25)),
+                                Text("share".tr()),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          InkWell(
+                            onTap: () {
+                              Navigator.pushNamed(
+                                  context, Routes.googleMapDetailsRoute,
+                                  arguments: LatLng(
+                                      double.parse(
+                                          notificationModel.service?.latitude ??
+                                              '0'),
+                                      double.parse(notificationModel
+                                              .service?.longitude ??
+                                          '0')));
+                            },
+                            child: Column(
+                              children: [
+                                CircleAvatar(
+                                    backgroundColor: Colors.cyan,
+                                    child: Icon(
+                                      Icons.location_on_outlined,
+                                      color: Colors.white,
+                                    )),
+                                Text("location".tr()),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                      RatingBar.builder(
+                        ignoreGestures: true,
+                        initialRating: cubit.rateValue.toDouble(),
+                        minRating: 1,
+                        direction: Axis.horizontal,
+                        allowHalfRating: true,
+                        itemCount: 5,
+                        itemSize: 20,
+                        itemPadding: EdgeInsets.symmetric(horizontal: 1.0),
+                        itemBuilder: (context, _) => Icon(
+                          Icons.star,
+                          color: Colors.amber,
+                        ),
+                        onRatingUpdate: (double value) {},
+                      ),
+                      Container(
+                        padding: EdgeInsets.symmetric(vertical: 7),
+                        margin:
+                            EdgeInsets.symmetric(horizontal: 40, vertical: 10),
+                        decoration: BoxDecoration(
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.5),
+                                spreadRadius: 0,
+                                blurRadius: 10,
+                                offset: Offset(1, 9),
+                              ),
+                            ],
+                            color: AppColors.white,
+                            borderRadius: BorderRadius.circular(20)),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            CircleAvatar(
-                                backgroundColor: Colors.green,
-                                child: MySvgWidget(
-                                    path: ImageAssets.call2Icon,
-                                    imageColor: AppColors.white,
-                                    size: 25)),
-                            Text("call2".tr()),
+                            Column(
+                              children: [
+                                Text(
+                                  notificationModel.service?.reviews
+                                          .toString() ??
+                                      "10",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 20,
+                                      color: Colors.blueAccent),
+                                ),
+                                Text(
+                                  "reviews",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 17,
+                                      color: AppColors.gray),
+                                )
+                              ],
+                            ),
+                            Container(
+                              margin: EdgeInsets.symmetric(horizontal: 15),
+                              width: 1,
+                              height: 30,
+                              color: Colors.grey,
+                            ),
+                            Column(
+                              children: [
+                                Text(
+                                  notificationModel.service?.followers
+                                          .toString() ??
+                                      "10",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 20,
+                                      color: Colors.blueAccent),
+                                ),
+                                Text(
+                                  "followers",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 17,
+                                      color: AppColors.gray),
+                                )
+                              ],
+                            ),
+                            Container(
+                              margin: EdgeInsets.symmetric(horizontal: 15),
+                              width: 1,
+                              height: 30,
+                              color: Colors.grey,
+                            ),
+                            Column(
+                              children: [
+                                Text(
+                                  notificationModel.service?.following
+                                          .toString() ??
+                                      "10",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 20,
+                                      color: Colors.blueAccent),
+                                ),
+                                Text(
+                                  "following",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 17,
+                                      color: AppColors.gray),
+                                )
+                              ],
+                            ),
                           ],
                         ),
                       ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      InkWell(
-                        onTap: () async {
-                          await cubit.addToFavourite(notificationModel.serviceId);
-                        },
-                        child: Column(
-                          children: [
-                            CircleAvatar(
-                                backgroundColor: Colors.red,
-                                child: MySvgWidget(
-                                    path: ImageAssets.favouriteIcon,
-                                    imageColor: AppColors.white,
-                                    size: 25)),
-                            Text("favourite".tr()),
-                          ],
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 8.0, horizontal: 16),
+                        child: Text(
+                          notificationModel.service?.details ?? " ",
+                          // style: TextStyle(
+                          //     fontSize: 23,
+                          //     fontWeight: FontWeight.w400,
+                          //     color: AppColors.gray),
+                          maxLines: 5,
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      InkWell(
-                        onTap: () async {
-                      //  await cubit.shareDeepLink();
-                        cubit.shareApplication(notificationModel.id);
-                        },
-                        child: Column(
-                          children: [
-                            CircleAvatar(
-                                backgroundColor: Colors.blueAccent,
-                                child: MySvgWidget(
-                                    path: ImageAssets.shareIcon,
-                                    imageColor: AppColors.white,
-                                    size: 25)),
-                            Text("share".tr()),
-                          ],
+                      Container(
+                        margin:
+                            EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                        height: 100,
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: notificationModel.service?.images?.length,
+                          itemBuilder: (context, index) {
+                            return InkWell(
+                              onTap: () {
+                                //TODO
+                                Navigator.pushNamed(
+                                    context, Routes.fullScreenImageRoute,
+                                    arguments: notificationModel
+                                        .service?.images![index]);
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: ManageNetworkImage(
+                                  width: 100,
+                                  borderRadius: 10,
+                                  imageUrl: notificationModel
+                                          .service!.images!.isNotEmpty
+                                      ? notificationModel
+                                          .service!.images![index]
+                                      : "https://picsum.photos/200",
+                                ),
+                              ),
+                            );
+                          },
                         ),
-                      ),
-                      SizedBox(
-                        width: 10,
                       ),
                       InkWell(
                         onTap: () {
-
-                          Navigator.pushNamed(context, Routes.googleMapDetailsRoute,arguments: LatLng(double.parse(notificationModel.service?.latitude), double.parse(notificationModel.service?.longitude!)
-                          ));
-                        },
-                        child: Column(
-                          children: [
-                            CircleAvatar(
-                                backgroundColor: Colors.cyan,
-                                child:Icon(Icons.location_on_outlined,color: Colors.white,)
-                            ),
-                            Text("location".tr()),
-                          ],
-                        ),
-                      ),
-
-                    ],
-                  ),
-                  RatingBar.builder(
-                    ignoreGestures: true,
-                    initialRating: cubit.rateValue.toDouble(),
-                    minRating: 1,
-                    direction: Axis.horizontal,
-                    allowHalfRating: true,
-                    itemCount: 5,
-                    itemSize: 20,
-                    itemPadding: EdgeInsets.symmetric(horizontal: 1.0),
-                    itemBuilder: (context, _) => Icon(
-                      Icons.star,
-                      color: Colors.amber,
-                    ),
-                    onRatingUpdate: (double value) {},
-                  ),
-                  Container(
-                    padding: EdgeInsets.symmetric(vertical: 7),
-                    margin:
-                    EdgeInsets.symmetric(horizontal: 40, vertical: 10),
-                    decoration: BoxDecoration(
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.5),
-                            spreadRadius: 0,
-                            blurRadius: 10,
-                            offset: Offset(1, 9),
-                          ),
-                        ],
-                        color: AppColors.white,
-                        borderRadius: BorderRadius.circular(20)),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Column(
-                          children: [
-                            Text(
-                              notificationModel.service?.reviews.toString() ?? "10",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 20,
-                                  color: Colors.blueAccent),
-                            ),
-                            Text(
-                              "reviews",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 17,
-                                  color: AppColors.gray),
-                            )
-                          ],
-                        ),
-                        Container(
-                          margin: EdgeInsets.symmetric(horizontal: 15),
-                          width: 1,
-                          height: 30,
-                          color: Colors.grey,
-                        ),
-                        Column(
-                          children: [
-                            Text(
-                              notificationModel.service?.followers.toString() ?? "10",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 20,
-                                  color: Colors.blueAccent),
-                            ),
-                            Text(
-                              "followers",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 17,
-                                  color: AppColors.gray),
-                            )
-                          ],
-                        ),
-                        Container(
-                          margin: EdgeInsets.symmetric(horizontal: 15),
-                          width: 1,
-                          height: 30,
-                          color: Colors.grey,
-                        ),
-                        Column(
-                          children: [
-                            Text(
-                              notificationModel.service?.following.toString() ?? "10",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 20,
-                                  color: Colors.blueAccent),
-                            ),
-                            Text(
-                              "following",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 17,
-                                  color: AppColors.gray),
-                            )
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 8.0, horizontal: 16),
-                    child: Text(
-                      notificationModel.service?.details ?? " ",
-                      // style: TextStyle(
-                      //     fontSize: 23,
-                      //     fontWeight: FontWeight.w400,
-                      //     color: AppColors.gray),
-                      maxLines: 5,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                  Container(
-                    margin:
-                    EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-                    height: 100,
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: notificationModel.service?.images?.length,
-                      itemBuilder: (context, index) {
-                        return InkWell(
-                          onTap: () {
-                            //TODO
-                            Navigator.pushNamed(context, Routes.fullScreenImageRoute,
-                                arguments: notificationModel.service?.images![index]);
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.all(4.0),
-                            child: ManageNetworkImage(
-                              width: 100,
-                              borderRadius: 10,
-                              imageUrl: notificationModel.service!.images!.isNotEmpty
-                                  ? notificationModel.service!.images![index]
-                                  : "https://picsum.photos/200",
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                  InkWell(
-                    onTap: () {
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            title: Text('add_rate'.tr()),
-                            content: RatingBar.builder(
-                              initialRating: 3,
-                              minRating: 1,
-                              direction: Axis.horizontal,
-                              allowHalfRating: true,
-                              itemCount: 5,
-                              itemSize: 20,
-                              itemPadding:
-                              EdgeInsets.symmetric(horizontal: 1.0),
-                              itemBuilder: (context, _) => Icon(
-                                Icons.star,
-                                color: Colors.amber,
-                              ),
-                              onRatingUpdate: (rating) {
-                                cubit.rateValue = rating;
-                              },
-                            ),
-                            actions: <Widget>[
-                              TextButton(
-                                child: Text('close'.tr()),
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                              ),
-                              TextButton(
-                                child: Text('rate'.tr()),
-                                onPressed: () async {
-                                  await cubit.setRate(notificationModel.serviceId);
-                                  Navigator.of(context).pop();
-                                },
-                              ),
-                            ],
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: Text('add_rate'.tr()),
+                                content: RatingBar.builder(
+                                  initialRating: 3,
+                                  minRating: 1,
+                                  direction: Axis.horizontal,
+                                  allowHalfRating: true,
+                                  itemCount: 5,
+                                  itemSize: 20,
+                                  itemPadding:
+                                      EdgeInsets.symmetric(horizontal: 1.0),
+                                  itemBuilder: (context, _) => Icon(
+                                    Icons.star,
+                                    color: Colors.amber,
+                                  ),
+                                  onRatingUpdate: (rating) {
+                                    cubit.rateValue = rating;
+                                  },
+                                ),
+                                actions: <Widget>[
+                                  TextButton(
+                                    child: Text('close'.tr()),
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                  ),
+                                  TextButton(
+                                    child: Text('rate'.tr()),
+                                    onPressed: () async {
+                                      await cubit
+                                          .setRate(notificationModel.serviceId);
+                                      Navigator.of(context).pop();
+                                    },
+                                  ),
+                                ],
+                              );
+                            },
                           );
                         },
-                      );
-                    },
-                    child: Container(
-                      margin: EdgeInsets.only(left: 25, bottom: 10),
-                      padding: EdgeInsets.symmetric(vertical: 12),
-                      decoration: BoxDecoration(
-                          color: AppColors.red,
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(25),
-                              bottomLeft: Radius.circular(25))),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          SizedBox(
-                            width: 20,
+                        child: Container(
+                          margin: EdgeInsets.only(left: 25, bottom: 10),
+                          padding: EdgeInsets.symmetric(vertical: 12),
+                          decoration: BoxDecoration(
+                              color: AppColors.red,
+                              borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(25),
+                                  bottomLeft: Radius.circular(25))),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              SizedBox(
+                                width: 20,
+                              ),
+                              Text(
+                                "service_evaluation".tr(),
+                                style: TextStyle(
+                                    color: AppColors.white,
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 20),
+                              ),
+                              SizedBox(
+                                width: 20,
+                              ),
+                              Container(
+                                padding: EdgeInsets.symmetric(horizontal: 5),
+                                decoration: BoxDecoration(
+                                    color: AppColors.white,
+                                    borderRadius: BorderRadius.circular(15)),
+                                child: Text(
+                                  "your_opinion_of_the_service".tr(),
+                                  style: TextStyle(
+                                      color: AppColors.gray,
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 20),
+                                ),
+                              ),
+                            ],
                           ),
-                          Text(
-                            "service_evaluation".tr(),
-                            style: TextStyle(
-                                color: AppColors.white,
-                                fontWeight: FontWeight.w700,
-                                fontSize: 20),
-                          ),
-                          SizedBox(
-                            width: 20,
-                          ),
-                          Container(
-                            padding: EdgeInsets.symmetric(horizontal: 5),
-                            decoration: BoxDecoration(
-                                color: AppColors.white,
-                                borderRadius: BorderRadius.circular(15)),
-                            child: Text(
-                              "your_opinion_of_the_service".tr(),
-                              style: TextStyle(
-                                  color: AppColors.gray,
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 20),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  )
-                ],
-              ),
-            ),
-          ),
-          //first clip path with image
-          Positioned(
-              top: 0,
-              right: 0,
-              left: 0,
-              child: ClipPath(
-                clipper: BottomCurveClipper(),
-                child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height * 0.3,
-                  child: notificationModel.service!.images!.isNotEmpty
-                      ? ManageNetworkImage(
-                    imageUrl: notificationModel.service!.images![0],
-                  )
-                      : Image.asset(
-                    ImageAssets.detailsPlaceholder,
+                        ),
+                      )
+                    ],
                   ),
                 ),
-              ))
-        ],
-      ),
+              ),
+              //first clip path with image
+              Positioned(
+                  top: 0,
+                  right: 0,
+                  left: 0,
+                  child: ClipPath(
+                    clipper: BottomCurveClipper(),
+                    child: Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height * 0.3,
+                      child: notificationModel.service!.images!.isNotEmpty
+                          ? ManageNetworkImage(
+                              imageUrl: notificationModel.service!.images![0],
+                            )
+                          : Image.asset(
+                              ImageAssets.detailsPlaceholder,
+                            ),
+                    ),
+                  ))
+            ],
+          ),
+        );
+      },
     );
-  },
-);
   }
 }
 
@@ -487,7 +521,7 @@ Future<void> _showDialog(context, String number1, String number2) async {
                 child: Text('$number2'),
                 onTap: () {
                   UrlLauncher.launch("tel://${number2}");
-                   Navigator.of(context).pop('option2');
+                  Navigator.of(context).pop('option2');
                 },
               ),
             ],
@@ -497,13 +531,6 @@ Future<void> _showDialog(context, String number1, String number2) async {
     },
   );
 }
-
-
-
-
-
-
-
 
 void shareDeepLink() {
   // Generate your deep link URL
