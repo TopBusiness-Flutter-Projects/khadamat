@@ -1,36 +1,26 @@
 {
   "project_info": {
-    "project_number": "907035958311",
-    "project_id": "khadamat-67945",
-    "storage_bucket": "khadamat-67945.appspot.com"
+    "project_number": "555356454569",
+    "project_id": "elomda-96ae3",
+    "storage_bucket": "elomda-96ae3.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:907035958311:android:6e36566ba7697544488202",
+        "mobilesdk_app_id": "1:555356454569:android:92ebc22ae255895f4073b8",
         "android_client_info": {
           "package_name": "com.topbusiness.khadamat"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "907035958311-t33uhcb2hrdvuc173inkfrb4nk396fm5.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyCvL80htIqra1BNny_R3Zjp79F2KDxkNEw"
+          "current_key": "AIzaSyAFY862kjR5_jAhJmS4vXHRbwAibNArqTw"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "907035958311-t33uhcb2hrdvuc173inkfrb4nk396fm5.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }

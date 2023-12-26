@@ -23,10 +23,10 @@ import 'package:flutter/services.dart' show PlatformException, MethodChannel;
 
 import '../../../core/utils/get_city_name_method.dart';
 
-class NotificationDetails extends StatelessWidget {
+class NotificationDetailsScreen extends StatelessWidget {
   final NotificationDatum notificationModel;
 
-  NotificationDetails({Key? key, required this.notificationModel})
+  NotificationDetailsScreen({Key? key, required this.notificationModel})
       : super(key: key);
 
   @override

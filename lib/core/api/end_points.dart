@@ -1,6 +1,8 @@
 class EndPoints {
-  static const String baseUrl = 'https://el-3mda.com/api/';//khdamat.topbusiness.io  l-3mda.com
-  static const String deepbaseUrl = 'https://el-3mda.com/';//khdamat.topbusiness.io  l-3mda.com
+  static const String baseUrl =
+      'https://el-3mda.com/api/'; //khdamat.topbusiness.io  l-3mda.com
+  static const String deepbaseUrl =
+      'https://el-3mda.com/'; //khdamat.topbusiness.io  l-3mda.com
   static const String loginUrl = '${baseUrl}auth/login';
   static const String homeUrl = '${baseUrl}home';
   static const String getServiceDetailsUrl = '${baseUrl}services/get_service';
@@ -16,13 +18,13 @@ class EndPoints {
   static const String serviceStoreUrl = '${baseUrl}services/store';
   static const String categoriesUrl = '${baseUrl}categories';
   static const String rateUrl = '${baseUrl}services/add-rate';
-  static const String addToFavouriteUrl = '${baseUrl}services/add-to-favourites';
+  static const String addToFavouriteUrl =
+      '${baseUrl}services/add-to-favourites';
   static const String deepLink = '${deepbaseUrl}service/';
   static const String searchUrl = '${baseUrl}search';
   static const String notificationUrl = '${baseUrl}notifications';
   static const String registerUrl = '${baseUrl}client/auth/register';
 
-
-
-
+  ///checkToken
+  static const String checkToken = '${baseUrl}checkToken';
 }
