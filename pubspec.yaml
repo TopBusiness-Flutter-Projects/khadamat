@@ -69,6 +69,8 @@ dependencies:
   multi_image_picker: ^4.7.14
   flutter_launcher_icons: ^0.12.0
   font_awesome_flutter: ^10.6.0
+  flutter_local_notifications: ^13.0.0
+  rxdart: ^0.27.7
 
 
 

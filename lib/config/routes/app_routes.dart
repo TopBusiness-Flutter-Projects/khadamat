@@ -72,7 +72,7 @@ class AppRoutes {
         print(notificationModel);
         return MaterialPageRoute(
           builder: (context) =>
-              NotificationDetails(notificationModel: notificationModel),
+              NotificationDetailsScreen(notificationModel: notificationModel),
         );
       case Routes.homeRoute:
         return MaterialPageRoute(

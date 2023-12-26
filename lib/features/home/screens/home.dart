@@ -1,19 +1,16 @@
-import 'package:easy_localization/easy_localization.dart' as tr;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:khadamat/core/utils/assets_manager.dart';
-import 'package:khadamat/core/widgets/network_image.dart';
 import 'package:khadamat/features/add%20services/cubit/add_service_cubit.dart';
 import 'package:khadamat/features/home/cubit/home_cubit.dart';
-import 'package:khadamat/features/home/cubit/home_cubit.dart';
-
 import '../../../core/utils/app_colors.dart';
+import '../../../main.dart';
 import '../../add services/screens/add_services.dart';
 import '../../favorite/screens/favorite_screen.dart';
 import '../../notification/screens/notification_screen.dart';
-import '../../posts/screens/services_of_categories.dart';
 import '../../profile/screens/profile_screen.dart';
+import '../../register/cubit/register_cubit.dart';
 import '../widgets/home_page_widget.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -29,17 +26,24 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
+    getToken().then((e) {
+      context.read<RegisterCubit>().checkToken(e);
+    });
 
-    context.read<HomeCubit>().tabController = TabController(length: 5, vsync: this);
-    context.read<HomeCubit>().tabController.animateTo(context.read<HomeCubit>().currentIndex);
+    context.read<HomeCubit>().tabController =
+        TabController(length: 5, vsync: this);
+    context
+        .read<HomeCubit>()
+        .tabController
+        .animateTo(context.read<HomeCubit>().currentIndex);
   }
 
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: ()async {
+      onWillPop: () async {
         // Call SystemNavigator.pop() to close the app
-        if(context.read<HomeCubit>().currentIndex==0){
+        if (context.read<HomeCubit>().currentIndex == 0) {
           SystemNavigator.pop();
         }
 
@@ -58,7 +62,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               children: [
                 Positioned(
                   top: 0,
-                  bottom:cubit.currentIndex==4?0: 25,
+                  bottom: cubit.currentIndex == 4 ? 0 : 25,
                   left: 0,
                   right: 0,
                   child: TabBarView(
@@ -67,7 +71,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     children: [
                       HomePageWidget(),
                       FavoriteScreen(),
-                       AddServicesScreen(),
+                      AddServicesScreen(),
                       NotificationScreen(),
                       ProfileScreen(),
                     ],
@@ -78,7 +82,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   left: 0,
                   right: 0,
                   child: Visibility(
-                    visible: cubit.currentIndex!=4,
+                    visible: cubit.currentIndex != 4,
                     child: Container(
                       height: 90,
                       decoration: BoxDecoration(
@@ -95,7 +99,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   left: 0,
                   right: 0,
                   child: Visibility(
-                    visible: cubit.currentIndex!=4,
+                    visible: cubit.currentIndex != 4,
                     child: RotationTransition(
                       turns: AlwaysStoppedAnimation(180 / 360),
                       child: Container(
@@ -153,8 +157,12 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                       FloatingActionButton(
                                         onPressed: () {
                                           //TODO== clear the fields
-                                          context.read<AddServiceCubit>().clearFields();
-                                          context.read<AddServiceCubit>().isUpdate=false;
+                                          context
+                                              .read<AddServiceCubit>()
+                                              .clearFields();
+                                          context
+                                              .read<AddServiceCubit>()
+                                              .isUpdate = false;
                                           cubit.selectTap(2);
                                           cubit.tabController.animateTo(2);
                                         },
