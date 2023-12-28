@@ -10,6 +10,7 @@ class EndPoints {
   static const String checkPhoneUrl = '${baseUrl}auth/checkPhone';
   static const String citiesUrl = '${baseUrl}cities';
   static const String servicesUrl = '${baseUrl}services/';
+  static const String subServicesUrl = '${baseUrl}sub-categories/';
   static const String editServicesUrl = '${baseUrl}services/update/';
   static const String favoriteUrl = '${baseUrl}services/get-favourites';
   static const String myServicesUrl = '${baseUrl}services/my_services';

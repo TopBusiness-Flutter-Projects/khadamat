@@ -8,6 +8,7 @@ import '../../../config/routes/app_routes.dart';
 import '../../../core/utils/app_colors.dart';
 import '../../../core/widgets/network_image.dart';
 import '../../posts/screens/services_of_categories.dart';
+import '../../posts/screens/services_of_sub_categories.dart';
 
 class HomePageWidget extends StatelessWidget {
   HomePageWidget({Key? key}) : super(key: key);
@@ -17,9 +18,7 @@ class HomePageWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<HomeCubit, HomeState>(
       listener: (context, state) {
-        if (state is SearchSuccess) {
-
-        }
+        if (state is SearchSuccess) {}
       },
       builder: (context, state) {
         HomeCubit cubit = context.read<HomeCubit>();
@@ -40,14 +39,12 @@ class HomePageWidget extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) =>
-                                ServicesOfCategories(
-                                  catId: 0
-                                  //cubit.categories[index].id!,
+                            builder: (context) => ServicesOfCategories(catId: 0
+                                //cubit.categories[index].id!,
                                 ),
                           ),
                         );
-                       // Navigator.pushNamed(context, Routes.allServicesRoute);
+                        // Navigator.pushNamed(context, Routes.allServicesRoute);
                       },
                       child: Container(
                         decoration: BoxDecoration(
@@ -58,7 +55,8 @@ class HomePageWidget extends StatelessWidget {
                           ),
                           borderRadius: BorderRadius.circular(25),
                         ),
-                        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -110,18 +108,20 @@ class HomePageWidget extends StatelessWidget {
                                           ),
                                         )
                                       : InkWell(
-                                    onTap: () {
-                                      //TODO --------
-                                      Navigator.pushNamed(context, Routes.detailsRoute,
-                                      arguments: cubit.lastAddServices[index]);
-                                    },
-                                        child: ManageNetworkImage(
+                                          onTap: () {
+                                            //TODO --------
+                                            Navigator.pushNamed(
+                                                context, Routes.detailsRoute,
+                                                arguments: cubit
+                                                    .lastAddServices[index]);
+                                          },
+                                          child: ManageNetworkImage(
                                             imageUrl: cubit
                                                 .lastAddServices[index].logo!,
                                             height: 130,
                                             width: 130,
                                           ),
-                                      ),
+                                        ),
                                 ),
                               ),
                             ],
@@ -174,16 +174,34 @@ class HomePageWidget extends StatelessWidget {
                                           ),
                                         )
                                       : InkWell(
-                                          onTap: () => Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  ServicesOfCategories(
-                                                catId:
-                                                    cubit.categories[index].id!,
-                                              ),
-                                            ),
-                                          ),
+                                          onTap: () {
+                                            //! ServicesOfSubCategories
+                                            if (cubit.categories[index]
+                                                    .subsCount !=
+                                                0) {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      ServicesOfSubCategories(
+                                                    subCategoryId: cubit
+                                                        .categories[index].id!,
+                                                  ),
+                                                ),
+                                              );
+                                            } else {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      ServicesOfCategories(
+                                                    catId: cubit
+                                                        .categories[index].id!,
+                                                  ),
+                                                ),
+                                              );
+                                            }
+                                          },
                                           child: Stack(
                                             children: [
                                               Positioned(
@@ -216,11 +234,11 @@ class HomePageWidget extends StatelessWidget {
                                                   ),
                                                   child: Center(
                                                     child: Text(
-                                                      textAlign: TextAlign.center,
+                                                      textAlign:
+                                                          TextAlign.center,
                                                       cubit.categories[index]
                                                           .name!,
                                                       style: TextStyle(
-
                                                           color:
                                                               AppColors.black),
                                                     ),

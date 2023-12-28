@@ -2,7 +2,6 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:khadamat/core/remote/service.dart';
-import 'package:meta/meta.dart';
 
 import '../../../config/routes/app_routes.dart';
 import '../../../core/models/login_model.dart';
@@ -39,10 +38,11 @@ class RegisterCubit extends Cubit<RegisterState> {
     final response = await api.postRegister(phoneController.text, phoneCode,
         nameController.text, passwordController.text);
     response.fold((l) => {Get.back(), emit(RegisterFailedState())}, (r) {
-      Get.back();
-
+      // Get.back();
       if (r.code == 200) {
         registerModel = r;
+        errorGetBar(r.message ?? '');
+
         Preferences.instance.setUser(registerModel).then((value) =>
             {Navigator.pushReplacementNamed(context, Routes.homeRoute)});
         emit(RegisterSuccessState());
@@ -50,12 +50,14 @@ class RegisterCubit extends Cubit<RegisterState> {
         //  registerModel = r ;
         emit(RegisterFailedUserExistState());
         errorGetBar('المستخدم موجود بالفعل');
+      } else {
+        errorGetBar(r.message ?? '');
       }
     });
   }
 
   checkToken(String deviceToken) async {
-    final response = await api.checkToken( deviceToken);
+    final response = await api.checkToken(deviceToken);
     response.fold((l) => emit(CheckTokenFailedState()), (r) {
       if (r.code == 200) {
         registerModel = r;

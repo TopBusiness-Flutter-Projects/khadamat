@@ -48,7 +48,7 @@ class _ServicesOfCategoriesState extends State<ServicesOfCategories> {
                       padding: const EdgeInsets.symmetric(horizontal: 16.0),
                       child: Container(
                         decoration: BoxDecoration(
-                          color:Colors.white,
+                          color: Colors.white,
                           border: Border.all(
                             color: AppColors.gray,
                             width: 1,
@@ -60,18 +60,18 @@ class _ServicesOfCategoriesState extends State<ServicesOfCategories> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                          //  Text('search'.tr()),
+                            //  Text('search'.tr()),
                             Expanded(
                               child: TextField(
                                 onChanged: (value) async {
-
-                                  await context.read<PostsCubit>().searchServices(widget.catId, value);
+                                  await context
+                                      .read<PostsCubit>()
+                                      .searchServices(widget.catId, value);
                                 },
                                 decoration: InputDecoration(
-                                  hintText: "search".tr(),
-                                  border: InputBorder.none,
-                                  fillColor: AppColors.white
-                                ),
+                                    hintText: "search".tr(),
+                                    border: InputBorder.none,
+                                    fillColor: AppColors.white),
                               ),
                             ),
                             Icon(Icons.search),
@@ -83,10 +83,13 @@ class _ServicesOfCategoriesState extends State<ServicesOfCategories> {
                     ...List.generate(
                       cubit.servicesList.length,
                       (index) => InkWell(
-                         onTap:(){
-                           Navigator.pushNamed(context, Routes.detailsRoute,arguments:cubit.servicesList[index] );
-                         },
-                          child: PostWidget(model: cubit.servicesList[index],)),
+                          onTap: () {
+                            Navigator.pushNamed(context, Routes.detailsRoute,
+                                arguments: cubit.servicesList[index]);
+                          },
+                          child: PostWidget(
+                            model: cubit.servicesList[index],
+                          )),
                     ),
                   ],
                 );

@@ -11,23 +11,22 @@ import '../../../core/models/servicemodel.dart';
 part 'home_state.dart';
 
 class HomeCubit extends Cubit<HomeState> {
-  HomeCubit(this.api) : super(HomeInitial()){
+  HomeCubit(this.api) : super(HomeInitial()) {
     getHomeData();
   }
   final ServiceApi api;
   late TabController tabController;
   late SearchModel searchModel;
- TextEditingController searchController = TextEditingController();
+  TextEditingController searchController = TextEditingController();
   int currentIndex = 0;
 
   List<Category> categories = [];
   List<ServicesModel> lastAddServices = [];
-  List<ServicesModel> servicesList=[];
+  List<ServicesModel> servicesList = [];
   selectTap(int index) {
     currentIndex = index;
     emit(HomeChangeCurrentIndexTap());
   }
-
 
   getHomeData() async {
     emit(HomeLoading());
@@ -43,18 +42,15 @@ class HomeCubit extends Cubit<HomeState> {
   }
 
   getServicesPosts(int catId) async {
-   // emit(PostsServicesLoading());
+    // emit(PostsServicesLoading());
     final response = await api.servicesData(catId);
     response.fold(
-          (l) => null,
-              //emit(PostsServicesError()),
-          (r) {
+      (l) => null,
+      //emit(PostsServicesError()),
+      (r) {
         servicesList = r.data!;
-      //  emit(PostsServicesLoaded());
+        //  emit(PostsServicesLoaded());
       },
     );
   }
-
-
-
 }

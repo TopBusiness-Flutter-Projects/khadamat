@@ -25,6 +25,7 @@ import '../models/serviceToUpdate.dart';
 import '../models/service_store_model.dart';
 import '../models/servicemodel.dart';
 import '../models/setting_model.dart';
+import '../models/subcategorymodel.dart';
 import '../models/updated_model.dart';
 import '../preferences/preferences.dart';
 
@@ -357,6 +358,22 @@ class ServiceApi {
           ),
           queryParameters: {"search_key": searchKey});
       return Right(CategoriesServicesModel.fromJson(response));
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
+
+  Future<Either<Failure, SubCategoryMainModel>> SubCategoryMethod(
+      int catId) async {
+    LoginModel loginModel = await Preferences.instance.getUserModel();
+    try {
+      final response = await dio.get(
+        EndPoints.subServicesUrl + catId.toString(),
+        options: Options(
+          headers: {'Authorization': loginModel.data!.accessToken!},
+        ),
+      );
+      return Right(SubCategoryMainModel.fromJson(response));
     } on ServerException {
       return Left(ServerFailure());
     }

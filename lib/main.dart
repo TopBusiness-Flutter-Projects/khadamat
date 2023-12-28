@@ -70,16 +70,15 @@ Future<void> main() async {
   await injector.setup();
   Bloc.observer = AppBlocObserver();
 //!
-  if (userModel.data!.user!.email != null) {
-    FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler2);
-    await FirebaseMessaging.instance
-        .setForegroundNotificationPresentationOptions(
-      alert: true,
-      badge: true,
-      sound: true,
-    );
-    await pushNotificationService!.initialise();
-  }
+  // if (userModel.data!.user!.email != null) {
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler2);
+  await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
+    alert: true,
+    badge: true,
+    sound: true,
+  );
+  await pushNotificationService!.initialise();
+  // }
 
 //!
   // Call the function to initialize the uni_links packages
@@ -156,18 +155,18 @@ void showNotification(RemoteMessage message) async {
 
   LoginModel userModel = await Preferences.instance.getUserModel();
 
-  if (userModel.data!.user!.email != null) {
-    await flutterLocalNotificationsPlugin.show(
-        message.data.hashCode,
-        message.data['title'],
-        message.data['body'],
-        payload: paylod,
-        NotificationDetails(
-            android: AndroidNotificationDetails(channel.id, channel.name,
-                channelDescription: channel.description,
-                importance: Importance.max,
-                icon: '@mipmap/ic_launcher')));
-  }
+  // if (userModel.data!.user!.email != null) {
+  await flutterLocalNotificationsPlugin.show(
+      message.data.hashCode,
+      message.data['title'],
+      message.data['body'],
+      payload: paylod,
+      NotificationDetails(
+          android: AndroidNotificationDetails(channel.id, channel.name,
+              channelDescription: channel.description,
+              importance: Importance.max,
+              icon: '@mipmap/ic_launcher')));
+  // }
 }
 
 void checkData(RemoteMessage message) {

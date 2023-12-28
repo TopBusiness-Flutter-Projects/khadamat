@@ -16,7 +16,6 @@ class PostWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return BlocConsumer<FavoriteCubit, FavoriteState>(
       listener: (context, state) {
         // TODO: implement listener
@@ -46,14 +45,12 @@ class PostWidget extends StatelessWidget {
                           Expanded(
                             child: Text(
                               model.name!,
-
                               style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
                           ),
-
                         ],
                       ),
                       Directionality(
@@ -63,7 +60,7 @@ class PostWidget extends StatelessWidget {
                           children: [
                             ...List.generate(
                               5,
-                                  (index) {
+                              (index) {
                                 print(index);
                                 print(model.rate);
                                 return Padding(
@@ -71,7 +68,8 @@ class PostWidget extends StatelessWidget {
                                   child: Icon(
                                     Icons.star,
                                     size: 25,
-                                    color:model.rate!=null&& index + 1 <= model.rate!
+                                    color: model.rate != null &&
+                                            index + 1 <= model.rate!
                                         ? AppColors.goldStarColor
                                         : AppColors.hint,
                                   ),
@@ -159,8 +157,7 @@ class PostWidget extends StatelessWidget {
                           backgroundColor: AppColors.white,
                           child: ClipOval(
                             child: ManageNetworkImage(
-                              imageUrl:
-                              model.logo!,
+                              imageUrl: model.logo!,
                               width: 160,
                               height: 160,
                               borderRadius: 140,

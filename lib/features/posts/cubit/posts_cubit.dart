@@ -4,6 +4,7 @@ import 'package:khadamat/core/remote/service.dart';
 import 'package:meta/meta.dart';
 
 import '../../../core/models/servicemodel.dart';
+import '../../../core/models/subcategorymodel.dart';
 
 part 'posts_state.dart';
 
@@ -24,13 +25,23 @@ class PostsCubit extends Cubit<PostsState> {
     );
   }
 
-  searchServices(catId,searchKey) async {
+  searchServices(catId, searchKey) async {
     emit(searchServicesLoading());
-    final response = await api.servicesSearchData(catId,searchKey);
-    response.fold((l) => emit(searchServicesError()),
-            (r) {
-              servicesList = r.data!;
+    final response = await api.servicesSearchData(catId, searchKey);
+    response.fold((l) => emit(searchServicesError()), (r) {
+      servicesList = r.data!;
       emit(searchServicesSuccess());
-        });
+    });
+  }
+
+  List<SubCategoryModeel> subCategories = [];
+
+  searchSSubCategory({required int catId}) async {
+    emit(SubServicesLoading());
+    final response = await api.SubCategoryMethod(catId);
+    response.fold((l) => emit(SubServicesError()), (r) {
+      subCategories = r.data!;
+      emit(SubServicesLoaded());
+    });
   }
 }
