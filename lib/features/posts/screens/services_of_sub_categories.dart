@@ -48,49 +48,44 @@ class _ServicesOfSubCategoriesState extends State<ServicesOfSubCategories> {
                         left: 0,
                         right: 0,
                         bottom: 0,
-                        child: ListView(
-                          children: [
-                            SizedBox(height: 20),
-                            ...List.generate(
-                              cubit.servicesList.length,
-                              (index) => InkWell(
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            ServicesOfCategories(
-                                          catId: cubit.subCategories[index].id!,
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                  child: Column(
-                                    children: [
-                                      InkWell(
-                                        onTap: () {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  ServicesOfCategories(
-                                                catId: cubit
-                                                    .subCategories[index]
-                                                    .catId!,
-                                              ),
-                                            ),
-                                          );
-                                        },
-                                        child: Container(
-                                            decoration: BoxDecoration(
-                                                color: AppColors.primary),
-                                            child: Text(cubit
-                                                .subCategories[index].name!)),
-                                      )
+                        child: GridView.builder(
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 2),
+                          itemBuilder: (context, index) {
+                            return InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => ServicesOfCategories(
+                                      catId: cubit.subCategories[index].catId!,
+                                    ),
+                                  ),
+                                );
+                              },
+                              child: Container(
+                                  alignment: Alignment.center,
+                                  padding: EdgeInsets.all(20),
+                                  margin: EdgeInsets.all(20),
+                                  decoration: BoxDecoration(
+                                    color: AppColors.white,
+                                    boxShadow: [
+                                      BoxShadow(
+                                          color: Colors.grey.shade300,
+                                          offset: Offset(3, 4))
                                     ],
+                                    border: Border.all(
+                                        color: Colors.grey.shade50, width: 2),
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  child: Text(
+                                    cubit.subCategories[index].name ?? '',
+                                    style: TextStyle(color: AppColors.primary),
                                   )),
-                            ),
-                          ],
+                            );
+                          },
+                          itemCount: cubit.subCategories.length,
                         )),
                     Positioned(
                       top: 0,
