@@ -37,10 +37,7 @@ Future<void> main() async {
   LoginModel userModel = await Preferences.instance.getUserModel();
 
   NotificationSettings settings = await messaging.requestPermission(
-    alert: true,
-    badge: true,
-    sound: true,
-  );
+      alert: true, badge: true, provisional: true, sound: true);
 
   print('User granted permission: ${settings.authorizationStatus}');
   // FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
@@ -55,12 +52,7 @@ Future<void> main() async {
   );
   await setupLocator();
   getToken();
-  //Cloud messaging step 3
-  await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
-    alert: true,
-    badge: true,
-    sound: true,
-  );
+
   // FirebaseMessaging.instance.getInitialMessage().then((value) {
   //   navigatorKey.currentState?.pushNamed(Routes.homeRoute);
   // });
@@ -148,7 +140,7 @@ void showNotification(RemoteMessage message) async {
   String paylod = "notification";
   if (message.data["note_type"] == "notification") {
     behaviorchat.add('notification');
-    paylod = message.data['room'] + message.data['note_type'];
+    paylod = message.data['note_type'];
   } else {
     message.data['note_type'];
   }
