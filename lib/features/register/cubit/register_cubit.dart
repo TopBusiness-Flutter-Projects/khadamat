@@ -34,16 +34,13 @@ class RegisterCubit extends Cubit<RegisterState> {
   }
 
   register(BuildContext context) async {
-    // loadingDialog();
-
     emit(RegisterLoadingState());
     final response = await api.postRegister(phoneController.text, phoneCode,
         nameController.text, passwordController.text);
     response.fold((l) => {emit(RegisterFailedState())}, (r) {
-      Get.back();
       if (r.code == 200) {
         registerModel = r;
-        // errorGetBar(r.message ?? '');
+
         Preferences.instance.setUser(r).then((value) {
           Navigator.pushReplacementNamed(context, Routes.homeRoute);
         });
