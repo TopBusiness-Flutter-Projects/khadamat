@@ -6,6 +6,7 @@ import '../../../core/utils/assets_manager.dart';
 import '../../../core/widgets/show_loading_indicator.dart';
 import '../cubit/posts_cubit.dart';
 import 'services_of_categories.dart';
+import 'subservicesscreen.dart';
 
 // ignore: must_be_immutable
 class ServicesOfSubCategories extends StatefulWidget {
@@ -58,8 +59,9 @@ class _ServicesOfSubCategoriesState extends State<ServicesOfSubCategories> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => ServicesOfCategories(
-                                      catId: cubit.subCategories[index].catId!,
+                                    builder: (context) =>
+                                        ServicesSubOfCategories(
+                                      catId: cubit.subCategories[index].id!,
                                     ),
                                   ),
                                 );

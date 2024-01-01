@@ -23,3 +23,10 @@ class SubServicesLoading extends PostsState {}
 class SubServicesLoaded extends PostsState {}
 
 class SubServicesError extends PostsState {}
+
+//************************************************
+class ServicesBySubLoading extends PostsState {}
+
+class ServicesBySubSuccess extends PostsState {}
+
+class ServicesBySubFailure extends PostsState {}
