@@ -2,7 +2,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:khadamat/features/home/cubit/home_cubit.dart';
-import 'package:khadamat/features/home/cubit/home_cubit.dart';
 
 import '../../../config/routes/app_routes.dart';
 import '../../../core/utils/app_colors.dart';
@@ -195,9 +194,9 @@ class HomePageWidget extends StatelessWidget {
                                                 MaterialPageRoute(
                                                   builder: (context) =>
                                                       ServicesOfCategories(
-                                                    catId: cubit
-                                                        .categories[index].id!,
-                                                  ),
+                                                          catId: cubit
+                                                              .categories[index]
+                                                              .id!),
                                                 ),
                                               );
                                             }
