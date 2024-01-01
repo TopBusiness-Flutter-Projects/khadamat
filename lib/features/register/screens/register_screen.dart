@@ -12,11 +12,16 @@ import '../../../core/utils/assets_manager.dart';
 import '../../../core/utils/dialogs.dart';
 import '../../../core/widgets/custom_button.dart';
 
-class RegisterScreen extends StatelessWidget {
+class RegisterScreen extends StatefulWidget {
   RegisterScreen({Key? key}) : super(key: key);
-  GlobalKey<FormState> form_key2 =
-      GlobalKey<FormState>(debugLabel: 'registerScreenkey');
 
+  @override
+  State<RegisterScreen> createState() => _RegisterScreenState();
+}
+
+class _RegisterScreenState extends State<RegisterScreen> {
+  GlobalKey<FormState> form_key2 = GlobalKey<FormState>();
+  bool isLoading = false;
   @override
   Widget build(BuildContext context) {
     String lang = oo.EasyLocalization.of(context)!.locale.languageCode;
@@ -34,10 +39,11 @@ class RegisterScreen extends StatelessWidget {
             ),
             child: BlocConsumer<RegisterCubit, RegisterState>(
               listener: (context, state) {
-                // if (state is RegisterFailedUserExistState) {
-                //   errorGetBar("Failed,phone number already exists");
-                //   Navigator.pushNamed(context, Routes.loginRoute);
-                // }
+                if (state is RegisterLoadingState) {
+                  isLoading = true;
+                } else {
+                  isLoading = false;
+                }
               },
               builder: (context, state) {
                 RegisterCubit cubit = context.read<RegisterCubit>();
@@ -260,19 +266,25 @@ class RegisterScreen extends StatelessWidget {
                           ),
                         ),
                         SizedBox(height: 20),
-                        CustomButton(
-                          text: 'done_btn'.tr(),
-                          color: AppColors.primary,
-                          paddingHorizontal: 80,
-                          borderRadius: 20,
-                          onClick: () async {
-                            //todo register
-                            if (form_key2.currentState!.validate()) {
-                              await cubit.register(context);
-                              //     Navigator.pushNamed(context, Routes.otpRoute);
-                            }
-                          },
-                        ),
+                        isLoading
+                            ? Center(
+                                child: CircularProgressIndicator(
+                                  color: Colors.white,
+                                ),
+                              )
+                            : CustomButton(
+                                text: 'done_btn'.tr(),
+                                color: AppColors.primary,
+                                paddingHorizontal: 80,
+                                borderRadius: 20,
+                                onClick: () async {
+                                  //todo register
+                                  if (form_key2.currentState!.validate()) {
+                                    await cubit.register(context);
+                                    //   //     Navigator.pushNamed(context, Routes.otpRoute);
+                                  }
+                                },
+                              ),
                         Image.asset(
                           ImageAssets.bottomImage,
                           height: MediaQuery.of(context).size.height / 4,

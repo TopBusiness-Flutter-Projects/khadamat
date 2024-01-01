@@ -1,7 +1,7 @@
-
 import 'package:bloc/bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:khadamat/core/models/login_model.dart';
 import 'package:khadamat/core/remote/service.dart';
@@ -26,63 +26,52 @@ class LoginCubit extends Cubit<LoginState> {
   LoginModel? model;
   var responseCode;
 
-  login() async {
+  login(
+    BuildContext context,
+  ) async {
     print("___________________________________________________________");
-    isLogin = false;
-    loadingDialog();
-   // emit(LoginLoading());
-    final response = await api.postLogin(phoneController.text, phoneCode,passwordController.text);
+    // isLogin = false;
+    // loadingDialog();
+    emit(LoginLoading());
+    final response = await api.postLogin(
+        phoneController.text, phoneCode, passwordController.text);
     response.fold(
       (l) {
-        Get.back();
-        isLogin = true;
+        // Get.back();
+        // isLogin = true;
         emit(LoginError());
       },
       (r) async {
-        Get.back();
-        isLogin = true;
         if (r.code == 200) {
-          emit(LoginLoaded());
+          errorGetBar('تم تسجيل الدخول بنجاح', code: 1);
           responseCode = 200;
-          print("r.code == 200");
           model = r;
           Preferences.instance.setUser(r);
-          Get.offAllNamed( Routes.homeRoute);
-          // await sendSmsCode(code: phoneCode, phoneNum: phoneController.text);
-          // Get.toNamed( Routes.verificationScreenRoute);
-
-        }
-        else if (r.code == 422) {
-          responseCode = 422;
-          print("r.code == 422");
-         // errorGetBar('لا يوجد حساب مرتبط بهذا الهاتف');
-         // await sendSmsCode(code: phoneCode, phoneNum: phoneController.text);
-         //  Get.toNamed( Routes.verificationScreenRoute);
-
+          Navigator.pushReplacementNamed(context, Routes.homeRoute);
+          phoneController.clear();
+          nameController.clear();
         } else {
-          print("هناك خطئ حاول فى وقت لاحق");
-          errorGetBar('هناك خطئ حاول فى وقت لاحق');
+          errorGetBar(r.message ?? '');
         }
-
+        emit(LoginLoaded());
       },
     );
   }
 
   String smsCode = '';
-  bool isLogin = true;
- late LoginModel registerModel ;
- //  final FirebaseAuth _mAuth = FirebaseAuth.instance;
+  // bool isLogin = true;
+  late LoginModel registerModel;
+  //  final FirebaseAuth _mAuth = FirebaseAuth.instance;
   String? verification_Id;
   int? resendToken;
   bool isObscureText = true;
   IconData passwordIcon = Icons.visibility;
-  changePasswordIcon(){
+  changePasswordIcon() {
     isObscureText = !isObscureText;
-    if(isObscureText==true){
+    if (isObscureText == true) {
       passwordIcon = Icons.visibility_off;
       emit(ChangePasswordIconState());
-    }
-    else{
+    } else {
       passwordIcon = Icons.visibility;
       emit(ChangePasswordIconState());
     }
@@ -155,6 +144,4 @@ class LoginCubit extends Cubit<LoginState> {
   //     print('phone auth =>${error.toString()}');
   //   });
   // }
-
-
 }

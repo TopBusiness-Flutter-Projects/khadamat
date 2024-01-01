@@ -17,7 +17,7 @@ class RegisterCubit extends Cubit<RegisterState> {
   TextEditingController nameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   ServiceApi api;
-  late LoginModel registerModel;
+  LoginModel? registerModel;
   String phoneCode = '';
   bool isObscureText = true;
   IconData passwordIcon = Icons.visibility;
@@ -34,20 +34,25 @@ class RegisterCubit extends Cubit<RegisterState> {
   }
 
   register(BuildContext context) async {
-    loadingDialog();
+    // loadingDialog();
+
+    emit(RegisterLoadingState());
     final response = await api.postRegister(phoneController.text, phoneCode,
         nameController.text, passwordController.text);
-    response.fold((l) => {Get.back(), emit(RegisterFailedState())}, (r) {
-      // Get.back();
+    response.fold((l) => {emit(RegisterFailedState())}, (r) {
+      Get.back();
       if (r.code == 200) {
         registerModel = r;
-        errorGetBar(r.message ?? '');
+        // errorGetBar(r.message ?? '');
+        Preferences.instance.setUser(r).then((value) {
+          Navigator.pushReplacementNamed(context, Routes.homeRoute);
+        });
 
-        Preferences.instance.setUser(registerModel).then((value) =>
-            {Navigator.pushReplacementNamed(context, Routes.homeRoute)});
+        phoneController.clear();
+        nameController.clear();
+
         emit(RegisterSuccessState());
       } else if (r.code == 409) {
-        //  registerModel = r ;
         emit(RegisterFailedUserExistState());
         errorGetBar('المستخدم موجود بالفعل');
       } else {

@@ -1,32 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:khadamat/core/utils/app_colors.dart';
-
 
 /*----------------------------------------------------------------------------*/
 /*------------------------------  Error Get Bar  -----------------------------*/
 /*----------------------------------------------------------------------------*/
-errorGetBar(String message) {
-  Get.showSnackbar(
-    GetSnackBar(
-      messageText: Text(
-        message!,
-        style: Get.textTheme.titleSmall!.copyWith(
-          color: Colors.white,
-          height: 1.3,
-        ),
-      ),
-      icon: const Icon(Icons.error_outline_outlined, color: Colors.white),
-      backgroundColor: AppColors.error,
-      barBlur: 5.0,
-      borderRadius: 12.0,
-      duration: const Duration(seconds: 2),
-      isDismissible: true,
-      margin: const EdgeInsets.all(12.0),
-      snackPosition: SnackPosition.BOTTOM,
-    ),
-  );
+errorGetBar(String message, {int code = 0}) {
+  Fluttertoast.showToast(
+      msg: message, backgroundColor: code == 0 ? Colors.red : Colors.black);
 }
 
 /*----------------------------------------------------------------------------*/
