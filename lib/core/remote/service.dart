@@ -379,6 +379,24 @@ class ServiceApi {
     }
   }
 
+  Future<Either<Failure, CategoriesServicesModel>> servicesBySubCategory(
+      int catId, searchKey) async {
+    LoginModel loginModel = await Preferences.instance.getUserModel();
+    try {
+      final response =
+          await dio.get(EndPoints.servicesBysubServicesUrl + catId.toString(),
+              options: Options(
+                headers: {'Authorization': loginModel.data!.accessToken!},
+              ),
+              queryParameters: {"search_key": searchKey});
+      return Right(CategoriesServicesModel.fromJson(response));
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
+
+///////////////servicesBysubServicesUrl
+
   Future<Either<Failure, FavoriteModel>> getFavoriteData() async {
     LoginModel loginModel = await Preferences.instance.getUserModel();
     try {

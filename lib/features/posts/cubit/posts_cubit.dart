@@ -1,5 +1,4 @@
 import 'package:bloc/bloc.dart';
-import 'package:khadamat/core/models/catigoreis_services.dart';
 import 'package:khadamat/core/remote/service.dart';
 import 'package:meta/meta.dart';
 
@@ -43,5 +42,18 @@ class PostsCubit extends Cubit<PostsState> {
       subCategories = r.data!;
       emit(SubServicesLoaded());
     });
+  }
+
+  List<ServicesModel> servicesSubList = [];
+  servicesBySubCategory({required int catId, required String search}) async {
+    emit(ServicesBySubLoading());
+    final response = await api.servicesBySubCategory(catId, search);
+    response.fold(
+      (l) => emit(ServicesBySubFailure()),
+      (r) {
+        servicesSubList = r.data!;
+        emit(ServicesBySubSuccess());
+      },
+    );
   }
 }

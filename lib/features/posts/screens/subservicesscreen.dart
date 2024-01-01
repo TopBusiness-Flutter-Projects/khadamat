@@ -1,0 +1,121 @@
+import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:khadamat/config/routes/app_routes.dart';
+import 'package:khadamat/core/utils/app_colors.dart';
+import 'package:khadamat/core/widgets/post_widget.dart';
+import 'package:khadamat/core/widgets/show_loading_indicator.dart';
+import 'package:khadamat/features/posts/cubit/posts_cubit.dart';
+
+import '../../../core/utils/assets_manager.dart';
+
+class ServicesSubOfCategories extends StatefulWidget {
+  const ServicesSubOfCategories({Key? key, required this.catId})
+      : super(key: key);
+  final int catId;
+
+  @override
+  State<ServicesSubOfCategories> createState() =>
+      _ServicesSubOfCategoriesState();
+}
+
+class _ServicesSubOfCategoriesState extends State<ServicesSubOfCategories> {
+  @override
+  void initState() {
+    super.initState();
+    context
+        .read<PostsCubit>()
+        .servicesBySubCategory(catId: widget.catId, search: '');
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: AppColors.scaffoldColor,
+      body: Stack(
+        children: [
+          Positioned(
+            top: 60,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            child: BlocBuilder<PostsCubit, PostsState>(
+              builder: (context, state) {
+                PostsCubit cubit = context.read<PostsCubit>();
+                if (state is PostsServicesLoading) {
+                  return ShowLoadingIndicator();
+                }
+                return ListView(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          border: Border.all(
+                            color: AppColors.gray,
+                            width: 1,
+                          ),
+                          borderRadius: BorderRadius.circular(25),
+                        ),
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            //  Text('search'.tr()),
+                            Expanded(
+                              child: TextField(
+                                onChanged: (value) async {
+                                  await context
+                                      .read<PostsCubit>()
+                                      .servicesBySubCategory(
+                                          catId: widget.catId, search: value);
+                                },
+                                decoration: InputDecoration(
+                                    hintText: "search".tr(),
+                                    border: InputBorder.none,
+                                    fillColor: AppColors.white),
+                              ),
+                            ),
+                            Icon(Icons.search),
+                          ],
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 20),
+                    ...List.generate(
+                      cubit.servicesSubList.length,
+                      (index) => InkWell(
+                          onTap: () {
+                            Navigator.pushNamed(context, Routes.detailsRoute,
+                                arguments: cubit.servicesSubList[index]);
+                          },
+                          child: PostWidget(
+                            model: cubit.servicesSubList[index],
+                          )),
+                    ),
+                  ],
+                );
+              },
+            ),
+          ),
+          Positioned(
+            top: 0,
+            left: 0,
+            right: 0,
+            child: Container(
+              height: 90,
+              decoration: BoxDecoration(
+                  color: AppColors.transparent,
+                  image: DecorationImage(
+                    image: AssetImage(ImageAssets.topStatusBarImage),
+                    fit: BoxFit.fill,
+                  )),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
