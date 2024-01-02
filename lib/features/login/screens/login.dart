@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart' as oo;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:khadamat/core/widgets/my_svg_widget.dart';
 import 'package:khadamat/features/login/cubit/login_cubit.dart';
@@ -265,8 +266,13 @@ class _LoginScreenState extends State<LoginScreen> {
                             paddingHorizontal: 40,
                             borderRadius: 30,
                             onClick: () async {
-                              if (formKey3.currentState!.validate()) {
-                                await cubit.login(context);
+                              if (cubit.passwordController.text.length < 7) {
+                                Fluttertoast.showToast(
+                                    msg: 'من فضلك أدخل كلمة مرور صحيحه');
+                              } else {
+                                if (formKey3.currentState!.validate()) {
+                                  await cubit.login(context);
+                                }
                               }
                             },
                           ),

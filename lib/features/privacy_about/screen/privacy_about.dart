@@ -42,7 +42,7 @@ class _PrivacyAboutState extends State<PrivacyAbout> {
                 bottom: MediaQuery.of(context).size.height / 2.8,
                 child: SingleChildScrollView(
                   child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(0.0),
                     child: Column(
                       // mainAxisSize: MainAxisSize.max,
                       // mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart' as oo;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:khadamat/core/widgets/my_svg_widget.dart';
 
@@ -279,9 +280,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 borderRadius: 20,
                                 onClick: () async {
                                   //todo register
-                                  if (form_key2.currentState!.validate()) {
-                                    await cubit.register(context);
-                                    //   //     Navigator.pushNamed(context, Routes.otpRoute);
+
+                                  if (cubit.passwordController.text.length <
+                                      7) {
+                                    Fluttertoast.showToast(
+                                        msg: 'من فضلك أدخل كلمة مرور صحيحه');
+                                  } else {
+                                    if (form_key2.currentState!.validate()) {
+                                      await cubit.register(context);
+                                      //   //     Navigator.pushNamed(context, Routes.otpRoute);
+                                    }
                                   }
                                 },
                               ),
