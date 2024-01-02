@@ -45,13 +45,13 @@ Future<void> setup() async {
     ),
   );
   serviceLocator.registerFactory(
-        () => GoogleMapsCubit(
-     // serviceLocator(),
-    ),
+    () => GoogleMapsCubit(
+        // serviceLocator(),
+        ),
   );
   serviceLocator.registerFactory(
     () => ProfileCubit(
-       serviceLocator(),
+      serviceLocator(),
     ),
   );
   serviceLocator.registerFactory(
@@ -70,70 +70,60 @@ Future<void> setup() async {
     ),
   );
   serviceLocator.registerFactory(
-        () => EditProfileCubit(
+    () => EditProfileCubit(
       serviceLocator(),
     ),
-
   );
   serviceLocator.registerFactory(
-        () => MyPostsCubit(
+    () => MyPostsCubit(
       serviceLocator(),
     ),
-
   );
   serviceLocator.registerFactory(
-        () => AddServiceCubit(
+    () => AddServiceCubit(
       serviceLocator(),
     ),
-
   );
   serviceLocator.registerFactory(
-        () => DetailsCubit(
+    () => DetailsCubit(
       serviceLocator(),
     ),
-
   );
 
   serviceLocator.registerFactory(
-        () => PrivacyCubit(
+    () => PrivacyCubit(
       serviceLocator(),
     ),
-
   );
   serviceLocator.registerFactory(
-        () => ContactUsCubit(
+    () => ContactUsCubit(
       serviceLocator(),
     ),
-
   );
   serviceLocator.registerFactory(
-        () => NottificationCubit(
+    () => NottificationCubit(
       serviceLocator(),
     ),
-
   );
   serviceLocator.registerFactory(
-        () => RegisterCubit(
+    () => RegisterCubit(
       serviceLocator(),
     ),
-
   );
   serviceLocator.registerFactory(
-        () => NotificationDetailsCubit(
+    () => NotificationDetailsCubit(
       serviceLocator(),
     ),
-
   );
   serviceLocator.registerFactory(
-        () => ResetPasswordCubit(
+    () => ResetPasswordCubit(
       serviceLocator(),
     ),
-
-  );  serviceLocator.registerFactory(
-        () => DetailsDeeplinkCubit(
+  );
+  serviceLocator.registerFactory(
+    () => DetailsDeeplinkCubit(
       serviceLocator(),
     ),
-
   );
 
   ///////////////////////////////////////////////////////////////////////////////

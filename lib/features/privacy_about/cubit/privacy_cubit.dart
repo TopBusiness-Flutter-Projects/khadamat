@@ -11,9 +11,7 @@ import '../../../core/remote/service.dart';
 part 'privacy_state.dart';
 
 class PrivacyCubit extends Cubit<PrivacyState> {
-  PrivacyCubit(this.api) : super(PrivacyInitial()) {
-    getPrivacyData();
-  }
+  PrivacyCubit(this.api) : super(PrivacyInitial());
 
   bool isPrivacy = true;
   final ServiceApi api;
@@ -22,13 +20,14 @@ class PrivacyCubit extends Cubit<PrivacyState> {
   String email = "";
 
   getPrivacyData() async {
+    emit(PrivacyLoading());
     final response = await api.getSettingData();
     response.fold(
       (l) => emit(PrivacyError()),
       (r) {
         settingModel = r;
         // soup = BeautifulSoup(r.data!.aboutAr!);
-        emit(PrivacyLoading());
+        emit(PrivacySuccess());
       },
     );
   }
