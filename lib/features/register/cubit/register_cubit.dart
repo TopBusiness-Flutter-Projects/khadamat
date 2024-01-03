@@ -61,7 +61,7 @@ class RegisterCubit extends Cubit<RegisterState> {
   checkToken(String deviceToken) async {
     final response = await api.checkToken(deviceToken);
     response.fold((l) => emit(CheckTokenFailedState()), (r) {
-      if (r.code == 200) {
+      if (r == 'token updated successfully') {
         registerModel = r;
         emit(CheckTokenSuccessState());
       } else if (r.code == 409) {

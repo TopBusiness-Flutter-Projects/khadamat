@@ -6,6 +6,7 @@ import 'package:khadamat/config/routes/app_routes.dart';
 import 'package:khadamat/core/preferences/preferences.dart';
 import 'package:khadamat/core/utils/app_colors.dart';
 import 'package:khadamat/core/widgets/show_loading_indicator.dart';
+import 'package:khadamat/features/contact_us/screen/contact_us.dart';
 import 'package:khadamat/features/my_posts/cubit/my_posts_cubit.dart';
 import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
 import '../../../core/utils/assets_manager.dart';
@@ -139,8 +140,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ProfileListTailWidget(
                           title: 'call'.tr(),
                           onclick: () {
-                            //todo
                             Navigator.pushNamed(context, Routes.contactUsRoute);
+                     
                             // var dialNumber = context.read<PrivacyCubit>().settingModel!.data!.whatsapp??0100000000;
                             //    UrlLauncher.launch("tel://${dialNumber}");
                           },

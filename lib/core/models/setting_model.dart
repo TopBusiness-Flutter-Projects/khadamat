@@ -42,12 +42,12 @@ class Data {
   String? privacyAr;
   String? privacyEn;
   List<String>? phones;
-  dynamic instagram;
-  dynamic whatsapp;
-  dynamic facebook;
-  dynamic youtube;
-  dynamic createdAt;
-  dynamic updatedAt;
+  String? instagram;
+  String? whatsapp;
+  String? facebook;
+  String? youtube;
+  String? createdAt;
+  String? updatedAt;
   String? email;
 
   Data(
@@ -68,24 +68,23 @@ class Data {
       this.youtube});
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
-        id: json["id"],
-        facebook: json['facebook'],
-        youtube: json['youtube'],
-        aboutAr: json["about_ar"],
-        aboutEn: json["about_en"],
-        termsAr: json["terms_ar"],
-        termsEn: json["terms_en"],
-        privacyAr: json["privacy_ar"],
-        privacyEn: json["privacy_en"],
-        phones: json["phones"] == null
-            ? []
-            : List<String>.from(json["phones"]!.map((x) => x)),
-        instagram: json["instagram"],
-        whatsapp: json["whatsapp"],
-        email: json["email"],
-        createdAt: json["created_at"],
-        updatedAt: json["updated_at"],
-      );
+      id: json["id"],
+      facebook: json['facebook'],
+      youtube: json['youtube'],
+      aboutAr: json["about_ar"],
+      aboutEn: json["about_en"],
+      termsAr: json["terms_ar"],
+      termsEn: json["terms_en"],
+      privacyAr: json["privacy_ar"],
+      privacyEn: json["privacy_en"],
+      phones: json["phones"] == null
+          ? []
+          : List<String>.from(json["phones"]!.map((x) => x == null ? '' : x)),
+      instagram: json["instagram"],
+      whatsapp: json["whatsapp"],
+      email: json["email"],
+      createdAt: json["created_at"],
+      updatedAt: json["updated_at"]);
 
   Map<String, dynamic> toJson() => {
         "id": id,
