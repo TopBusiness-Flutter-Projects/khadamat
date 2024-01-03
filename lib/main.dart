@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get_it/get_it.dart' as gt;
-import 'package:khadamat/config/routes/app_routes.dart';
 import 'package:khadamat/injector.dart' as injector;
 import 'package:rxdart/rxdart.dart';
 import 'app.dart';
@@ -111,7 +110,6 @@ Future<void> _firebaseMessagingBackgroundHandler2(RemoteMessage message) async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  print("Handling a background message:");
 
   AndroidInitializationSettings initializationSettingsAndroid =
       AndroidInitializationSettings('@mipmap/ic_launcher');

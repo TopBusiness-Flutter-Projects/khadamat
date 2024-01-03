@@ -73,14 +73,21 @@ class _ContactUsState extends State<ContactUs> {
                                 itemCount:
                                     cubit.settingModel!.data!.phones!.length,
                                 itemBuilder: (context, index) {
-                                  return InkWell(
-                                      onTap: () {
-                                        UrlLauncher.launchUrl(Uri.parse(
-                                            "tel://${cubit.settingModel?.data!.phones![index]}"));
-                                      },
-                                      child: PhoneWidget(
-                                          phone: cubit.settingModel?.data
-                                              ?.phones?[index]));
+                                  return (cubit.settingModel?.data!
+                                                  .phones![index] ==
+                                              null ||
+                                          cubit.settingModel?.data!
+                                                  .phones![index] ==
+                                              '')
+                                      ? Container()
+                                      : InkWell(
+                                          onTap: () {
+                                            UrlLauncher.launchUrl(Uri.parse(
+                                                "tel://${cubit.settingModel?.data!.phones![index]}"));
+                                          },
+                                          child: PhoneWidget(
+                                              phone: cubit.settingModel?.data
+                                                  ?.phones?[index]));
                                 },
                               ),
                             ),
@@ -89,13 +96,14 @@ class _ContactUsState extends State<ContactUs> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            cubit.settingModel?.data?.facebook == null
+                            cubit.settingModel?.data!.facebook == null
                                 ? Container()
                                 : IconButton(
                                     onPressed: () async {
                                       await cubit.lanchUrlSocial(
-                                          url: cubit
-                                              .settingModel?.data?.facebook);
+                                          url: cubit.settingModel!.data!
+                                                  .facebook ??
+                                              '');
                                     },
                                     icon: FaIcon(
                                       FontAwesomeIcons.facebook,
@@ -106,18 +114,21 @@ class _ContactUsState extends State<ContactUs> {
                                 : IconButton(
                                     onPressed: () async {
                                       await cubit.lanchUrlSocial(
-                                          url: cubit
-                                              .settingModel?.data?.youtube);
+                                          url: cubit.settingModel?.data
+                                                  ?.youtube ??
+                                              '');
                                     },
                                     icon: FaIcon(FontAwesomeIcons.youtube,
                                         color: Colors.red)),
-                            cubit.settingModel?.data?.instagram == null
+                            (cubit.settingModel?.data?.instagram == null ||
+                                    cubit.settingModel?.data?.instagram == '')
                                 ? Container()
                                 : IconButton(
                                     onPressed: () async {
                                       await cubit.lanchUrlSocial(
-                                          url: cubit
-                                              .settingModel?.data?.instagram);
+                                          url: cubit.settingModel?.data
+                                                  ?.instagram ??
+                                              '');
                                     },
                                     icon: FaIcon(
                                       FontAwesomeIcons.instagram,
@@ -129,7 +140,8 @@ class _ContactUsState extends State<ContactUs> {
                                     onPressed: () async {
                                       await cubit.lanchUrlSocial(
                                           url: cubit
-                                              .settingModel?.data?.whatsapp);
+                                              .settingModel!.data!.whatsapp
+                                              .toString());
                                     },
                                     icon: FaIcon(
                                       FontAwesomeIcons.whatsapp,
@@ -158,10 +170,9 @@ class _ContactUsState extends State<ContactUs> {
                             },
                             child: Text("${cubit.settingModel?.data?.email}")),
                       ),
-
-                      Image.asset(ImageAssets.bottomCurve2)
                     ],
                   ),
+            bottomSheet: Image.asset(ImageAssets.bottomCurve2),
           ),
         );
       },

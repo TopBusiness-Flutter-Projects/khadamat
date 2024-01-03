@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:khadamat/features/contact_us/cubit/contact_us_cubit.dart';
 import 'package:khadamat/features/details/cubit/details_cubit.dart';
 import 'package:khadamat/features/edit_profile/cubit/edit_profile_cubit.dart';
@@ -43,48 +45,38 @@ class _KhadamatState extends State<Khadamat> {
   void initState() {
     // initUniLinks2();
     runWhileAppIsTerminated();
-    FirebaseMessaging.onMessageOpenedApp.listen((message) {
-      print('Got a message whilstt in the foreground!');
-      locator<NavigationService>().navigateToReplacement();
-      // Fluttertoast.showToast(
-      //     msg: message.data.toString() + "lkkfkfk", // message
-      //     toastLength: Toast.LENGTH_SHORT, // length
-      //     gravity: ToastGravity.BOTTOM, // location
-      //     timeInSecForIosWeb: 1 // duration
-      //     );
-    });
     listenToNotificationStream();
-    // FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-    //   print('Got a message whilst in the foreground!');
-    //   print('Message data: ${message.data}');
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      print('Got a message whilst in the foreground!');
+      print('Message data: ${message.data}');
 
-    //   if (message.notification != null) {
-    //     print('Message also contained a notification: ${message.notification}');
+      if (message.notification != null) {
+        print('Message also contained a notification: ${message.notification}');
 
-    //     ///now i have message i want show notification
-    //     RemoteNotification? notification = message.notification;
-    //     AndroidNotification? android = message.notification?.android;
-    //     if (notification != null && android != null) {
-    //       flutterLocalNotificationsPlugin.show(
-    //         notification.hashCode,
-    //         notification.title,
-    //         notification.body,
-    //         payload: "123",
-    //         NotificationDetails(
-    //           android: AndroidNotificationDetails(channel.id, channel.name,
-    //               channelDescription: channel.description,
-    //               icon: '@drawable/ic_launcher',
-    //               playSound: true,
-    //               enableLights: true,
-    //               enableVibration: true),
-    //         ),
-    //       );
-    //     }
-    //     FirebaseMessaging.instance.getInitialMessage().then((value) {
-    //       navigatorKey.currentState?.pushNamed(Routes.homeRoute);
-    //     });
-    //   }
-    // });
+        ///now i have message i want show notification
+        RemoteNotification? notification = message.notification;
+        AndroidNotification? android = message.notification?.android;
+        if (notification != null && android != null) {
+          flutterLocalNotificationsPlugin.show(
+            notification.hashCode,
+            notification.title,
+            notification.body,
+            payload: "notification",
+            NotificationDetails(
+              android: AndroidNotificationDetails(channel.id, channel.name,
+                  channelDescription: channel.description,
+                  icon: '@drawable/ic_launcher',
+                  playSound: true,
+                  enableLights: true,
+                  enableVibration: true),
+            ),
+          );
+        }
+        // FirebaseMessaging.instance.getInitialMessage().then((value) {
+        //   locator<NavigationService>().navigateToReplacement();
+        // });
+      }
+    });
 
     super.initState();
   }
