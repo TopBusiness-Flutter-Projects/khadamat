@@ -187,18 +187,15 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                   ),
                                 ),
                                 InkWell(
-                                  onTap: () {
-                                    cubit.selectTap(4);
-                                    cubit.tabController.animateTo(4);
-                                  },
-                                  child: Icon(
-                                    Icons.person,
-                                    color: cubit.currentIndex == 4
-                                        ? AppColors.secondPrimary
-                                        : AppColors.gray1,
-                                    size: 36,
-                                  ),
-                                ),
+                                    onTap: () {
+                                      cubit.selectTap(4);
+                                      cubit.tabController.animateTo(4);
+                                    },
+                                    child: Icon(Icons.person,
+                                        color: cubit.currentIndex == 4
+                                            ? AppColors.secondPrimary
+                                            : AppColors.gray1,
+                                        size: 36)),
                               ],
                             ),
                           ),

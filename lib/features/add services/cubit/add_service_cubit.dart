@@ -109,58 +109,60 @@ class AddServiceCubit extends Cubit<AddServiceState> {
     });
   }
 
-  storeService() async {
-    loadingDialog();
+  storeService(BuildContext context) async {
+    loadingDialog(context);
     final response = await api.postServiceStore(serviceModel);
-
     response.fold(
       (l) {
-        Get.back();
+        Navigator.pop(context);
         emit(StoreServiceFailure());
       },
       (r) {
-        Get.back();
+        Navigator.pop(context);
+        // Get.back();
         serviceStoreModel = r;
         emit(StoreServiceSuccess());
       },
     );
   }
 
-  updateAd(int id, ServiceToUpdate serviceToUpdate) async {
-    loadingDialog();
+  updateAd(
+      int id, ServiceToUpdate serviceToUpdate, BuildContext context) async {
+    // loadingDialog();
     final response = await api.edit(serviceToUpdate, id);
     response.fold((l) {
       print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
-      Get.back();
+      Navigator.pop(context);
 
       emit(EditServiceFailure());
     }, (r) {
       emit(EditServiceSuccess());
       print("/////////////////////////////////////////////////");
-      Get.back();
+      Navigator.pop(context);
+
       updateServiceModel = r;
       updatedItem = r.data!;
     });
   }
 
-  loadingDialog() {
-    Get.dialog(
-      Dialog(
+  loadingDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
         backgroundColor: Colors.white,
-        insetAnimationCurve: Curves.bounceInOut,
-        insetPadding: const EdgeInsets.symmetric(horizontal: 40, vertical: 40),
+        insetPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
         ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 25),
+        content: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 2),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                'جارى التحميل'.tr,
-                style: Get.textTheme.bodyText1!.copyWith(
+                'جارى التحميل',
+                style: Get.textTheme.bodyLarge!.copyWith(
                   color: Get.theme.primaryColor,
                 ),
               ),
@@ -172,7 +174,7 @@ class AddServiceCubit extends Cubit<AddServiceState> {
         ),
       ),
       barrierDismissible: false,
-      transitionCurve: Curves.easeInOutBack,
+      // transitionCurve: Curves.easeInOutBack,
     );
   }
 
@@ -199,7 +201,7 @@ class AddServiceCubit extends Cubit<AddServiceState> {
               children: <Widget>[
                 ListTile(
                   leading: Icon(Icons.photo_library),
-                  title: Text('Pick from gallery'),
+                  title: Text('اختر صوره من المعرض'),
                   onTap: () async {
                     serviceLogoImage =
                         await picker.pickImage(source: ImageSource.gallery);
@@ -224,7 +226,7 @@ class AddServiceCubit extends Cubit<AddServiceState> {
                 ),
                 ListTile(
                   leading: Icon(Icons.camera_alt),
-                  title: Text('Take a photo'),
+                  title: Text('التقط صوره'),
                   onTap: () async {
                     serviceLogoImage =
                         await picker.pickImage(source: ImageSource.camera);
@@ -253,7 +255,6 @@ class AddServiceCubit extends Cubit<AddServiceState> {
     );
   }
 
-
   removeImage(int index) {
     serviceImages.removeAt(index);
     emit(RemoveImageState());
@@ -270,7 +271,7 @@ class AddServiceCubit extends Cubit<AddServiceState> {
               children: <Widget>[
                 ListTile(
                   leading: Icon(Icons.photo_library),
-                  title: Text('Pick from gallery'),
+                  title: Text('اختر صوره من المعرض'),
                   onTap: () async {
                     List<Asset> resultList = await MultiImagePicker.pickImages(
                       maxImages:
@@ -278,8 +279,8 @@ class AddServiceCubit extends Cubit<AddServiceState> {
                     );
 
                     for (final asset in resultList) {
-                 File image = await  getImageFileFromAssets(asset);
-                 serviceImages.add(XFile(image.path));
+                      File image = await getImageFileFromAssets(asset);
+                      serviceImages.add(XFile(image.path));
                     }
 
                     emit(ServiceImageSuccess());
@@ -288,7 +289,7 @@ class AddServiceCubit extends Cubit<AddServiceState> {
                 ),
                 ListTile(
                   leading: Icon(Icons.camera_alt),
-                  title: Text('Take a photo'),
+                  title: Text('التقط صوره'),
                   onTap: () async {
                     var image =
                         await picker.pickImage(source: ImageSource.camera);
@@ -305,12 +306,11 @@ class AddServiceCubit extends Cubit<AddServiceState> {
     );
   }
 
-
   Future<File> getImageFileFromAssets(Asset asset) async {
     final byteData = await asset.getByteData();
 
     final tempFile =
-    File("${(await getTemporaryDirectory()).path}/${asset.name}");
+        File("${(await getTemporaryDirectory()).path}/${asset.name}");
     final file = await tempFile.writeAsBytes(
       byteData.buffer
           .asUint8List(byteData.offsetInBytes, byteData.lengthInBytes),
@@ -318,7 +318,6 @@ class AddServiceCubit extends Cubit<AddServiceState> {
 
     return file;
   }
-
 
   void setAddress(Placemark? place) {
     this.placeToBack = place;
@@ -331,9 +330,15 @@ class AddServiceCubit extends Cubit<AddServiceState> {
   bool isOpened = false;
   late GoogleMapController mapController;
 
-  Position position = Position(longitude:31.189283 , latitude:  27.180134,
-      timestamp: DateTime(Duration.millisecondsPerDay), accuracy: 1.5,
-      altitude: 0.8, heading: 100, speed: 12, speedAccuracy: 1);
+  Position position = Position(
+      longitude: 31.189283,
+      latitude: 27.180134,
+      timestamp: DateTime(Duration.millisecondsPerDay),
+      accuracy: 1.5,
+      altitude: 0.8,
+      heading: 100,
+      speed: 12,
+      speedAccuracy: 1);
 
   LatLng selectedLocation = LatLng(31.189283, 27.180134);
 
@@ -343,9 +348,9 @@ class AddServiceCubit extends Cubit<AddServiceState> {
   String address = "";
   // String? currentAddress = "";
 
-  PermissionStatus permissionStatus =PermissionStatus.denied ;
+  PermissionStatus permissionStatus = PermissionStatus.denied;
   // Completer<Placemark> resultCompleter = Completer<Placemark>();
-   Placemark? place;
+  Placemark? place;
 
   getTheUserPermissionAndLocation() async {
     permissionStatus = await Permission.location.request();
@@ -366,7 +371,7 @@ class AddServiceCubit extends Cubit<AddServiceState> {
       position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high,
       );
-      selectedLocation =  LatLng(position.latitude, position.longitude) ;
+      selectedLocation = LatLng(position.latitude, position.longitude);
       moveCamera();
       List<Placemark> placemarks = await placemarkFromCoordinates(
           selectedLocation.latitude, selectedLocation.longitude);
@@ -384,27 +389,21 @@ class AddServiceCubit extends Cubit<AddServiceState> {
 
   moveCamera() async {
     //await getTheUserPermission();
-    mapController.animateCamera(
-
-        CameraUpdate.newCameraPosition(
-            CameraPosition(
-                zoom: 15,
-                // tilt: 60,
-                // bearing: 100,
-                target: LatLng(position.latitude, position.longitude))));
+    mapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
+        zoom: 15,
+        // tilt: 60,
+        // bearing: 100,
+        target: LatLng(position.latitude, position.longitude))));
     emit(CameraMoveState());
   }
 
   moveCamera2(LatLng latLng) async {
     //await getTheUserPermission();
-    mapController.animateCamera(
-
-        CameraUpdate.newCameraPosition(
-            CameraPosition(
-                zoom: 15,
-                // tilt: 60,
-                // bearing: 100,
-                target: latLng)));
+    mapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
+        zoom: 15,
+        // tilt: 60,
+        // bearing: 100,
+        target: latLng)));
     emit(CameraMoveState());
   }
 
@@ -419,9 +418,8 @@ class AddServiceCubit extends Cubit<AddServiceState> {
           selectedLocation.latitude, selectedLocation.longitude);
       place = placemarks[0];
       address =
-      '${place?.name},${place?.street}, ${place?.subLocality}, ${place?.subAdministrativeArea},}';
+          '${place?.name},${place?.street}, ${place?.subLocality}, ${place?.subAdministrativeArea},}';
       // "${place.administrativeArea} , ${place.name} ${place.street}, ${place.locality}, ${place.postalCode}, ${place.country}";
-
     } catch (e) {
       print(e);
     }
