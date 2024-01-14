@@ -34,12 +34,23 @@ class PostsCubit extends Cubit<PostsState> {
   }
 
   List<SubCategoryModeel> subCategories = [];
+  List<SubCategoryModeel> subCategoriesAtAddProduct = [];
+  changeCategoryName(SubCategoryModeel? newValue) {
+    currentSubCategory = newValue;
+    emit(Change2CategoriesState());
+  }
 
-  searchSSubCategory({required int catId}) async {
+  SubCategoryModeel? currentSubCategory;
+  searchSSubCategory({required int catId, bool isAddNewProduct = false}) async {
     emit(SubServicesLoading());
     final response = await api.SubCategoryMethod(catId);
     response.fold((l) => emit(SubServicesError()), (r) {
-      subCategories = r.data!;
+      if (isAddNewProduct) {
+        subCategoriesAtAddProduct = r.data!;
+      } else {
+        subCategories = r.data!;
+      }
+
       emit(SubServicesLoaded());
     });
   }

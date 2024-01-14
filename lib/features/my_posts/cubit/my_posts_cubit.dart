@@ -23,24 +23,23 @@ class MyPostsCubit extends Cubit<MyPostsState> {
     getMyPostsList();
   }
 
-
   final ServiceApi api;
   List<ServicesModel> modelList = [];
-  late  MyServicesModel myServicesModel;
+  late MyServicesModel myServicesModel;
 
   // late  UpdatedModel updateServiceModel;
   // late ServicesModel updatedItem ;
 
   getMyPostsList() async {
-    modelList.clear();//todo
+    modelList.clear(); //todo
     // emit(MyPostsLoaded());
 
     final response = await api.getMyServicesData();
     response.fold(
-          (l) => emit(MyPostsError()),
-          (r) {
+      (l) => emit(MyPostsError()),
+      (r) {
         modelList = r.data!;
-       // myServicesModel = r;
+        // myServicesModel = r;
         emit(MyPostsLoaded());
       },
     );
@@ -50,9 +49,9 @@ class MyPostsCubit extends Cubit<MyPostsState> {
     emit(MyPostsSearchLoading());
     final response = await api.getMyServicesSearchData(searchKey);
     response.fold(
-          (l) => emit(MyPostsSearchError()),
-          (r) {
-            myServicesModel = r;
+      (l) => emit(MyPostsSearchError()),
+      (r) {
+        myServicesModel = r;
         modelList = r.data!;
 
         emit(MyPostsSearchSuccess());
@@ -79,19 +78,22 @@ class MyPostsCubit extends Cubit<MyPostsState> {
     context.read<AddServiceCubit>().isUpdate = true;
     context.read<AddServiceCubit>().nameController.text = model.name!;
     context.read<AddServiceCubit>().locationController.text = model.location!;
-    context.read<AddServiceCubit>().contact1Controller.text =model.phones?[0];
+    context.read<AddServiceCubit>().contact1Controller.text = model.phones?[0];
     context.read<AddServiceCubit>().contact2Controller.text = model.phones?[1];
     context.read<AddServiceCubit>().detailsController.text = model.details!;
     context.read<AddServiceCubit>().currentCategory?.name = model.category;
-   // context.read<AddServiceCubit>().city_id = model.cityId;
-    context.read<AddServiceCubit>().serviceLogoImage= XFile(model.logo!);
-    context.read<AddServiceCubit>().cityHint = model.cityName??"Abha";
-    context.read<AddServiceCubit>().categoryHint = model.category??"Gym";
-    context.read<AddServiceCubit>().serviceImages= await convertStringListToXFileList(model.images);
-   // context.read<AddServiceCubit>().getCities();
+    // context.read<AddServiceCubit>().city_id = model.cityId;
+    context.read<AddServiceCubit>().serviceLogoImage = XFile(model.logo!);
+    context.read<AddServiceCubit>().cityHint = model.cityName ?? "Abha";
+    // context.read<AddServiceCubit>().categoryHint = model.category ?? "Gym";
+    context.read<AddServiceCubit>().serviceImages =
+        await convertStringListToXFileList(model.images);
+    // context.read<AddServiceCubit>().getCities();
   }
+
   // convert a List<String> to List<XFile?>
-  Future<List<XFile?>> convertStringListToXFileList(List<String>? stringList) async {
+  Future<List<XFile?>> convertStringListToXFileList(
+      List<String>? stringList) async {
     if (stringList == null) return [];
 
     List<XFile?> xFileList = [];

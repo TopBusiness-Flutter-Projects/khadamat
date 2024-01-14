@@ -1,18 +1,16 @@
 import 'dart:io';
-
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geocoding/geocoding.dart';
-import 'package:geocoding_platform_interface/src/models/placemark.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:khadamat/core/models/categories_model.dart';
 import 'package:khadamat/core/models/service_model.dart';
-import 'package:meta/meta.dart';
+import 'package:khadamat/features/posts/cubit/posts_cubit.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import '../../../core/models/cities_model.dart';
@@ -21,7 +19,6 @@ import '../../../core/models/service_store_model.dart';
 import '../../../core/models/servicemodel.dart';
 import '../../../core/models/updated_model.dart';
 import '../../../core/remote/service.dart';
-import 'package:multi_image_picker/multi_image_picker.dart';
 
 part 'add_service_state.dart';
 
@@ -38,7 +35,7 @@ class AddServiceCubit extends Cubit<AddServiceState> {
   final ImagePicker picker = ImagePicker();
   XFile? serviceLogoImage;
   String cityHint = "city";
-  String categoryHint = "kind of Activity";
+  // String categoryHint = "activity_type";
 
   List<XFile?> serviceImages = [];
   final ServiceApi api;
@@ -81,7 +78,7 @@ class AddServiceCubit extends Cubit<AddServiceState> {
     contact2Controller.text = "";
     detailsController.text = "";
     serviceLogoImage = null;
-    categoryHint = "Kind Of Activity";
+    // categoryHint = "Kind Of Activity";
     cityHint = "City";
     serviceImages.clear();
     emit(ClearService());
@@ -121,6 +118,8 @@ class AddServiceCubit extends Cubit<AddServiceState> {
         Navigator.pop(context);
         // Get.back();
         serviceStoreModel = r;
+        BlocProvider.of<PostsCubit>(context).currentSubCategory = null;
+        currentCategory = null;
         emit(StoreServiceSuccess());
       },
     );
@@ -260,6 +259,16 @@ class AddServiceCubit extends Cubit<AddServiceState> {
     emit(RemoveImageState());
   }
 
+  void selectImages(BuildContext context) async {
+    final List<XFile>? selectedImages = await ImagePicker().pickMultiImage();
+    if (selectedImages!.isNotEmpty) {
+      serviceImages.addAll(selectedImages);
+    }
+    print("Image List Length:" + serviceImages.length.toString());
+    Navigator.pop(context);
+    emit(pickImagesState());
+  }
+
   serviceImagePicker(BuildContext context) {
     emit(ServiceImageLoading());
     showModalBottomSheet(
@@ -273,18 +282,19 @@ class AddServiceCubit extends Cubit<AddServiceState> {
                   leading: Icon(Icons.photo_library),
                   title: Text('اختر صوره من المعرض'),
                   onTap: () async {
-                    List<Asset> resultList = await MultiImagePicker.pickImages(
-                      maxImages:
-                          10, // Set the maximum number of images to be selected
-                    );
+                    selectImages(context);
+                    // List<Asset> resultList = await MultiImagePicker.pickImages(
+                    //   maxImages:
+                    //       10, // Set the maximum number of images to be selected
+                    // );
 
-                    for (final asset in resultList) {
-                      File image = await getImageFileFromAssets(asset);
-                      serviceImages.add(XFile(image.path));
-                    }
+                    // for (final asset in resultList) {
+                    //   File image = await getImageFileFromAssets(asset);
+                    //   serviceImages.add(XFile(image.path));
+                    // }
 
-                    emit(ServiceImageSuccess());
-                    Navigator.of(context).pop();
+                    // emit(ServiceImageSuccess());
+                    // Navigator.of(context).pop();
                   },
                 ),
                 ListTile(
@@ -306,18 +316,18 @@ class AddServiceCubit extends Cubit<AddServiceState> {
     );
   }
 
-  Future<File> getImageFileFromAssets(Asset asset) async {
-    final byteData = await asset.getByteData();
+  // Future<File> getImageFileFromAssets(Asset asset) async {
+  //   final byteData = await asset.getByteData();
 
-    final tempFile =
-        File("${(await getTemporaryDirectory()).path}/${asset.name}");
-    final file = await tempFile.writeAsBytes(
-      byteData.buffer
-          .asUint8List(byteData.offsetInBytes, byteData.lengthInBytes),
-    );
+  //   final tempFile =
+  //       File("${(await getTemporaryDirectory()).path}/${asset.name}");
+  //   final file = await tempFile.writeAsBytes(
+  //     byteData.buffer
+  //         .asUint8List(byteData.offsetInBytes, byteData.lengthInBytes),
+  //   );
 
-    return file;
-  }
+  //   return file;
+  // }
 
   void setAddress(Placemark? place) {
     this.placeToBack = place;
@@ -331,6 +341,8 @@ class AddServiceCubit extends Cubit<AddServiceState> {
   late GoogleMapController mapController;
 
   Position position = Position(
+      altitudeAccuracy: 0.8,
+      headingAccuracy: 100,
       longitude: 31.189283,
       latitude: 27.180134,
       timestamp: DateTime(Duration.millisecondsPerDay),

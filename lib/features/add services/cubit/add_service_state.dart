@@ -47,3 +47,4 @@ class NewLocationSelected extends AddServiceState {}
 class CurrentAddressState extends AddServiceState {}
 class CameraMoveState extends AddServiceState {}
 
+class pickImagesState extends AddServiceState {}

@@ -31,7 +31,8 @@
  "setting": "Privacy",
  "call": "Call to App Support",
  "about_app": "About App",
- "activity_type": "activity type",
+ "activity_type": "activity type",  "activity_type2": "sub category",
+
  "name": "Name",
  "contact_numbers":"contact numbers",
  "contact_number1":"contact number 1",
