@@ -47,9 +47,13 @@ class _NotificationScreenState extends State<NotificationScreen> {
                             itemBuilder: (context, index) {
                               return InkWell(
                                 onTap: () {
-                                  Navigator.pushNamed(
-                                      context, Routes.notificationDetailsRoute,
-                                      arguments: cubit.notificationList[index]);
+                                  cubit.notificationList[index].serviceId ==
+                                          null
+                                      ? null
+                                      : Navigator.pushNamed(context,
+                                          Routes.notificationDetailsRoute,
+                                          arguments:
+                                              cubit.notificationList[index]);
                                   //  Navigator.pushNamed(context, Routes.detailsRoute,arguments:ServicesModel(
                                   //    name: cubit.notificationList[index].title,
                                   //    id: cubit.notificationList[index].id,

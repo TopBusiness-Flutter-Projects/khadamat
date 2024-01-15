@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../../../core/utils/app_colors.dart';
 import '../../../core/utils/assets_manager.dart';
 import '../../../core/widgets/show_loading_indicator.dart';
 import '../cubit/posts_cubit.dart';
-import 'services_of_categories.dart';
 import 'subservicesscreen.dart';
 
 // ignore: must_be_immutable
@@ -83,6 +81,7 @@ class _ServicesOfSubCategoriesState extends State<ServicesOfSubCategories> {
                                   ),
                                   child: Text(
                                     cubit.subCategories[index].name ?? '',
+                                    textAlign: TextAlign.center,
                                     style: TextStyle(color: AppColors.primary),
                                   )),
                             );

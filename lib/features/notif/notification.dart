@@ -150,12 +150,10 @@ class PushNotificationService {
       behaviorchat.add('notification');
 
       NotificationsBloc.instance.newNotification(notification);
-
       showNotification(message);
     } else {
       var notification = LocalNotification("data", message.data);
       NotificationsBloc.instance.newNotification(notification);
-
       showNotification(message);
     }
   }

@@ -2,9 +2,6 @@ import 'package:easy_localization/easy_localization.dart' as tr;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:khadamat/features/favorite/cubit/favorite_cubit.dart';
-import 'package:khadamat/features/favorite/cubit/favorite_cubit.dart';
-
-import '../models/catigoreis_services.dart';
 import '../models/servicemodel.dart';
 import '../utils/app_colors.dart';
 import 'network_image.dart';
@@ -139,8 +136,24 @@ class PostWidget extends StatelessWidget {
                               ),
                             ],
                           ),
+
+                          //!
                         ],
                       ),
+                      model.cityName == null
+                          ? Container()
+                          : Container(
+                              width: double.infinity,
+                              child: Text(
+                                "المدينه : ${model.cityName!}",
+                                maxLines: 2,
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w200,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                            ),
                     ],
                   ),
                 ),

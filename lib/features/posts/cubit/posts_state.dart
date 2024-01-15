@@ -30,3 +30,5 @@ class ServicesBySubLoading extends PostsState {}
 class ServicesBySubSuccess extends PostsState {}
 
 class ServicesBySubFailure extends PostsState {}
+
+class Change2CategoriesState extends PostsState {}
