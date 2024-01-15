@@ -85,7 +85,7 @@ class _KhadamatState extends State<Khadamat> {
         print(payload);
         if (payload.contains("notification")) {
           if (pushNotificationService!.behaviorchat.hasValue) {
-            locator<NavigationService>().navigateToReplacement();
+            locator<NavigationService>().navigateToReplacement(isBack: true);
           }
         }
       });

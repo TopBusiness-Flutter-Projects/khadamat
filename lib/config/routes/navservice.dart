@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../features/home/screens/home.dart';
 import '../../features/notification/cubit/nottification_cubit.dart';
 import '../../features/notification/screens/notification_screen.dart';
 import '../../injector.dart';
@@ -14,16 +15,21 @@ class NavigationService {
     navigationKey = GlobalKey<NavigatorState>();
   }
 
-  Future<dynamic> navigateToReplacement() {
+  Future<dynamic> navigateToReplacement({bool isBack = false}) {
     print("navigateToReplacement");
-    return navigationKey.currentState!.push(MaterialPageRoute(
-        builder: (context) => BlocProvider(
-              create: (context) => NottificationCubit(serviceLocator()),
-              child: NotificationScreen(),
-            )));
+    if (isBack) {
+      return navigationKey.currentState!
+          .push(MaterialPageRoute(builder: (context) => HomeScreen()));
+    } else {
+      return navigationKey.currentState!.push(MaterialPageRoute(
+          builder: (context) => BlocProvider(
+                create: (context) => NottificationCubit(serviceLocator()),
+                child: NotificationScreen(),
+              )));
+    }
   }
 
-  goback() {
-    return navigationKey.currentState!.pop();
-  }
+  // goback() {
+  //   return navigationKey.currentState!.pop();
+  // }
 }

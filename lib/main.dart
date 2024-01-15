@@ -172,14 +172,14 @@ Future ondidnotification(
     int id, String? title, String? body, String? payload) async {
   print("object");
   if (payload!.contains("notification")) {
-    locator<NavigationService>().navigateToReplacement();
+    locator<NavigationService>().navigateToReplacement(isBack: true);
   } else if (payload == "service_request") {}
 }
 
 Future notificationTapBackground(NotificationResponse details) async {
   print('notification payload: ${details.payload}');
   if (details.payload!.contains("notification")) {
-    locator<NavigationService>().navigateToReplacement();
+    locator<NavigationService>().navigateToReplacement(isBack: true);
   }
 }
 
