@@ -1,4 +1,4 @@
-import 'package:easy_localization/easy_localization.dart'as oo;
+import 'package:easy_localization/easy_localization.dart' as oo;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
@@ -10,9 +10,10 @@ import '../../../../core/widgets/custom_button.dart';
 import '../../../../core/widgets/my_svg_widget.dart';
 
 class ForgotPasswordScreen extends StatelessWidget {
-   ForgotPasswordScreen({super.key});
- final GlobalKey<FormState> formKey4 = GlobalKey<FormState>(debugLabel: 'forgotpasswordScreenkey');
-
+  ForgotPasswordScreen({super.key});
+  final GlobalKey<FormState> formKey4 =
+      GlobalKey<FormState>(debugLabel: 'forgotpasswordScreenkey');
+  bool isLoading = false;
   @override
   Widget build(BuildContext context) {
     String lang = oo.EasyLocalization.of(context)!.locale.languageCode;
@@ -21,13 +22,20 @@ class ForgotPasswordScreen extends StatelessWidget {
       // resizeToAvoidBottomInset: false,
       body: Container(
         height: double.infinity,
-        decoration:  BoxDecoration(
+        decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage(ImageAssets.introBackgroundImage),
             fit: BoxFit.cover,
           ),
         ),
-        child: BlocBuilder<ResetPasswordCubit, ResetPasswordState>(
+        child: BlocConsumer<ResetPasswordCubit, ResetPasswordState>(
+          listener: (context, state) {
+            if (state is LoadingCheckPhone) {
+              isLoading = true;
+            } else {
+              isLoading = false;
+            }
+          },
           builder: (context, state) {
             ResetPasswordCubit cubit = context.read<ResetPasswordCubit>();
             return Form(
@@ -74,21 +82,24 @@ class ForgotPasswordScreen extends StatelessWidget {
                           tag: 'logo',
                           child: SizedBox(
                             //  width: MediaQuery.of(context).size.width*0.7,
-                            height: MediaQuery.of(context).size.height*0.32,
+                            height: MediaQuery.of(context).size.height * 0.32,
                             child: Image.asset(ImageAssets.logoImage),
                           ),
                         ),
                       ],
                     ),
                     Center(
-                      child: Text("فضلا ادخل رقم تليفونك لنعيد لك كلمة المرور الخاصة بك !",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w400,
-                        fontSize: 16
-                      ),),
+                      child: Text(
+                        "فضلا ادخل رقم تليفونك لنعيد لك كلمة المرور الخاصة بك !",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w400,
+                            fontSize: 16),
+                      ),
                     ),
-                    SizedBox(height: 20,),
+                    SizedBox(
+                      height: 20,
+                    ),
                     //phone
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 30.0),
@@ -120,7 +131,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                                   hintText: 'phone_number_text'.tr(),
                                   hintTextDirection: TextDirection.ltr,
                                   hintStyle:
-                                  TextStyle(color: AppColors.primary),
+                                      TextStyle(color: AppColors.primary),
                                   filled: true,
                                 ),
                                 locale: lang,
@@ -136,7 +147,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                                 initialValue: PhoneNumber(isoCode: 'EG'),
                                 selectorConfig: SelectorConfig(
                                   selectorType:
-                                  PhoneInputSelectorType.BOTTOM_SHEET,
+                                      PhoneInputSelectorType.BOTTOM_SHEET,
                                   showFlags: false,
                                   setSelectorButtonAsPrefixIcon: false,
                                   useEmoji: true,
@@ -167,35 +178,35 @@ class ForgotPasswordScreen extends StatelessWidget {
                             ),
                           ],
                         ),
-
                       ),
                     ),
-                    SizedBox(height: 20,),
-
-                    // SizedBox(height: MediaQuery.of(context).size.height*0.03),
-
-                    SizedBox(height: MediaQuery.of(context).size.height*0.03),
-                    CustomButton(
-                      text: 'send'.tr(),
-                      color: AppColors.secondPrimary,
-                      paddingHorizontal: 40,
-                      borderRadius: 30,
-                      onClick: () async {
-                        if(formKey4.currentState!.validate()){
-                          await cubit.checkPhone();
-                        }
-                      },
-                    ),
+                    SizedBox(height: 20),
+                    SizedBox(height: MediaQuery.of(context).size.height * 0.03),
+                    isLoading
+                        ? Container(
+                            // height: 5,
+                            // width: 5,
+                            child: Center(child: CircularProgressIndicator()))
+                        : CustomButton(
+                            text: 'send'.tr(),
+                            color: AppColors.secondPrimary,
+                            paddingHorizontal: 40,
+                            borderRadius: 30,
+                            onClick: () async {
+                              if (formKey4.currentState!.validate()) {
+                                await cubit.checkPhone(context);
+                              }
+                            },
+                          ),
                     Stack(
                       alignment: Alignment.topCenter,
                       children: [
                         Image.asset(
                           ImageAssets.bottomImage,
                           height: MediaQuery.of(context).size.height / 3.89,
-                          width: MediaQuery.of(context).size.width*0.99 ,
+                          width: MediaQuery.of(context).size.width * 0.99,
                           fit: BoxFit.cover,
                         ),
-
                       ],
                     ),
                   ],

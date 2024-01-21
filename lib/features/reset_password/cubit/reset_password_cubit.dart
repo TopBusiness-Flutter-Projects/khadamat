@@ -38,42 +38,29 @@ class ResetPasswordCubit extends Cubit<ResetPasswordState> {
     emit(ChangePasswordIconStat());
   }
 
-  checkPhone() async {
-    loadingDialog();
-    // emit(LoginLoading());
+  checkPhone(BuildContext context) async {
+    // loadingDialog();
+    emit(LoadingCheckPhone());
     final response = await api.checkPhone(phoneController.text, phoneCode);
     response.fold(
       (l) {
-        Get.back();
+        // Get.back();
         emit(CheckPhoneError());
       },
       (r) async {
-        Get.back();
-
+        // Get.back();
         if (r.code == 200) {
-          emit(CheckPhoneLoaded());
           responseCode = 200;
           print("r.code == 200");
           model = r;
-
           // Get.offAllNamed( Routes.verificationScreenRoute);
           await sendSmsCode(code: phoneCode, phoneNum: phoneController.text);
-          Get.toNamed(Routes.verificationScreenRoute);
-        } else if (r.code == 422) {
-          responseCode = 422;
-          print("r.code == 422");
-          errorGetBar('لا يوجد حساب مرتبط بهذا الهاتف');
-          // await sendSmsCode(code: phoneCode, phoneNum: phoneController.text);
-          //  Get.toNamed( Routes.verificationScreenRoute);
-        } else if (r.code == 406) {
-          responseCode = 406;
-          print("r.code == 422");
-          errorGetBar('لا يوجد حساب مرتبط بهذا الهاتف');
-          // await sendSmsCode(code: phoneCode, phoneNum: phoneController.text);
-          //  Get.toNamed( Routes.verificationScreenRoute);
+          Navigator.pushNamed(context, Routes.verificationScreenRoute);
+          emit(CheckPhoneLoaded());
         } else {
           print("هناك خطئ حاول فى وقت لاحق");
           errorGetBar('هناك خطئ حاول فى وقت لاحق');
+          emit(CheckPhoneError());
         }
       },
     );
@@ -194,12 +181,6 @@ class ResetPasswordCubit extends Cubit<ResetPasswordState> {
           //  // Get.offAndToNamed(Routes.homeRoute);
           //
           // }
-        } else if (r.code == 408) {
-          responseCode = 408;
-          print("r.code == 408");
-          errorGetBar('password already reset');
-          // await sendSmsCode(code: phoneCode, phoneNum: phoneController.text);
-          //  Get.toNamed( Routes.verificationScreenRoute);
         } else {
           print("هناك خطئ حاول فى وقت لاحق");
           errorGetBar('هناك خطئ حاول فى وقت لاحق');

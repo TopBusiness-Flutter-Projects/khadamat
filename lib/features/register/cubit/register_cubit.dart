@@ -47,13 +47,11 @@ class RegisterCubit extends Cubit<RegisterState> {
 
         phoneController.clear();
         nameController.clear();
-
+        passwordController.clear();
         emit(RegisterSuccessState());
-      } else if (r.code == 409) {
-        emit(RegisterFailedUserExistState());
-        errorGetBar('المستخدم موجود بالفعل');
       } else {
         errorGetBar(r.message ?? '');
+        emit(RegisterFailedUserExistState());
       }
     });
   }
